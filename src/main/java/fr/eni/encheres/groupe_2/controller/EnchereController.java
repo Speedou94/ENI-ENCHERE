@@ -5,12 +5,14 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "HomePageController", value = "/")
-public class HomePageController extends HttpServlet {
+@WebServlet(name = "EnchereController", value = "/encheres/*")
+public class EnchereController extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-RequestDispatcher rd = request.getRequestDispatcher("/homepage");
-rd.forward(request,response);
+        RequestDispatcher  rd = request.getRequestDispatcher("/accueil");
+
+        rd.forward(request,response);
     }
 
     @Override

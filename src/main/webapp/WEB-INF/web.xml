@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <welcome-file-list>
-        <welcome-file>fr/eni/encheres/groupe_2/controller/HomePageController.java</welcome-file>
+        <welcome-file>fr/eni/encheres/groupe_2/controller/EnchereController.java</welcome-file>
     </welcome-file-list>
     <servlet>
-        <servlet-name>homepage</servlet-name>
-        <jsp-file>/WEB-INF/view/HomePage.jsp</jsp-file>
+        <servlet-name>accueil</servlet-name>
+        <jsp-file>/WEB-INF/view/EncherePage.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>homepage</servlet-name>
-        <url-pattern>/homepage</url-pattern>
+        <servlet-name>accueil</servlet-name>
+        <url-pattern>/accueil</url-pattern>
     </servlet-mapping>
 </web-app>
