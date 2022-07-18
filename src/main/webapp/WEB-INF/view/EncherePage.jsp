@@ -18,6 +18,7 @@
 <body>
 <header>
     <%@include file="./../components/public/navbar-public.jspf"%>
+
 </header>
 <div class="box">
     <h1 class="has-text-centered title is-1">Page d'accueil</h1>
@@ -27,6 +28,7 @@
     </p>
 
 </div>
+
 <footer>
     <%@include file="./../components/public/footer.jspf"%>
 </footer>

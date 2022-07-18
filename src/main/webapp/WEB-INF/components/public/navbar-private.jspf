@@ -45,14 +45,18 @@
 
         <div class="navbar-end">
             <div class="navbar-item">
-                <div class="buttons">
-                    <a class="button is-light is-info">
-                        <strong><fmt:message key="navbar_public_signIn" bundle="${message}"/></strong>
-                    </a>
-                    <a class="button is-primary">
-                        <fmt:message key="navbar_public_login" bundle="${message}"/>
-                    </a>
-                </div>
+                <a class="navbar-item">
+                    <fmt:message key="navbar_private_auction" bundle="${message}"/>
+                </a>
+                <a class="navbar-item">
+                    <fmt:message key="navbar_private_sold" bundle="${message}"/>
+                </a>
+                <a class="navbar-item">
+                    <fmt:message key="navbar_private_profil" bundle="${message}"/>
+                </a>
+                <a class="button is-dark">
+                    <fmt:message key="navbar_private_logout" bundle="${message}"/>
+                </a>
             </div>
         </div>
     </div>
