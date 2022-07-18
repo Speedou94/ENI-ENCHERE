@@ -3,4 +3,18 @@ Edit by Niko 18/07/2022
  */
 .footer{
     padding: 1rem 1.5rem 1rem;
+
+}
+.form-login{
+    max-width: 50%;
+    margin-top: 15rem;
+}
+.options-form{
+    display: flex;
+    flex-direction: column;
+    margin-left: 8rem;
+}
+.btn-form-login{
+    margin-top: 2rem;
+    display: flex;
 }

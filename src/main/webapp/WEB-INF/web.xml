@@ -22,4 +22,12 @@
         <servlet-name>login</servlet-name>
         <url-pattern>/loginpage</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>loged</servlet-name>
+        <jsp-file>/WEB-INF/view/Logged.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loged</servlet-name>
+        <url-pattern>/logged</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -18,6 +18,7 @@
 <body>
 <header>
     <%@include file="./../components/public/navbar-public.jspf"%>
+
 </header>
 <div class="box">
     <h1 class="has-text-centered title is-1">Page d'accueil</h1>
@@ -26,6 +27,7 @@
         il faut commencer par l'orginastion du site , en commencant par la BDD .. plus apres se repatir les taches
     </p>
 </div>
+
 <footer>
     <%@include file="./../components/public/footer.jspf"%>
 </footer>

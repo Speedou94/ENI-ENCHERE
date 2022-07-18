@@ -28,11 +28,11 @@
                 </p>
 
                 <div class="navbar-dropdown">
-                    <a href="${pageContext.request.contextPath}?lang=fr" class="navbar-item">
+                    <a href="/encheres?lang=fr" class="navbar-item">
                         <span> <img class="image is-24x24 mr-4" src="../../img/drapeau_fr.png" alt="drapeau francais"> </span>    <fmt:message key="navbar_public_francais" bundle="${message}"/>
                     </a>
 
-                    <a href="${pageContext.request.contextPath}?lang=en" class="navbar-item">
+                    <a href="/encheres?lang=en" class="navbar-item">
                         <span> <img class="image is-24x24 mr-4" src="../../img/drapeau-en.png" alt="drapeau anglais"> </span>  <fmt:message key="navbar_public_anglais" bundle="${message}"/>
                     </a>
                     <a></a>
@@ -45,19 +45,18 @@
 
         <div class="navbar-end">
             <div class="navbar-item">
-                <div class="buttons">
-
-                    <a class="button is-primary" href="${pageContext.request.contextPath}/signin">
-                        <strong><fmt:message key="navbar_public_signIn" bundle="${message}"/></strong>
-                    </a>
-
-
-
-                    <a class="button is-primary"  href="${pageContext.request.contextPath}/login">
-
-                        <fmt:message key="navbar_public_login" bundle="${message}"/>
-                    </a>
-                </div>
+                <a class="navbar-item">
+                    <fmt:message key="navbar_private_auction" bundle="${message}"/>
+                </a>
+                <a class="navbar-item">
+                    <fmt:message key="navbar_private_sold" bundle="${message}"/>
+                </a>
+                <a class="navbar-item">
+                    <fmt:message key="navbar_private_profil" bundle="${message}"/>
+                </a>
+                <a class="button is-dark">
+                    <fmt:message key="navbar_private_logout" bundle="${message}"/>
+                </a>
             </div>
         </div>
     </div>
