@@ -29,11 +29,11 @@
 
                 <div class="navbar-dropdown">
                     <a href="/encheres?lang=fr" class="navbar-item">
-                        <fmt:message key="navbar_public_francais" bundle="${message}"/>
+                        <span> <img class="image is-24x24 mr-4" src="../../img/drapeau_fr.png" alt="drapeau francais"> </span>    <fmt:message key="navbar_public_francais" bundle="${message}"/>
                     </a>
 
                     <a href="/encheres?lang=en" class="navbar-item">
-                        <fmt:message key="navbar_public_anglais" bundle="${message}"/>
+                        <span> <img class="image is-24x24 mr-4" src="../../img/drapeau-en.png" alt="drapeau anglais"> </span>  <fmt:message key="navbar_public_anglais" bundle="${message}"/>
                     </a>
 
                 </div>
