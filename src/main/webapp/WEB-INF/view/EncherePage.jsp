@@ -25,7 +25,6 @@
     <p class="sub-title is-4">
         il faut commencer par l'orginastion du site , en commencant par la BDD .. plus apres se repatir les taches
     </p>
-
 </div>
 <footer>
     <%@include file="./../components/public/footer.jspf"%>

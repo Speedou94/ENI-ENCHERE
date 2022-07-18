@@ -45,10 +45,10 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a class="button is-primary">
+                    <a class="button is-primary" href="${pageContext.request.contextPath}/signin">
                         <strong><fmt:message key="navbar_public_signIn" bundle="${message}"/></strong>
                     </a>
-                    <a class="button is-light">
+                    <a class="button is-light" href="${pageContext.request.contextPath}/login">
                         <fmt:message key="navbar_public_login" bundle="${message}"/>
                     </a>
                 </div>
