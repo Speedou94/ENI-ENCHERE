@@ -1,7 +1,6 @@
 package fr.eni.encheres.groupe_2.controller;
 
 import fr.eni.encheres.groupe_2.bll.ArticleManager;
-import fr.eni.encheres.groupe_2.bll.BuissnessException;
 import fr.eni.encheres.groupe_2.bll.CategorieManager;
 import fr.eni.encheres.groupe_2.bo.Article;
 import fr.eni.encheres.groupe_2.bo.Categorie;
@@ -13,14 +12,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "EnchereController", value = "/adefinir/*")
-public class EnchereController extends HttpServlet {
-    //CategorieManager managerCategorie = CategorieManager.getInstance();
-   // ArticleManager managerArticle = ArticleManager.getInstance();
+@WebServlet(name = "HomeController", value = "/encheres/*")
+public class HomeController extends HttpServlet {
+    CategorieManager managerCategorie = CategorieManager.getInstance();
+    ArticleManager managerArticle = ArticleManager.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher  rd = request.getRequestDispatcher("/accueil");
+        List<Categorie> listDesCategories = new ArrayList<>();
+        List<Article> listDesArticles = new ArrayList<>();
+        try {
+            listDesCategories = managerCategorie.getAllCategorie();
+            listDesArticles = managerArticle.getAllArticles();
+            request.setAttribute("listDesCategories", listDesCategories);
+            request.setAttribute("articlesDisponible",listDesArticles);
+        } finally {
+
+        }
+
 
         rd.forward(request,response);
     }
@@ -30,5 +40,3 @@ public class EnchereController extends HttpServlet {
 
     }
 }
-
-

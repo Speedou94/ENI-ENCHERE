@@ -16,25 +16,25 @@ import java.io.IOException;
 public class UtilisateurControlleur extends HttpServlet {
     UtilisateurManager manager = UtilisateurManager.getInstance();
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher rd = req.getRequestDispatcher("/signup");
-        rd.forward(req,resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher rd = request.getRequestDispatcher("/signup");
+        rd.forward(request,resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher rd = req.getRequestDispatcher("");
-    String pseudo = req.getParameter("pseudo");
-        String nom = req.getParameter("nom");
-        String prenom = req.getParameter("prenom");
-        String email = req.getParameter("email");
-        String telephone = req.getParameter("telephone");
-        String rue = req.getParameter("rue");
-        String ville = req.getParameter("ville");
-        String codePostal = req.getParameter("codePostal");
-        String password = req.getParameter("password");
-        String confirmPassword = req.getParameter("confirmPassword");
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher rd = request.getRequestDispatcher("");
+    String pseudo = request.getParameter("pseudo");
+        String nom = request.getParameter("nom");
+        String prenom = request.getParameter("prenom");
+        String email = request.getParameter("email");
+        String telephone = request.getParameter("telephone");
+        String rue = request.getParameter("rue");
+        String ville = request.getParameter("ville");
+        String codePostal = request.getParameter("codePostal");
+        String password = request.getParameter("password");
+        String confirmPassword = request.getParameter("confirmPassword");
+        //TODO: faire une fonction qui compare les parametre recu entre password et confirm password => si pas pareil buissness excepiton
         Utilisateur utilisateur = new Utilisateur(pseudo,nom, prenom, email, telephone, rue, codePostal,ville, password);
 
         try {

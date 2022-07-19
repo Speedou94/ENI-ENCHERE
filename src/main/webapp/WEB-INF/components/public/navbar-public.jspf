@@ -6,9 +6,9 @@
 
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <p class="navbar-item">
+        <a class="navbar-item" href="${pageContext.request.contextPath}/encheres/">
             <fmt:message key="navbar_public_eni_enchere" bundle="${message}"/>
-        </p>
+        </a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" id="burger">
             <span aria-hidden="true"></span>
@@ -49,7 +49,7 @@
                     <a class="button is-light is-info" href="${pageContext.request.contextPath}/utilisateurs">
                         <strong><fmt:message key="navbar_public_signIn" bundle="${message}"/></strong>
                     </a>
-                    <a class="button is-primary">
+                    <a class="button is-primary" href="${pageContext.request.contextPath}/login">
                         <fmt:message key="navbar_public_login" bundle="${message}"/>
                     </a>
                 </div>

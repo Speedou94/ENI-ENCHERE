@@ -54,7 +54,7 @@
                 <a class="navbar-item">
                     <fmt:message key="navbar_private_profil" bundle="${message}"/>
                 </a>
-                <a class="button is-dark">
+                <a class="button is-dark" href="${pageContext.request.contextPath}/encheres/">
                     <fmt:message key="navbar_private_logout" bundle="${message}"/>
                 </a>
             </div>

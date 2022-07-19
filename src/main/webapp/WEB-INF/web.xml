@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <welcome-file-list>
-        <welcome-file>fr/eni/encheres/groupe_2/controller/EnchereController.java</welcome-file>
+        <welcome-file>fr/eni/encheres/groupe_2/controller/HomeController.java</welcome-file>
     </welcome-file-list>
     <servlet>
         <servlet-name>accueil</servlet-name>
@@ -15,15 +15,15 @@
         <url-pattern>/accueil</url-pattern>
     </servlet-mapping>
 
-<servlet>
+    <servlet>
     <servlet-name>SignUp</servlet-name>
     <jsp-file>/WEB-INF/view/SignUp.jsp</jsp-file>
-</servlet>
-
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/signup</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>login</servlet-name>
         <jsp-file>/WEB-INF/view/LoginPage.jsp</jsp-file>
@@ -32,12 +32,24 @@
         <servlet-name>login</servlet-name>
         <url-pattern>/loginpage</url-pattern>
     </servlet-mapping>
+
     <servlet>
-        <servlet-name>loged</servlet-name>
-        <jsp-file>/WEB-INF/view/Logged.jsp</jsp-file>
+        <servlet-name>vente</servlet-name>
+        <jsp-file>/WEB-INF/view/DetailVente.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>loged</servlet-name>
-        <url-pattern>/logged</url-pattern>
+        <servlet-name>vente</servlet-name>
+        <url-pattern>/jspvente</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>detailArticle</servlet-name>
+        <jsp-file>/WEB-INF/view/DetailArticle.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>detailArticle</servlet-name>
+        <url-pattern>/detailArticle</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

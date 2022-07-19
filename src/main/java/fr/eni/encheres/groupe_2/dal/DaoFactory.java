@@ -11,9 +11,10 @@ public class DaoFactory {
         return new CategorieImplJdbc();
     }
 
-    public static DAO<Article> articledao() {
+    public static DAO<Article> articleDao() {
         return new ArticleImplJdbc();
     }
- public static DAO<Utilisateur> utilisateurDAO(){return new UtilisateurImplJdbc();}
- public static LoginDao loginDao(){return  new UtilisateurImplJdbc();}
+    public static DAO<Utilisateur> utilisateurDAO(){return new UtilisateurImplJdbc();}
+    public static LoginDao loginDao(){return  new UtilisateurImplJdbc();}
+    public static AdminDao adminDao(){return new AdminImplJdbc();}
 }

@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class="card" id="toto">
+<div class="card">
     <div class="card-image">
         <figure class="image is-128x128">
             <img src="" alt="Placeholder image">
@@ -11,14 +11,14 @@
         <div class="media">
 
             <div class="media-content">
-                <a class="title is-4">PC Gamer pour travailler</a>
+                <a class="title is-4">en variable(PC Gamer pour travailler)</a>
             </div>
         </div>
 
         <div class="content">
-           <p>Prix : 210 points <br>
-           Fin de l'enchere : 10/08/2022 <br>
-           Vendeur : jojo44</p>
+           <p>a mettre dans message_jsp =>Prix : en variable(210 points) <br>
+               a mettre dans message_jsp =>Fin de l'enchere : en variable(10/08/2022) <br>
+               a mettre dans message_jsp => Vendeur : en variable(jojo44)</p>
         </div>
     </div>
 </div>

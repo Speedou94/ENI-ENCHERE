@@ -18,18 +18,28 @@
 </head>
 <body>
 <header>
-    <%@include file="./../components/public/navbar-public.jspf"%>
-
+    <c:if test="${empty login}">
+        <%@include file="./../components/public/navbar-public.jspf"%>
+    </c:if>
+    <c:if test="${!empty login}">
+        <%@include file="./../components/public/navbar-private.jspf"%>
+    </c:if>
 </header>
 <div class="box">
-    <h1 class="has-text-centered title is-1">Liste des enchères</h1>
+    <h1 class="has-text-centered title is-1"> a mettre dans message_jsp =>Liste des enchères</h1>
 
-    <%@include file="./../components/EncherePage/Searchform.jspf"%>
+    <%@include file="./../components/EncherePage/search-form.jspf"%>
 </div>
 <div class="enchere-cards">
 </div>
-<%@include file="./../components/EncherePage/CardEnchere.jspf"%>
+<!-- TODO: faire attention au nom des components lower kebab case
+<%@include file="./../components/EncherePage/card-encheres.jspf"%>
+<div>
+    <c:if test="${!empty error}">
+        <%@include file="./../components/public/error_message_toast.jspf"%>
+    </c:if>
 
+</div>
 <footer>
     <%@include file="./../components/public/footer.jspf"%>
 </footer>

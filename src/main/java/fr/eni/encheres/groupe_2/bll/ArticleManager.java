@@ -11,7 +11,7 @@ public class ArticleManager {
 
     private static ArticleManager instance;
 
-    private DAO<Article> articleDAO = DaoFactory.articledao();
+    private DAO<Article> articleDAO = DaoFactory.articleDao();
 
     public static ArticleManager getInstance() {
         if (instance == null) {

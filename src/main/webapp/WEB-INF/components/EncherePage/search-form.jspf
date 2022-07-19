@@ -1,14 +1,14 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<p class="subtitle is-3">Filtres :</p>
+<p class="subtitle is-3">a mettre dans message_jsp =>Filtres :</p>
 <div class="control">
     <input class="input" type="text" placeholder="Le nom de l'article contient ">
 </div>
 <br>
-<label for="categories-select">Categorie :</label>
+<label for="categories-select">a mettre dans message_jsp =>Categorie :</label>
 
 <select name="Categories" id="Categories-select">
-    <option>Toutes</option>
+    <option>a mettre dans message_jsp =>Toutes</option>
     <c:forEach items="${listDesCategories}" var="categorie">
         <option value="${categorie.noCategorie}">${categorie.libelle}</option>
     </c:forEach>

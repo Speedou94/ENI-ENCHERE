@@ -14,9 +14,8 @@ public class LoginController extends HttpServlet {
     UtilisateurManager manager = UtilisateurManager.getInstance();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-RequestDispatcher rd = request.getRequestDispatcher("/loginpage");
-
-rd.forward(request,response);
+    RequestDispatcher rd = request.getRequestDispatcher("/loginpage");
+    rd.forward(request,response);
     }
 
     @Override
@@ -28,7 +27,7 @@ rd.forward(request,response);
         try {
                 utilisateur =  manager.login(pseudo,password);
                 request.setAttribute("login",utilisateur);
-                rd = request.getRequestDispatcher("/logged");
+                rd = request.getRequestDispatcher("/accueil");
 
              }
         catch (BuissnessException e){
