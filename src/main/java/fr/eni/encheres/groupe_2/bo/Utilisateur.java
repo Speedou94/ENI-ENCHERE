@@ -11,11 +11,12 @@ public class Utilisateur implements Serializable {
     private String telephone;
     private String rue ;
     private String codePostal;
+    private String ville;
     private String motDePasse;
     private int credit;
     private boolean administrateur;
 
-    public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String motDePasse, int credit, boolean administrateur) {
+    public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal,String ville, String motDePasse, int credit, boolean administrateur) {
         this.noUtilisateur = noUtilisateur;
         this.pseudo = pseudo;
         this.nom = nom;
@@ -24,12 +25,13 @@ public class Utilisateur implements Serializable {
         this.telephone = telephone;
         this.rue = rue;
         this.codePostal = codePostal;
+        this.ville = ville;
         this.motDePasse = motDePasse;
         this.credit = credit;
         this.administrateur = administrateur;
     }
 
-    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String motDePasse, int credit) {
+    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse) {
         this.pseudo = pseudo;
         this.nom = nom;
         this.prenom = prenom;
@@ -37,8 +39,9 @@ public class Utilisateur implements Serializable {
         this.telephone = telephone;
         this.rue = rue;
         this.codePostal = codePostal;
+        this.ville = ville;
         this.motDePasse = motDePasse;
-        this.credit = credit;
+        this.credit = 0;
         this.administrateur=false;
     }
 
@@ -131,5 +134,13 @@ public class Utilisateur implements Serializable {
 
     public void setAdministrateur(boolean administrateur) {
         this.administrateur = administrateur;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
     }
 }

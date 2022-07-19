@@ -14,4 +14,14 @@
         <servlet-name>accueil</servlet-name>
         <url-pattern>/accueil</url-pattern>
     </servlet-mapping>
+
+<servlet>
+    <servlet-name>SignUp</servlet-name>
+    <jsp-file>/WEB-INF/view/SignUp.jsp</jsp-file>
+</servlet>
+
+    <servlet-mapping>
+        <servlet-name>SignUp</servlet-name>
+        <url-pattern>/signup</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -46,7 +46,7 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a class="button is-light is-info">
+                    <a class="button is-light is-info" href="${pageContext.request.contextPath}/utilisateurs">
                         <strong><fmt:message key="navbar_public_signIn" bundle="${message}"/></strong>
                     </a>
                     <a class="button is-primary">
