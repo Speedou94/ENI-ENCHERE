@@ -5,6 +5,7 @@
   Time: 17:48
   To change this template use File | Settings | File Templates.
 --%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${param.lang}" scope="session"/>
@@ -21,9 +22,13 @@
 
 </header>
 <div class="box">
-    <h1 class="has-text-centered title is-1">Page d'accueil</h1>
+    <h1 class="has-text-centered title is-1">Liste des enchères</h1>
 
+    <%@include file="./../components/EncherePage/Searchform.jspf"%>
 </div>
+<div class="enchere-cards">
+</div>
+<%@include file="./../components/EncherePage/CardEnchere.jspf"%>
 
 <footer>
     <%@include file="./../components/public/footer.jspf"%>

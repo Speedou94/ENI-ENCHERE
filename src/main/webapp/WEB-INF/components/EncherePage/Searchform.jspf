@@ -1,0 +1,20 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<p class="subtitle is-3">Filtres :</p>
+<div class="control">
+    <input class="input" type="text" placeholder="Le nom de l'article contient ">
+</div>
+<br>
+<label for="categories-select">Categorie :</label>
+
+<select name="Categories" id="Categories-select">
+    <option>Toutes</option>
+    <c:forEach items="${listDesCategories}" var="categorie">
+        <option value="${categorie.noCategorie}">${categorie.libelle}</option>
+    </c:forEach>
+
+</select>
+
+<div class="flex-btn-search">
+    <button class="button is-primary is-light">Rechercher</button>
+</div>

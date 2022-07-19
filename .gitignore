@@ -1,8 +1,8 @@
 target/
-!.mvn/wrapper/maven-wrapper.jar
+!src/main/java/fr/eni/encheres/groupe_2/dal/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-!**/scr/main/webapp/META-INF/context.xml
+!**/scr/main/webapp/META-INF/*
 
 
 ### IntelliJ IDEA ###
@@ -39,4 +39,4 @@ build/
 ### Mac OS ###
 .DS_Store
 
-!**/scr/main/webapp/META-INF/context.xml
+!**/scr/main/webapp/META-INF/*
