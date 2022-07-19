@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setBundle basename="message_error" var="errors"/>
 
-
-    <p><fmt:message key="${error}" bundle="${errors}"/></p>
+<!--  //mettre un timeout sur le taost -->
+<p><fmt:message key="${error}" bundle="${errors}"/></p>
 
 

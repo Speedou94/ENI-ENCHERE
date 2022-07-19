@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UtilisateurImplJdbc implements DAO<Utilisateur>,Login {
+public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
     PreparedStatement ps;
     ResultSet rs;
     @Override
@@ -39,7 +39,6 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,Login {
     public Utilisateur login(String pseudo,String password) throws BuissnessException{
         String loginSql="SELECT * FROM dbo.UTILISATEURS WHERE pseudo = ?";
         Utilisateur utilisateur;
-
         try(Connection cnx = ConnectionProvider.getConnection()) {
             ps = cnx.prepareStatement(loginSql);
             ps.setString(1,pseudo);
@@ -67,7 +66,6 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,Login {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return utilisateur;
     }
 }

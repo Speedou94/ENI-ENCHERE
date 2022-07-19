@@ -32,6 +32,7 @@ rd.forward(request,response);
 
              }
         catch (BuissnessException e){
+            //mettre un timeout sur le taost
                 rd = request.getRequestDispatcher("/loginpage");
                 request.setAttribute("error",Integer.parseInt(e.getMessage()));
             }

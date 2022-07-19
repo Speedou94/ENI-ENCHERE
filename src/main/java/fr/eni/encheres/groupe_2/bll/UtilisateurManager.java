@@ -1,13 +1,12 @@
 package fr.eni.encheres.groupe_2.bll;
 
 import fr.eni.encheres.groupe_2.bo.Utilisateur;
-import fr.eni.encheres.groupe_2.dal.DAO;
 import fr.eni.encheres.groupe_2.dal.DaoFactory;
-import fr.eni.encheres.groupe_2.dal.Login;
+import fr.eni.encheres.groupe_2.dal.LoginDao;
 
 public class UtilisateurManager {
     private static UtilisateurManager instance;
-    private Login loginDao = DaoFactory.loginDao();
+    private LoginDao loginDao = DaoFactory.loginDao();
 
     public static UtilisateurManager getInstance(){
         if(instance==null){
