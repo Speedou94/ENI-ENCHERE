@@ -5,6 +5,35 @@ Edit by Niko 18/07/2022
     padding: 1rem 1.5rem 1rem;
 
 }
+
+.subtitle{
+    width: 100%; text-align: right;
+
+}
+
+.control{
+    width: 100%; text-align: right;
+    margin: 2rem 20rem 0 8rem;
+
+}
+
+.menu{
+    width: 100%; text-align: right;
+    margin: 0 20rem 0 8rem;
+
+}
+
+.flex-btn-search{
+    width: 100%; text-align: right;
+    display: flex;
+    flex-direction: row;
+}
+
+#toto{
+    display: flex;
+    align-items: center;
+}
+
 .form-login{
     max-width: 50%;
     margin-top: 15rem;
