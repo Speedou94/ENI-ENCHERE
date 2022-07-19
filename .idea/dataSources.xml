@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Enchères" uuid="abff4019-a8e8-415e-88ab-0d7c69f1bfbc">
-      <driver-ref>oracle.19</driver-ref>
-      <synchronize>true</synchronize>
-      <auto-commit>false</auto-commit>
-      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
-      <jdbc-url>jdbc:oracle:thin:@//localhost:1521/orclpdb</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="Enchères v2" uuid="b264a47b-3101-488f-b8b6-f1e79ff21283">
+    <data-source source="LOCAL" name="@localhost" uuid="a206ff40-7390-4fd4-b3e4-d13f05b16644">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://localhost\MSSQLSERVER:1433;database=Encheres</jdbc-url>
+      <jdbc-url>jdbc:sqlserver://localhost:1433</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

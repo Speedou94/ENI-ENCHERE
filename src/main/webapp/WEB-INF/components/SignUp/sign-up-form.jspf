@@ -1,0 +1,16 @@
+<form method="post" action ="${pageContext.request.contextPath}/utilisateurs/">
+    <input class="input" type="text" placeholder="pseudo" name="pseudo">
+    <input class="input" type="text" placeholder="nom" name="nom">
+    <input class="input" type="text" placeholder="prenom" name="prenom">
+    <input class="input" type="email" placeholder="email" name="email">
+    <input class="input" type="tel" placeholder="telephone" name="telephone">
+    <input class="input" type="text" placeholder="adresse" name="rue">
+    <input class="input" type="text" placeholder="code postale" name="codePostal">
+    <input class="input" type="text" placeholder="ville" name="ville">
+    <input class="input" type="password" placeholder="mot de passe" name="password">
+    <input class="input" type="password" placeholder="confirm" name="confirmPassword">
+    <button class="button" type="submit">creer</button>
+    <button class="button" type="submit">annuler</button>
+
+
+</form>
