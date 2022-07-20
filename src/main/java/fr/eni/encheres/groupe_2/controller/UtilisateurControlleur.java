@@ -22,9 +22,9 @@ public class UtilisateurControlleur extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException{
         RequestDispatcher rd = request.getRequestDispatcher("");
-    String pseudo = request.getParameter("pseudo");
+        String pseudo = request.getParameter("pseudo");
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
         String email = request.getParameter("email");
@@ -34,15 +34,32 @@ public class UtilisateurControlleur extends HttpServlet {
         String codePostal = request.getParameter("codePostal");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
-        //TODO: faire une fonction qui compare les parametre recu entre password et confirm password => si pas pareil buissness excepiton
-        Utilisateur utilisateur = new Utilisateur(pseudo,nom, prenom, email, telephone, rue, codePostal,ville, password);
+
+
 
         try {
-    manager.newUtilisateur(utilisateur);
+            boolean valide = verifPassword(password,confirmPassword);
+            if(valide){
+                Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, password);
+                manager.newUtilisateur(utilisateur);
+                request.setAttribute("login", utilisateur);
+                rd = request.getRequestDispatcher("/accueil");
+            }
+        } catch (BuissnessException e){
 
-        }catch (BuissnessException e)
-        {
-            e.printStackTrace();
-        }
+            rd = request.getRequestDispatcher("/loginpage");
+            request.setAttribute("error",Integer.parseInt(e.getMessage()));
+            }
+        rd.forward(request,resp);
+
+
     }
+    private boolean verifPassword (String password, String confirmPassword) throws BuissnessException {
+        boolean ok = true ;
+        if (!password.equals(confirmPassword)) {
+            throw new BuissnessException(CodeErrorController.BAD_PASSWORD_CONFIRMATION);
+        }
+        return ok;
+    }
+
 }
