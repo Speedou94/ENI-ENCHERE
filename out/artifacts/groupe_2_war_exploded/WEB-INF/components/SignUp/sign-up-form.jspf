@@ -1,11 +1,11 @@
 <form method="post" action ="${pageContext.request.contextPath}/utilisateurs/">
   <div class="form-new-user">
       <div class="input-container">
-          <label> Pseudo
+          <label> a mettre dans message_jsp =>Pseudo
               <input class="input" type="text" placeholder="pseudo" name="pseudo">
           </label>
           <label>
-               Nom <input class="input" type="text" placeholder="nom" name="nom">
+              a mettre dans message_jsp =>   Nom <input class="input" type="text" placeholder="nom" name="nom">
           </label>
 
           <label>
@@ -27,7 +27,7 @@
           <label> a mettre dans message_jsp =>Ville
               <input class="input" type="text" placeholder="ville" name="ville"></label>
           <label> a mettre dans message_jsp =>Mot de passe
-              <input class="input" type="password" placeholder="mot de passe" name="password" autofocus required></label>
+              <input class="input" type="password" placeholder="mot de passe" name="password"></label>
           <label> a mettre dans message_jsp =>Confirmation
               <input class="input" type="password" placeholder="confirm" name="confirmPassword"></label>
 
