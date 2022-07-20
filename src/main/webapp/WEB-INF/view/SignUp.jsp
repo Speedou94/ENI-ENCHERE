@@ -9,19 +9,21 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${param.lang}" scope="session"/>
+<fmt:setBundle basename="message_jsp" var="message"/>
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="../../style/style.css">
-    <title>Profil</title>
+    <title><fmt:message key="sign_up_titre_jsp" bundle="${message}"/></title>
 </head>
 <body>
 <header>
     <%@include file="./../components/public/navbar-public.jspf"%>
 </header>
 <div>
-    <h1> a mettre dans message_jsp => Mon profil</h1>
+    <h1><fmt:message key="sign_up_header" bundle="${message}"/></h1>
 <%@include file="./../components/SignUp/sign-up-form.jspf"%>
 
 </div>
