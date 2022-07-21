@@ -20,30 +20,31 @@
 <body>
 <header>
     <c:if test="${empty login}">
-        <%@include file="./../components/public/navbar-public.jspf" %>
+
+       <jsp:include page="${pageContext.request.contextPath}/navbar-public"/>
     </c:if>
     <c:if test="${!empty login}">
-        <%@include file="./../components/public/navbar-private.jspf" %>
+        <jsp:include page="${pageContext.request.contextPath}/navbar-private"/>
     </c:if>
 </header>
 <div class="box">
-    <h1 class="has-text-centered title is-1"><fmt:message key="enchere_page_liste_enchere" bundle="${message}"/></h1>
-
-
-    <%@include file="./../components/EncherePage/search-form.jspf" %>
+    <h1 class="has-text-centered title is-1">
+        <fmt:message key="enchere_page_liste_enchere" bundle="${message}"/>
+    </h1>
+    <jsp:include page="${pageContext.request.contextPath}/search-article"/>
+    <jsp:include page="${pageContext.request.contextPath}/card-article"/>
 </div>
 <div class="enchere-cards">
-</div>
-<!-- TODO: faire attention au nom des components lower kebab case -->
-<%@include file="./../components/EncherePage/card-encheres.jspf" %>
-<div>
-    <c:if test="${!empty error}">
-        <%@include file="./../components/public/error_message_toast.jspf" %>
-    </c:if>
 
 </div>
+
+<div>
+    <c:if test="${!empty error}">
+       <jsp:include page="${pageContext.request.contextPath}/error-toast"/>
+    </c:if>
+</div>
 <footer>
-    <%@include file="./../components/public/footer.jspf" %>
+   <jsp:include page="${pageContext.request.contextPath}/footer"/>
 </footer>
 </body>
 <script src="../../script/nav-bar-public.js"></script>

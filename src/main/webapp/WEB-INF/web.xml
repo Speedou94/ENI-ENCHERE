@@ -50,6 +50,14 @@
         <servlet-name>detailArticle</servlet-name>
         <url-pattern>/detailArticle</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <jsp-file>/WEB-INF/view/LogoutPage.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>profilUtilisateur</servlet-name>
@@ -59,6 +67,68 @@
         <servlet-name>profilUtilisateur</servlet-name>
         <url-pattern>/profilPage</url-pattern>
     </servlet-mapping>
-
-
+    <servlet>
+        <servlet-name>navbar-public</servlet-name>
+        <jsp-file>/WEB-INF/components/public/navbar-public.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>navbar-public</servlet-name>
+        <url-pattern>/navbar-public</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>navbar-private</servlet-name>
+        <jsp-file>/WEB-INF/components/loggedContext/navbar-private.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>navbar-private</servlet-name>
+        <url-pattern>/navbar-private</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>footer</servlet-name>
+        <jsp-file>/WEB-INF/components/public/footer.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>footer</servlet-name>
+        <url-pattern>/footer</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>error-toast</servlet-name>
+        <jsp-file>/WEB-INF/components/public/error-message-toast.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>error-toast</servlet-name>
+        <url-pattern>/error-toast</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>sign-up-form</servlet-name>
+        <jsp-file>/WEB-INF/components/SignUp/sign-up-formulaire.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sign-up-form</servlet-name>
+        <url-pattern>/sign-up-form</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>card-article</servlet-name>
+        <jsp-file>/WEB-INF/components/EncherePage/card-encheres.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>card-article</servlet-name>
+        <url-pattern>/card-article</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>search-article</servlet-name>
+        <jsp-file>/WEB-INF/components/EncherePage/search-formulaire.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>search-article</servlet-name>
+        <url-pattern>/search-article</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>detail-article</servlet-name>
+        <jsp-file>/WEB-INF/components/DetailArticle/card-detail-article.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>detail-article</servlet-name>
+        <url-pattern>/detail-article</url-pattern>
+    </servlet-mapping>
 </web-app>

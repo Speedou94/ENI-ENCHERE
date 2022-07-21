@@ -13,13 +13,13 @@ public class ProfilController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 RequestDispatcher rd = request.getRequestDispatcher("/profilPage");
-
+//TODO : faire que losq un ulisitateur clique sur son profil cela declanche la methode select by id
 rd.forward(request,response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+//TODO: ici cela sera la method update pour la modif du profik , ne pas oublie de controle les champs et de faire suivre les erreur le cas echeant
     }
 
 }

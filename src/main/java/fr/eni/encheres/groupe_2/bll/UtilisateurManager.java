@@ -10,7 +10,7 @@ public class UtilisateurManager {
     private LoginDao loginDao = DaoFactory.loginDao();
 
 
-    //private LoginDao loginDao = DaoFactory.loginDao();
+
 private DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
     public static UtilisateurManager getInstance(){
         if(instance==null){
@@ -24,9 +24,7 @@ private DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
     public Utilisateur login(String pseudo ,String password) throws BuissnessException {
         return loginDao.login(pseudo,password);
     }
-    /*public Utilisateur login(String pseudo ,String password) throws BuissnessException {
-        return loginDao.login(pseudo,password);
-    }*/
+    //TODO:Faire la javadoc
     public void newUtilisateur (Utilisateur utilisateur)throws BuissnessException
     {
         boolean verifInputOk = verifInput(utilisateur);
@@ -39,28 +37,36 @@ private DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
         }
 
     }
+    //TODO:Faire la javadoc , essaye de remonte une erreur diffente par champs mal rempli (Code erreur a complete dans la class CodeErrorBLL
     private boolean verifInput(Utilisateur utilisateur) {
         boolean ok = false ;
-
-
-        if (utilisateur.getPseudo().length()>0 && utilisateur.getPseudo().length()<21){
+        int taillePseudo = utilisateur.getPseudo().length();
+        boolean telephooneIsNumeric =  isNumeric(utilisateur.getTelephone());
+        boolean codePostalIsNumeric = isNumeric(utilisateur.getCodePostal());
+        boolean emailIsValide = validateEmail(utilisateur.getEmail());
+        if (taillePseudo<21 && telephooneIsNumeric && codePostalIsNumeric && emailIsValide){
         ok = true ;
         }
-        ok = isNumeric(utilisateur.getTelephone());
-        ok = isNumeric(utilisateur.getCodePostal());
-        ok = utilisateur.getEmail().matches("/^(([^<>()[]\\.,;:\\s@\"]+(.[^<>()[]\\.,;:\\s@\"]+)*)|(\".+\"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/\n");
-
       return ok ;
 
-
-
     }
-    private boolean isNumeric(String texteATester) {
-        boolean Isnumeric = texteATester.matches("[+-]?\\d*(\\.\\d+)?");
 
-        return Isnumeric;
+    /**
+     * Verifie que le champs saisie dans l'input est bien de type numerique
+     * @param texteATester String du champs rempli par l'utilisateur
+     * @return booleen
+     */
+    private boolean isNumeric(String texteATester) {
+        return texteATester.matches("[+-]?\\d*(\\.\\d+)?");
     };
+
+    /**
+     * Verifie que le champs saisie dans l'input email est bien de type Email
+     * @param email String
+     * @return booleen
+     */
+    private boolean validateEmail(String email){
+        return email.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$\n" +
+                "\n");
+    }
 }
-// input est bin numeric
-// input mail
-//et une fois la fonction test longueur text appliquer sur tout les champs en db

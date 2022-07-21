@@ -18,12 +18,16 @@ import java.util.List;
 @WebServlet(name = "LoginController", value = "/login")
 public class LoginController extends HttpServlet {
     UtilisateurManager manager = UtilisateurManager.getInstance();
-    CategorieManager managerCategorie = CategorieManager.getInstance();
-    ArticleManager managerArticle = ArticleManager.getInstance();
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher("/loginpage");
+        if(request.getParameter("logout")!=null){
+            request.removeAttribute("login");
+            request.getSession().invalidate();
+            rd = request.getRequestDispatcher("/logout");
+        }
         rd.forward(request, response);
     }
 
@@ -33,15 +37,10 @@ public class LoginController extends HttpServlet {
         RequestDispatcher rd;
         String pseudo = request.getParameter("pseudo");
         String password = request.getParameter("password");
-        List<Categorie> listDesCategories = new ArrayList<>();
-        List<Article> listDesArticles = new ArrayList<>();
+
         try {
             utilisateur = manager.login(pseudo, password);
-            listDesCategories = managerCategorie.getAllCategorie();
-            listDesArticles = managerArticle.getAllArticles();
-            request.setAttribute("listDesCategories", listDesCategories);
-            request.setAttribute("articlesDisponible", listDesArticles);
-            request.setAttribute("login", utilisateur);
+            request.getSession().setAttribute("login", utilisateur);
             rd = request.getRequestDispatcher("/accueil");
 
         } catch (BuissnessException e) {

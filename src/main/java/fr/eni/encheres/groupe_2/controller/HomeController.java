@@ -22,13 +22,11 @@ public class HomeController extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/accueil");
         List<Categorie> listDesCategories = new ArrayList<>();
         List<Article> listDesArticles = new ArrayList<>();
-
         try {
-
             listDesCategories = managerCategorie.getAllCategorie();
             listDesArticles = managerArticle.getAllArticles();
-            request.setAttribute("listDesCategories", listDesCategories);
-            request.setAttribute("articlesDisponible", listDesArticles);
+            request.getSession().setAttribute("listDesCategories", listDesCategories);
+            request.getSession().setAttribute("articlesDisponible", listDesArticles);
             if (request.getParameter("Categories") != null) {
                 int idCategorie = Integer.parseInt(request.getParameter("Categories"));
                 listDesArticles = managerArticle.filteredListArticles(idCategorie);

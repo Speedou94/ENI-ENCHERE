@@ -18,22 +18,22 @@
 </head>
 <body>
 <header>
-    <c:if test="${empty login}">
-        <%@include file="./../components/public/navbar-public.jspf" %>
-    </c:if>
     <c:if test="${!empty login}">
-        <%@include file="./../components/public/navbar-private.jspf" %>
+        <jsp:include page="${pageContext.request.contextPath}/navbar-private"/>
     </c:if>
 </header>
 <div>
-    <%@include file="./../components/DetailArticle/card-detail-article.jspf"%>
+   <jsp:include page="${pageContext.request.contextPath}/detail-article"/>
 </div>
 <div>
     <c:if test="${!empty error}">
-        <%@include file="./../components/public/error_message_toast.jspf" %>
+        <jsp:include page="${pageContext.request.contextPath}/error-toast"/>
     </c:if>
 
 </div>
-
+<footer>
+    <jsp:include page="${pageContext.request.contextPath}/footer"/>
+</footer>
 </body>
+<script src="../../script/nav-bar-public.js"></script>
 </html>

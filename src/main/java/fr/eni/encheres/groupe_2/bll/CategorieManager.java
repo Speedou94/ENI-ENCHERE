@@ -16,7 +16,7 @@ public class CategorieManager {
         return instance;
     }
 
-    public CategorieManager() {
+   private CategorieManager() {
     }
     public List<Categorie> getAllCategorie(){
         return categorieDAO.selectALL();

@@ -8,9 +8,9 @@
             maxIdle="30"
             maxWaitMillis="10000"
             username="sa"
-            password="Pa$$w0rd"
+            password="someThingComplicated1234"
             driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-            url="jdbc:sqlserver://localhost:1433;databaseName=Encheres;encrypt=true;trustServerCertificate=true"
+            url="jdbc:sqlserver://localhost:1433;databaseName=ENCHERES;encrypt=true;trustServerCertificate=true"
     />
     <Resource-link name="jdbc/pool_cnx"  global="jdbc/pool_cnx" type="javax.sql.DataSource"/>
 </Context>

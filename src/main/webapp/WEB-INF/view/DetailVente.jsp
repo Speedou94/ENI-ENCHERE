@@ -18,13 +18,18 @@
 </head>
 <body>
 <header>
-
+    <c:if test="${!empty login}">
+        <jsp:include page="${pageContext.request.contextPath}/navbar-private"/>
+    </c:if>
 </header>
 <div>
     <c:if test="${!empty error}">
-        <%@include file="./../components/public/error_message_toast.jspf"%>
+        <jsp:include page="${pageContext.request.contextPath}/error-toast"/>
     </c:if>
-
 </div>
+<footer>
+    <jsp:include page="${pageContext.request.contextPath}/footer"/>
+</footer>
 </body>
+<script src="../../script/nav-bar-public.js"></script>
 </html>

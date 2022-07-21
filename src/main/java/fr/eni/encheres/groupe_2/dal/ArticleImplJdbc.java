@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 
 public class ArticleImplJdbc<ARTICLES_VENDUS> implements DAO<Article> {
+   private final String SELECT_BY_ID_SQL = "SELECT * FROM dbo.ARTICLES_VENDUS WHERE no_article=?";
+   private final  String SELECT_ALL_SQL = "SELECT * FROM dbo.ARTICLES_VENDUS JOIN UTILISATEURS U on U.no_utilisateur = ARTICLES_VENDUS.no_utilisateur JOIN CATEGORIES C on C.no_categorie = ARTICLES_VENDUS.no_categorie";
     PreparedStatement ps;
     ResultSet rs;
     @Override
@@ -28,10 +30,12 @@ public class ArticleImplJdbc<ARTICLES_VENDUS> implements DAO<Article> {
 
     @Override
     public Article selectById(int id) {
-        String selectSQL = "SELECT * FROM dbo.ARTICLES_VENDUS WHERE no_article=?";
+        PreparedStatement ps=null;
+        ResultSet rs=null;
+
         Article article = null;
         try (Connection cnx = ConnectionProvider.getConnection()) {
-            ps = cnx.prepareStatement(selectSQL);
+            ps = cnx.prepareStatement(SELECT_BY_ID_SQL);
             ps.setInt(1, id);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -60,10 +64,12 @@ public class ArticleImplJdbc<ARTICLES_VENDUS> implements DAO<Article> {
 
     @Override
     public List<Article> selectALL() {
-        String selectAllSql = "SELECT * FROM dbo.ARTICLES_VENDUS JOIN UTILISATEURS U on U.no_utilisateur = ARTICLES_VENDUS.no_utilisateur JOIN CATEGORIES C on C.no_categorie = ARTICLES_VENDUS.no_categorie";
+        PreparedStatement ps=null;
+        ResultSet rs=null;
+
         List<Article> listArticle = new ArrayList<>();
         try (Connection cnx = ConnectionProvider.getConnection()){
-            ps = cnx.prepareStatement(selectAllSql);
+            ps = cnx.prepareStatement(SELECT_ALL_SQL);
             rs = ps.executeQuery();
             while (rs.next()){
                 int noArticle = rs.getInt("no_article");
@@ -85,7 +91,7 @@ public class ArticleImplJdbc<ARTICLES_VENDUS> implements DAO<Article> {
                 String ville = rs.getString("ville");
                 String libelle = rs.getString("libelle");
 
-                Categorie categorie = new Categorie(idCategorie,libelle);
+               // Categorie categorie = new Categorie(idCategorie,libelle);
                 Utilisateur vendeur = new Utilisateur(idUtilisateur, pseudo, nom, prenom, email,telephone,rue,code_postal,ville);
 
                 Article article = new Article(noArticle,nomArticle,description,dateDebut,dateFin,prixIn,prixVente,vendeur,idCategorie);

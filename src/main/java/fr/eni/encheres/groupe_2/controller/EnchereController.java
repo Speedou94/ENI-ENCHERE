@@ -20,18 +20,24 @@ public class EnchereController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Toto et TATA");
-        RequestDispatcher  rd = request.getRequestDispatcher("/detailArticle");
-        int id = Integer.parseInt(request.getParameter("id"));
-        Article article = null;
-        try {
-           article = managerArticle.getSelectedArticle(id);
-           request.setAttribute("detailArticle", article);
+        RequestDispatcher  rd = null;
+        if(request.getSession()!=null){
+            rd = request.getRequestDispatcher("/detailArticle");
+            int id = Integer.parseInt(request.getParameter("id"));
+            try {
+                 Article  article = managerArticle.getSelectedArticle(id);
+                 request.setAttribute("detailArticle", article);
         } catch (Exception e) {
-            e.printStackTrace();
+        e.printStackTrace();
         }
-
+    }
+        else {
+        rd=request.getRequestDispatcher("/loginpage");
+    }
         rd.forward(request,response);
+
+
+
     }
 
     @Override

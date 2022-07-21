@@ -17,9 +17,16 @@
 </head>
 <body>
 <header>
-    <%@include file="./../components/public/navbar-private.jspf"%>
+    <c:if test="${!empty login}">
+        <jsp:include page="${pageContext.request.contextPath}/navbar-private"/>
+    </c:if>
 </header>
-
-
+<c:if test="${!empty error}">
+    <jsp:include page="${pageContext.request.contextPath}/error-toast"/>
+</c:if>
+<footer>
+    <jsp:include page="${pageContext.request.contextPath}/footer"/>
+</footer>
 </body>
+<script src="../../script/nav-bar-public.js"></script>
 </html>

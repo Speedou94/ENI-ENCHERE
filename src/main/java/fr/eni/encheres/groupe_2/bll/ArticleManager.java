@@ -22,6 +22,9 @@ public class ArticleManager {
         return instance;
     }
 
+    private ArticleManager() {
+    }
+
     public List<Article> getAllArticles() {
         return articleDAO.selectALL();
     }

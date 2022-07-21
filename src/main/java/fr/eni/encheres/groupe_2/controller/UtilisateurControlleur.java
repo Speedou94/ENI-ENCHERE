@@ -18,12 +18,14 @@ public class UtilisateurControlleur extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher("/signup");
+
         rd.forward(request,resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException{
         RequestDispatcher rd = request.getRequestDispatcher("");
+
         String pseudo = request.getParameter("pseudo");
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
@@ -35,15 +37,12 @@ public class UtilisateurControlleur extends HttpServlet {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
 
-
-
         try {
             boolean valide = verifPassword(password,confirmPassword);
             if(valide){
                 Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, password);
                 manager.newUtilisateur(utilisateur);
                 request.getSession().setAttribute("login", utilisateur);
-            //  if(request.getSession().getAttribute("login")!=null)
                 rd = request.getRequestDispatcher("/accueil");
 
             }

@@ -18,30 +18,46 @@
     <title>Login</title>
 </head>
 <body>
-<header><%@include file="./../components/public/navbar-public.jspf"%></header>
+<header>
+    <jsp:include page="${pageContext.request.contextPath}/navbar-public"/>
+</header>
 <div class="box form-login mx-auto">
     <form action="${pageContext.request.contextPath}/login" method="post">
-       <label for="pseudo"> <fmt:message key="login_page_pseudo" bundle="${message}"/></label> <input class="input" type="text" placeholder="Text input" id="pseudo" name="pseudo">
-       <label for="password"> <fmt:message key="login_page_password" bundle="${message}"/></label><input class="input" type="password" placeholder="Text input" id="password" name="password">
+       <label for="pseudo">
+           <fmt:message key="login_page_pseudo" bundle="${message}"/>
+       </label>
+        <input class="input" type="text" placeholder="Text input" id="pseudo" name="pseudo">
+        <label for="password">
+            <fmt:message key="login_page_password" bundle="${message}"/>
+        </label>
+        <input class="input" type="password" placeholder="Text input" id="password" name="password">
 <div class="btn-form-login">
        <div>
-           <button class="button is-info " type="submit"> <fmt:message key="login_page_btn_connect" bundle="${message}"/></button>
+           <button class="button is-info " type="submit">
+               <fmt:message key="login_page_btn_connect" bundle="${message}"/>
+           </button>
        </div>
         <div class="options-form">
             <label class="checkbox">
                 <input type="checkbox">
                 <fmt:message key="login_page_check_remember" bundle="${message}"/>
             </label>
-            <a class="mt-1"> <fmt:message key="login_page_forgot_password" bundle="${message}"/></a>
-        </div></div>
+            <a class="mt-1">
+                <fmt:message key="login_page_forgot_password" bundle="${message}"/>
+            </a>
+        </div>
+</div>
 
     </form>
     <div>
         <c:if test="${!empty error}">
-            <%@include file="./../components/public/error_message_toast.jspf"%>
+            <jsp:include page="${pageContext.request.contextPath}/error-toast"/>
         </c:if>
-
     </div>
+    <footer>
+        <jsp:include page="${pageContext.request.contextPath}/footer"/>
+    </footer>
 </div>
 </body>
+<script src="../../script/nav-bar-public.js"></script>
 </html>

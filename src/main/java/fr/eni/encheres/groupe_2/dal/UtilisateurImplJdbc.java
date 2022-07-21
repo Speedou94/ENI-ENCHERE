@@ -14,10 +14,10 @@ import java.util.List;
 public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
     private final String ADD_NEW_SQL = "INSERT INTO dbo.UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     private final String LOGIN_SQL = "SELECT * FROM dbo.UTILISATEURS WHERE pseudo = ?;";
-
     private final  String VERIF_PSEUDO_ET_MAIL_SQL= "SELECT pseudo,email FROM dbo.UTILISATEURS";
     //PreparedStatement ps;
    // ResultSet rs;
+    //TODO:Faire la javadoc
     @Override
     public void addNew(Utilisateur object) throws BuissnessException {
         PreparedStatement ps = null;
@@ -60,7 +60,7 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
     public Utilisateur selectById(int id) {
         return null;
     }
-
+//TODO:FAIRE LA METHODE SELECT BY ID ET UPDATE
     @Override
     public void update(Utilisateur object) {
 // creer cette methode
@@ -70,6 +70,7 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
     public List<Utilisateur> selectALL() {
         return null;
     }
+    //TODO:Faire la javadoc
     public Utilisateur login(String pseudo,String password) throws BuissnessException{
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -109,6 +110,14 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
 
         return utilisateur;
     }
+
+    /**
+     * TODO: FAIRE LA JAVADOC
+     * @param pseudo
+     * @param email
+     * @return
+     * @throws BuissnessException
+     */
     private boolean verifPseudoAndMail(String pseudo , String email) throws BuissnessException{
         PreparedStatement ps = null;
         ResultSet rs = null;

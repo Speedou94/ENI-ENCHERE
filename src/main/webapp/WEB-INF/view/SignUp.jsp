@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<fmt:setBundle basename="message_jsp" var="message"/>
 <fmt:setLocale value="${param.lang}" scope="session"/>
 <html>
 <head>
@@ -18,18 +19,25 @@
 </head>
 <body>
 <header>
-    <%@include file="./../components/public/navbar-public.jspf"%>
+    <jsp:include page="${pageContext.request.contextPath}/navbar-public"/>
 </header>
 <div>
-    <h1> <fmt:message key="sign_up_form" bundle="${message}"/></h1>
-<%@include file="./../components/SignUp/sign-up-form.jspf"%>
+    <h1>
+        <fmt:message key="sign_up_form" bundle="${message}"/>
+    </h1>
+
+<jsp:include page="${pageContext.request.contextPath}/sign-up-form"/>
 
 </div>
 <div>
     <c:if test="${!empty error}">
-        <%@include file="./../components/public/error_message_toast.jspf"%>
+        <jsp:include page="${pageContext.request.contextPath}/error-toast"/>
     </c:if>
 
 </div>
+<footer>
+    <jsp:include page="${pageContext.request.contextPath}/footer"/>
+</footer>
 </body>
+<script src="../../script/nav-bar-public.js"></script>
 </html>
