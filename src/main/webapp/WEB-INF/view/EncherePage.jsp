@@ -32,7 +32,7 @@
 </div>
 <div class="enchere-cards">
 </div>
-<!-- TODO: faire attention au nom des components lower kebab case
+<!-- TODO: faire attention au nom des components lower kebab case-->
 <%@include file="./../components/EncherePage/card-encheres.jspf"%>
 <div>
     <c:if test="${!empty error}">

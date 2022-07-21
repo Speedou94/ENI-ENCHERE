@@ -51,5 +51,14 @@
         <url-pattern>/detailArticle</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>profilUtilisateur</servlet-name>
+        <jsp-file>/WEB-INF/view/ProfilPAge.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>profilUtilisateur</servlet-name>
+        <url-pattern>/profilPage</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

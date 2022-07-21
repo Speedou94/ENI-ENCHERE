@@ -5,4 +5,6 @@ abstract class ErrorCodeDAL {
     public static final int PASSWORD_INCORRECT=10001;
     public static final int PSEUDO_DEJA_UTILISE=10002;
     public static final int EMAIL_DEJA_UTILISE=10003;
+
+    public static final int CATEGORIE_DEJA_EXISTANTE=10004;
 }
