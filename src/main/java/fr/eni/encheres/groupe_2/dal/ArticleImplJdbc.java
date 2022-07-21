@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ArticleImplJdbc implements DAO<Article> {
+public class ArticleImplJdbc<ARTICLES_VENDUS> implements DAO<Article> {
     PreparedStatement ps;
     ResultSet rs;
     @Override
@@ -28,8 +28,30 @@ public class ArticleImplJdbc implements DAO<Article> {
 
     @Override
     public Article selectById(int id) {
-        return null;
+        String selectSQL = "SELECT * FROM dbo.ARTICLES_VENDUS WHERE no_article=?";
+        Article article = null;
+        try (Connection cnx = ConnectionProvider.getConnection()) {
+            ps = cnx.prepareStatement(selectSQL);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int noArticle = rs.getInt("no_article");
+                String nomArticle = rs.getString("nom_article");
+                String description = rs.getString("description");
+                Date dateDebut = rs.getDate("date_debut_encheres");
+                Date dateFin = rs.getDate("date_fin_encheres");
+                int prixIn = rs.getInt("prix_initial");
+                int prixVente = rs.getInt("prix_vente");
+                int idUtilisateur = rs.getInt("no_utilisateur");
+                int idCategorie = rs.getInt("no_categorie");
+                article = new Article(noArticle, nomArticle, description, dateDebut, dateFin, prixIn, prixVente, idUtilisateur, idCategorie);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return article;
     }
+
 
     @Override
     public void update(Article object) {
