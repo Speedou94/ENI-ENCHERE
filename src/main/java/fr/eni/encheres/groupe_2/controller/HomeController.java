@@ -19,20 +19,36 @@ public class HomeController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher  rd = request.getRequestDispatcher("/accueil");
+        RequestDispatcher rd = request.getRequestDispatcher("/accueil");
         List<Categorie> listDesCategories = new ArrayList<>();
         List<Article> listDesArticles = new ArrayList<>();
+
         try {
+
             listDesCategories = managerCategorie.getAllCategorie();
             listDesArticles = managerArticle.getAllArticles();
             request.setAttribute("listDesCategories", listDesCategories);
-            request.setAttribute("articlesDisponible",listDesArticles);
+            request.setAttribute("articlesDisponible", listDesArticles);
+            if (request.getParameter("Categories") != null) {
+                int idCategorie = Integer.parseInt(request.getParameter("Categories"));
+                listDesArticles = managerArticle.filteredListArticles(idCategorie);
+                request.setAttribute("articlesDisponible", listDesArticles);
+                System.out.println("ça marche pas");
+
+            }
+            if (request.getParameter("search") !=null){
+                System.out.println("ça marche");
+                String filtre = request.getParameter("search");
+                listDesArticles = managerArticle.filteredListArticlesByName(filtre);
+                request.setAttribute("articlesDisponible", listDesArticles);
+
+            }
         } finally {
 
         }
 
 
-        rd.forward(request,response);
+        rd.forward(request, response);
     }
 
     @Override

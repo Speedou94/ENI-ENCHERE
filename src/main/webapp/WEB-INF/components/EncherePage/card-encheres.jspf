@@ -11,12 +11,16 @@
             </figure>
         </div>
         <div class="card-content">
-            <div class="media">
-
-                <div class="media-content">
-                    <a class="title is-4" href="${pageContext.request.contextPath}/details-encheres?id=${article.noArticle}">${article.nomArticle}</a>
+                <div class="media">
+                    <c:if test="${!empty login}">
+                        <a href="${pageContext.request.contextPath}/details-encheres?id=${article.noArticle}">${article.nomArticle}</a>
+                    </c:if>
+                    <c:if test="${empty login}">
+                        <div class="media-content">
+                            <p>${article.nomArticle}</p>
+                        </div>
+                    </c:if>
                 </div>
-            </div>
 
             <div class="content">
                 <p><fmt:message key="card_encheres_content" bundle="${message}"/>${article.prixInitial} <fmt:message key="card_encheres_price" bundle="${message}"/><br>

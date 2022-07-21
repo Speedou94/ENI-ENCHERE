@@ -32,7 +32,7 @@ public class Article implements Serializable {
         this.noCategorie = noCategorie;
     }
 
-    public Article(int noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie) {
+    public Article(int noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente, Utilisateur utilisateur, int noCategorie) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
         this.description = description;
@@ -41,7 +41,7 @@ public class Article implements Serializable {
         this.prixInitial = prixInitial;
         this.prixVente = prixVente;
         this.utilisateur = utilisateur;
-        this.categorie = categorie;
+        this.noCategorie = noCategorie;
     }
 
     public Article(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente) {

@@ -88,7 +88,7 @@ public class ArticleImplJdbc<ARTICLES_VENDUS> implements DAO<Article> {
                 Categorie categorie = new Categorie(idCategorie,libelle);
                 Utilisateur vendeur = new Utilisateur(idUtilisateur, pseudo, nom, prenom, email,telephone,rue,code_postal,ville);
 
-                Article article = new Article(noArticle,nomArticle,description,dateDebut,dateFin,prixIn,prixVente,vendeur, categorie);
+                Article article = new Article(noArticle,nomArticle,description,dateDebut,dateFin,prixIn,prixVente,vendeur,idCategorie);
                 listArticle.add(article);
             }
         } catch (SQLException e) {
