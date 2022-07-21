@@ -2,6 +2,9 @@ package fr.eni.encheres.groupe_2.bo;
 
 import java.io.Serializable;
 
+/**
+ *
+ */
 public class Utilisateur implements Serializable {
    private int noUtilisateur;
    private String pseudo;
@@ -15,20 +18,7 @@ public class Utilisateur implements Serializable {
     private String motDePasse;
     private int credit;
     private boolean administrateur;
-
-    public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal,String ville, String motDePasse, int credit, boolean administrateur) {
-        this.noUtilisateur = noUtilisateur;
-        this.pseudo = pseudo;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-        this.telephone = telephone;
-        this.rue = rue;
-        this.codePostal = codePostal;
-        this.ville = ville;
-        this.motDePasse = motDePasse;
-        this.credit = credit;
-        this.administrateur = administrateur;
+    public Utilisateur() {
     }
 
     public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse) {
@@ -44,8 +34,34 @@ public class Utilisateur implements Serializable {
         this.credit = 0;
         this.administrateur=false;
     }
+    public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal,String ville, String motDePasse, int credit, boolean administrateur) {
+        this(pseudo,nom,prenom,email,telephone,rue,codePostal,ville,motDePasse);
+        this.noUtilisateur = noUtilisateur;
+        this.credit = credit;
+        this.administrateur = administrateur;
+    }
 
-    public Utilisateur() {
+    /**
+     * Method pour le debug d'instance utilisateur a la console
+     * @return Une instance d'utilisateur
+     */
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Utilisateur{");
+        sb.append("noUtilisateur=").append(noUtilisateur);
+        sb.append(", pseudo='").append(pseudo).append('\'');
+        sb.append(", nom='").append(nom).append('\'');
+        sb.append(", prenom='").append(prenom).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", telephone='").append(telephone).append('\'');
+        sb.append(", rue='").append(rue).append('\'');
+        sb.append(", codePostal='").append(codePostal).append('\'');
+        sb.append(", ville='").append(ville).append('\'');
+        sb.append(", motDePasse='").append(motDePasse).append('\'');
+        sb.append(", credit=").append(credit);
+        sb.append(", administrateur=").append(administrateur);
+        sb.append('}');
+        return sb.toString();
     }
 
     public int getNoUtilisateur() {

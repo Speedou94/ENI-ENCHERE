@@ -12,34 +12,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
-    PreparedStatement ps;
-    ResultSet rs;
+    private final String ADD_NEW_SQL = "INSERT INTO dbo.UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+    private final String LOGIN_SQL = "SELECT * FROM dbo.UTILISATEURS WHERE pseudo = ?;";
+
+    private final  String VERIF_PSEUDO_ET_MAIL_SQL= "SELECT pseudo,email FROM dbo.UTILISATEURS";
+    //PreparedStatement ps;
+   // ResultSet rs;
     @Override
     public void addNew(Utilisateur object) throws BuissnessException {
-    String addNewSQL = "INSERT INTO dbo.UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-    boolean pseudoAndMailDispo = verifPseudoAndMail(object.getPseudo(),object.getEmail());
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        boolean pseudoAndMailDispo = verifPseudoAndMail(object.getPseudo(),object.getEmail());
         JCrypt jCrypt=new JCrypt();
-    if (pseudoAndMailDispo){
-        try(Connection cnx= ConnectionProvider.getConnection()){
-            ps = cnx.prepareStatement(addNewSQL,PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setString(1,object.getPseudo());
-            ps.setString(2,object.getNom());
-            ps.setString(3,object.getPrenom());
-            ps.setString(4,object.getEmail());
-            ps.setString(5,object.getTelephone());
-            ps.setString(6,object.getRue());
-            ps.setString(7,object.getCodePostal());
-            ps.setString(8,object.getVille());
-            StringBuilder cryptedPassw = jCrypt.encrypt(object.getMotDePasse().replaceAll("\\s","").toUpperCase(),1);
-            ps.setString(9, String.valueOf(cryptedPassw));
-            ps.setInt(10,object.getCredit());
-            ps.setBoolean(11,object.isAdministrateur());
-            ps.executeUpdate();
-            rs = ps.getGeneratedKeys();
-            while (rs.next()){
+        if (pseudoAndMailDispo){
+             try(Connection cnx= ConnectionProvider.getConnection()){
+                 ps = cnx.prepareStatement(ADD_NEW_SQL,PreparedStatement.RETURN_GENERATED_KEYS);
+                 ps.setString(1,object.getPseudo());
+                 ps.setString(2,object.getNom());
+                 ps.setString(3,object.getPrenom());
+                 ps.setString(4,object.getEmail());
+                 ps.setString(5,object.getTelephone());
+                 ps.setString(6,object.getRue());
+                 ps.setString(7,object.getCodePostal());
+                 ps.setString(8,object.getVille());
+                 StringBuilder cryptedPassw = jCrypt.encrypt(object.getMotDePasse().replaceAll("\\s","").toUpperCase(),1);
+                 ps.setString(9, String.valueOf(cryptedPassw));
+                 ps.setInt(10,object.getCredit());
+                 ps.setBoolean(11,object.isAdministrateur());
+                 ps.executeUpdate();
+                 rs = ps.getGeneratedKeys();
+                 while (rs.next()){
                 object.setNoUtilisateur(rs.getInt(1));
-            }
-        } catch (SQLException e) {
+                 }
+         }   catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -66,12 +71,12 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
         return null;
     }
     public Utilisateur login(String pseudo,String password) throws BuissnessException{
-        String loginSql="SELECT * FROM dbo.UTILISATEURS WHERE pseudo = ?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         Utilisateur utilisateur;
         JCrypt crypt = new JCrypt();
-
         try(Connection cnx = ConnectionProvider.getConnection()) {
-            ps = cnx.prepareStatement(loginSql);
+            ps = cnx.prepareStatement(LOGIN_SQL);
             ps.setString(1,pseudo);
             rs = ps.executeQuery();
             if (!rs.next()){
@@ -105,12 +110,12 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
         return utilisateur;
     }
     private boolean verifPseudoAndMail(String pseudo , String email) throws BuissnessException{
-        String sql= "SELECT pseudo,email FROM dbo.UTILISATEURS";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         List<String> listePseudo = new ArrayList<>();
         List<String> listeEmail = new ArrayList<>();
-
         try(Connection cnx = ConnectionProvider.getConnection()) {
-            ps = cnx.prepareStatement(sql);
+            ps = cnx.prepareStatement(VERIF_PSEUDO_ET_MAIL_SQL);
             rs = ps.executeQuery();
             while (rs.next()){
                 String pseudoDb = rs.getString("pseudo");

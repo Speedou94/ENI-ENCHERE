@@ -19,7 +19,7 @@ private DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
         return instance;
     }
 
-    public UtilisateurManager() {
+    private UtilisateurManager() {
     }
     public Utilisateur login(String pseudo ,String password) throws BuissnessException {
         return loginDao.login(pseudo,password);
