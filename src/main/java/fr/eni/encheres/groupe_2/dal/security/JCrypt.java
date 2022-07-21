@@ -26,9 +26,11 @@ public class JCrypt {
      * @return Stringbuilder , mot de passe crypter
      */
     public StringBuilder encrypt(String textToEncrypt,int keySk){
+        System.out.println(textToEncrypt);
         StringBuilder cryptedText= new StringBuilder();
         char[][] cryptArray = this.tableauEncodage();
-        String secretKey = SecretKeyProvider.getSecretKey(keySk).toUpperCase();
+        String secretKey = this.SECRET_KEY.toUpperCase();
+        System.out.println(secretKey);
         int secretIndex=0;
         for (int i = 0; i < textToEncrypt.length() ; i++) {
             int indexText = textToEncrypt.charAt(i)-65;
@@ -46,10 +48,10 @@ public class JCrypt {
      * @param textToDecrypt String mot de pass
      * @return Stringbuilder , mot de passe decrypter
      */
-    protected StringBuilder decrypt(String textToDecrypt,int keySk){
+    public StringBuilder decrypt(String textToDecrypt,int keySk){
         StringBuilder decryptedText = new StringBuilder();
         char[][] cryptArray = this.tableauEncodage();
-        String secretKey = SecretKeyProvider.getSecretKey(keySk).toUpperCase();
+        String secretKey = this.SECRET_KEY.toUpperCase();
         int secretIndex;
         int sKey=0;
         for (int i = 0; i <textToDecrypt.length() ; i++) {

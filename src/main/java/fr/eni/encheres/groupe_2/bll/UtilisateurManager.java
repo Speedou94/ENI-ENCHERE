@@ -19,7 +19,7 @@ private DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
         return instance;
     }
 
-    public UtilisateurManager() {
+    private UtilisateurManager() {
     }
     public Utilisateur login(String pseudo ,String password) throws BuissnessException {
         return loginDao.login(pseudo,password);
@@ -29,7 +29,38 @@ private DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
     }*/
     public void newUtilisateur (Utilisateur utilisateur)throws BuissnessException
     {
-        utilisateurDAO.addNew(utilisateur);
+        boolean verifInputOk = verifInput(utilisateur);
+        if (verifInputOk){
+
+            utilisateurDAO.addNew(utilisateur);
+
+        }else {
+            throw new BuissnessException(CodeErrorBll.CHAMP_INVALIDE);
+        }
 
     }
+    private boolean verifInput(Utilisateur utilisateur) {
+        boolean ok = false ;
+
+
+        if (utilisateur.getPseudo().length()>0 && utilisateur.getPseudo().length()<21){
+        ok = true ;
+        }
+        ok = isNumeric(utilisateur.getTelephone());
+        ok = isNumeric(utilisateur.getCodePostal());
+        ok = utilisateur.getEmail().matches("/^(([^<>()[]\\.,;:\\s@\"]+(.[^<>()[]\\.,;:\\s@\"]+)*)|(\".+\"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/\n");
+
+      return ok ;
+
+
+
+    }
+    private boolean isNumeric(String texteATester) {
+        boolean Isnumeric = texteATester.matches("[+-]?\\d*(\\.\\d+)?");
+
+        return Isnumeric;
+    };
 }
+// input est bin numeric
+// input mail
+//et une fois la fonction test longueur text appliquer sur tout les champs en db

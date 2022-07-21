@@ -1,0 +1,43 @@
+<form method="post" action ="${pageContext.request.contextPath}/utilisateurs/">
+  <div class="form-new-user">
+      <div class="input-container">
+          <label> a mettre dans message_jsp =>Pseudo
+              <input class="input" type="text" placeholder="pseudo" name="pseudo">
+          </label>
+          <label>
+              a mettre dans message_jsp =>   Nom <input class="input" type="text" placeholder="nom" name="nom">
+          </label>
+
+          <label>
+              a mettre dans message_jsp =>   Prenom <input class="input" type="text" placeholder="prenom" name="prenom">
+          </label>
+          <label>
+              a mettre dans message_jsp =>   Email  <input class="input" type="email" placeholder="email" name="email">
+          </label>
+         <label>
+             a mettre dans message_jsp =>  Telephone  <input class="input" type="tel" placeholder="telephone" name="telephone">
+         </label>
+
+      </div>
+      <div class="input-container">
+          <label> a mettre dans message_jsp =>Adresse
+              <input class="input" type="text" placeholder="adresse" name="rue"></label>
+          <label> a mettre dans message_jsp =>Code postal
+              <input class="input" type="text" placeholder="code postale" name="codePostal"></label>
+          <label> a mettre dans message_jsp =>Ville
+              <input class="input" type="text" placeholder="ville" name="ville"></label>
+          <label> a mettre dans message_jsp =>Mot de passe
+              <input class="input" type="password" placeholder="mot de passe" name="password"></label>
+          <label> a mettre dans message_jsp =>Confirmation
+              <input class="input" type="password" placeholder="confirm" name="confirmPassword"></label>
+
+      </div>
+  </div>
+
+
+
+    <button class="button" type="submit" name="addNewUtulisteur"> a mettre dans message_jsp =>creer</button>
+    <a href="${pageContext.request.contextPath}/encheres/" class="button"> a mettre dans message_jsp =>Annuler</a>
+
+
+</form>
