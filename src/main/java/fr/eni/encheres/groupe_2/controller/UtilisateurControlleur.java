@@ -42,7 +42,8 @@ public class UtilisateurControlleur extends HttpServlet {
             if(valide){
                 Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, password);
                 manager.newUtilisateur(utilisateur);
-                request.setAttribute("login", utilisateur);
+                request.getSession().setAttribute("login", utilisateur);
+            //  if(request.getSession().getAttribute("login")!=null)
                 rd = request.getRequestDispatcher("/accueil");
 
             }

@@ -23,6 +23,7 @@
     </c:if>
     <c:if test="${!empty login}">
         <%@include file="./../components/public/navbar-private.jspf"%>
+
     </c:if>
 </header>
 <div class="box">
