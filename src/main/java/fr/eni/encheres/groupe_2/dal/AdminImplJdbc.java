@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminImplJdbc implements AdminDao{
-    PreparedStatement ps;
-    ResultSet rs;
+    private final String NEW_CATEGORIE_SQL = "INSERT INTO dbo.CATEGORIES (libelle) VALUES (?)";
+    private final  String SELECT_ADMIN_BY_ID_SQL = "SELECT administrateur FROM dbo.UTILISATEURS WHERE no_utilisateur=?";
+    private final  String GET_ALL_LIBELLE_SQL = "SELECT libelle FROM dbo.CATEGORIES";
     @Override
     public void deleteUtilisateur(int id) {
 
@@ -19,11 +20,12 @@ public class AdminImplJdbc implements AdminDao{
 
     @Override
     public void addNewCategorie(String libelle) throws BuissnessException {
-        String newCategorieSql = "INSERT INTO dbo.CATEGORIES (libelle) VALUES (?)";
+        PreparedStatement ps =null;
+        ResultSet rs = null;
         boolean libelleDisponible = verifCategorie(libelle);
         if (libelleDisponible){
             try(Connection cnx = ConnectionProvider.getConnection()) {
-                ps= cnx.prepareStatement(newCategorieSql);
+                ps= cnx.prepareStatement(NEW_CATEGORIE_SQL);
                 ps.setString(1,libelle);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -35,11 +37,13 @@ public class AdminImplJdbc implements AdminDao{
 
     @Override
     public boolean isADmin(int id)  {
+        PreparedStatement ps =null;
+        ResultSet rs =null;
 
-        String selectByIdSql="SELECT administrateur FROM dbo.UTILISATEURS WHERE no_utilisateur=?";
+
         boolean admin = false;
         try(Connection cnx = ConnectionProvider.getConnection()) {
-            ps = cnx.prepareStatement(selectByIdSql);
+            ps = cnx.prepareStatement(SELECT_ADMIN_BY_ID_SQL);
             ps.setInt(1,id);
             rs = ps.executeQuery();
             while (rs.next()){
@@ -52,11 +56,12 @@ public class AdminImplJdbc implements AdminDao{
     }
 
     private boolean verifCategorie(String libelle) throws BuissnessException{
+        PreparedStatement ps =null;
+        ResultSet rs =null;
         boolean libelleVerifie =true;
         List<String> listeDesLibelles = new ArrayList<>();
-        String getAllLibelle = "SELECT libelle FROM dbo.CATEGORIES";
         try(Connection cnx = ConnectionProvider.getConnection()) {
-            ps = cnx.prepareStatement(getAllLibelle);
+            ps = cnx.prepareStatement(GET_ALL_LIBELLE_SQL);
             rs = ps.executeQuery();
             while (rs.next()){
                 String libelleDB = rs.getString("libelle");
