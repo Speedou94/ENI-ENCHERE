@@ -32,6 +32,25 @@ public class AdminImplJdbc implements AdminDao{
 
 
     }
+
+    @Override
+    public boolean isADmin(int id)  {
+
+        String selectByIdSql="SELECT administrateur FROM dbo.UTILISATEURS WHERE no_utilisateur=?";
+        boolean admin = false;
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            ps = cnx.prepareStatement(selectByIdSql);
+            ps.setInt(1,id);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                admin = rs.getBoolean("administrateur");
+            }
+            return admin;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private boolean verifCategorie(String libelle) throws BuissnessException{
         boolean libelleVerifie =true;
         List<String> listeDesLibelles = new ArrayList<>();
