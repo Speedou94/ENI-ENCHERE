@@ -14,6 +14,12 @@ public class Article implements Serializable {
     private int noUtilisateur;
     private int noCategorie;
 
+    private Utilisateur utilisateur;
+
+    private Categorie categorie;
+
+
+
     public Article(int noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente, int noUtilisateur, int noCategorie) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
@@ -23,6 +29,18 @@ public class Article implements Serializable {
         this.prixInitial = prixInitial;
         this.prixVente = prixVente;
         this.noUtilisateur = noUtilisateur;
+        this.noCategorie = noCategorie;
+    }
+
+    public Article(int noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente, Utilisateur utilisateur, int noCategorie) {
+        this.noArticle = noArticle;
+        this.nomArticle = nomArticle;
+        this.description = description;
+        this.dateDebutEncheres = dateDebutEncheres;
+        this.dateFinEncheres = dateFinEncheres;
+        this.prixInitial = prixInitial;
+        this.prixVente = prixVente;
+        this.utilisateur = utilisateur;
         this.noCategorie = noCategorie;
     }
 
@@ -93,4 +111,38 @@ public class Article implements Serializable {
     public void setPrixVente(int prixVente) {
         this.prixVente = prixVente;
     }
+
+    public int getNoUtilisateur() {
+        return noUtilisateur;
+    }
+
+    public void setNoUtilisateur(int noUtilisateur) {
+        this.noUtilisateur = noUtilisateur;
+    }
+
+    public int getNoCategorie() {
+        return noCategorie;
+    }
+
+    public void setNoCategorie(int noCategorie) {
+        this.noCategorie = noCategorie;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
 }
+
+

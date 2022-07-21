@@ -66,3 +66,7 @@ Edit by Niko 18/07/2022
     align-items: flex-end;
     align-content: space-around;
 }
+
+.navbar-item> img{
+    max-height: 4.75rem;
+}

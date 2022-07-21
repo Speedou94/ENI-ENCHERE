@@ -13,14 +13,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "EnchereController", value = "/adefinir/*")
+@WebServlet(name = "EnchereController", value = "/details-encheres/*")
 public class EnchereController extends HttpServlet {
     //CategorieManager managerCategorie = CategorieManager.getInstance();
-   // ArticleManager managerArticle = ArticleManager.getInstance();
+   ArticleManager managerArticle = ArticleManager.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher  rd = request.getRequestDispatcher("/accueil");
+        System.out.println("Toto et TATA");
+        RequestDispatcher  rd = request.getRequestDispatcher("/detailArticle");
+        int id = Integer.parseInt(request.getParameter("id"));
+        Article article = null;
+        try {
+           article = managerArticle.getSelectedArticle(id);
+           request.setAttribute("detailArticle", article);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         rd.forward(request,response);
     }
