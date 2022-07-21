@@ -21,7 +21,7 @@
     <%@include file="./../components/public/navbar-public.jspf"%>
 </header>
 <div>
-    <h1> a mettre dans message_jsp => Mon profil</h1>
+    <h1> <fmt:message key="sign_up_form" bundle="${message}"/></h1>
 <%@include file="./../components/SignUp/sign-up-form.jspf"%>
 
 </div>

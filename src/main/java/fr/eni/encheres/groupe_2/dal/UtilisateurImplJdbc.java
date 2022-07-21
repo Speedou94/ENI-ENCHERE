@@ -2,6 +2,7 @@ package fr.eni.encheres.groupe_2.dal;
 
 import fr.eni.encheres.groupe_2.bll.BuissnessException;
 import fr.eni.encheres.groupe_2.bo.Utilisateur;
+import fr.eni.encheres.groupe_2.dal.security.JCrypt;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +18,7 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
     public void addNew(Utilisateur object) throws BuissnessException {
     String addNewSQL = "INSERT INTO dbo.UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     boolean pseudoAndMailDispo = verifPseudoAndMail(object.getPseudo(),object.getEmail());
+        JCrypt jCrypt=new JCrypt();
     if (pseudoAndMailDispo){
         try(Connection cnx= ConnectionProvider.getConnection()){
             ps = cnx.prepareStatement(addNewSQL,PreparedStatement.RETURN_GENERATED_KEYS);
@@ -28,7 +30,8 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
             ps.setString(6,object.getRue());
             ps.setString(7,object.getCodePostal());
             ps.setString(8,object.getVille());
-            ps.setString(9,object.getMotDePasse());
+            //StringBuilder cryptedPassw = jCrypt.encrypt(object.getMotDePasse().replaceAll("\\s","").toUpperCase(),1);
+            ps.setString(9, object.getMotDePasse());
             ps.setInt(10,object.getCredit());
             ps.setBoolean(11,object.isAdministrateur());
             ps.executeUpdate();

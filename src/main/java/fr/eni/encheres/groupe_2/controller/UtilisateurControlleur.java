@@ -44,13 +44,14 @@ public class UtilisateurControlleur extends HttpServlet {
                 manager.newUtilisateur(utilisateur);
                 request.setAttribute("login", utilisateur);
                 rd = request.getRequestDispatcher("/accueil");
-                rd.forward(request,resp);
+
             }
         } catch (BuissnessException e){
 
-            rd = request.getRequestDispatcher("/loginpage");
+            rd = request.getRequestDispatcher("/signup");
             request.setAttribute("error",Integer.parseInt(e.getMessage()));
             }
+        rd.forward(request,resp);
 
 
 
