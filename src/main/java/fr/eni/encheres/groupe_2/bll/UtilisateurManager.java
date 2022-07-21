@@ -33,3 +33,16 @@ private DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
 
     }
 }
+    private boolean isNumeric(String texteATester) {
+        boolean Isnumeric = texteATester.matches("[+-]?\\d*(\\.\\d+)?");
+        ;
+        return Isnumeric;
+    };
+//reg mail:
+const re =
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+//tester la longueur text
+// input est bien numeric
+// input mail
+//et une fois la fonction test longueur text appliquer sur tout les champs en db
