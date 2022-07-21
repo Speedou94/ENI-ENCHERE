@@ -30,8 +30,8 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
             ps.setString(6,object.getRue());
             ps.setString(7,object.getCodePostal());
             ps.setString(8,object.getVille());
-            //StringBuilder cryptedPassw = jCrypt.encrypt(object.getMotDePasse().replaceAll("\\s","").toUpperCase(),1);
-            ps.setString(9, object.getMotDePasse());
+            StringBuilder cryptedPassw = jCrypt.encrypt(object.getMotDePasse().replaceAll("\\s","").toUpperCase(),1);
+            ps.setString(9, String.valueOf(cryptedPassw));
             ps.setInt(10,object.getCredit());
             ps.setBoolean(11,object.isAdministrateur());
             ps.executeUpdate();
@@ -68,6 +68,7 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
     public Utilisateur login(String pseudo,String password) throws BuissnessException{
         String loginSql="SELECT * FROM dbo.UTILISATEURS WHERE pseudo = ?";
         Utilisateur utilisateur;
+        JCrypt crypt = new JCrypt();
 
         try(Connection cnx = ConnectionProvider.getConnection()) {
             ps = cnx.prepareStatement(loginSql);
@@ -76,8 +77,12 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
             if (!rs.next()){
                 throw new BuissnessException(ErrorCodeDAL.UTILISATEUR_INCONNU);
             }else {
-                String psw = rs.getString("mot_de_passe");
-                if (!psw.equals(password)){
+                String passdb = rs.getString("mot_de_passe");
+                StringBuilder passdecrypt = crypt.decrypt(passdb.replaceAll("\\s","").toUpperCase(),1);
+                String motdepasse = String.valueOf(passdecrypt);
+                System.out.println(motdepasse);
+
+                if (!motdepasse.equalsIgnoreCase(password)){
                     throw new BuissnessException(ErrorCodeDAL.PASSWORD_INCORRECT);
                 }else {
                     int id = rs.getInt("no_utilisateur");
@@ -90,7 +95,7 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
                     String codePostal = rs.getString("code_postal");
                     int credit = rs.getInt("credit");
                     boolean admin = rs.getBoolean("administrateur");
-                    utilisateur = new Utilisateur(id,pseudo,nom,prenom,email,telephone,rue,codePostal,ville,psw,credit,admin);
+                    utilisateur = new Utilisateur(id,pseudo,nom,prenom,email,telephone,rue,codePostal,ville,password,credit,admin);
                 }
             }
         } catch (SQLException e) {
