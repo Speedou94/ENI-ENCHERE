@@ -37,19 +37,26 @@ private DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
         }
 
     }
-    //TODO:Faire la javadoc , essaye de remonte une erreur diffente par champs mal rempli (Code erreur a complete dans la class CodeErrorBLL
-    private boolean verifInput(Utilisateur utilisateur) {
+
+    private boolean verifInput(Utilisateur utilisateur) throws BuissnessException{
         boolean ok = false ;
         int taillePseudo = utilisateur.getPseudo().length();
         boolean telephooneIsNumeric =  isNumeric(utilisateur.getTelephone());
+        if (telephooneIsNumeric != isNumeric(utilisateur.getTelephone())){
+            throw new BuissnessException(CodeErrorBll.CHAMP_INVALIDE);
+
+        }
         boolean codePostalIsNumeric = isNumeric(utilisateur.getCodePostal());
+        if (codePostalIsNumeric != isNumeric(utilisateur.getCodePostal())){
+            throw new BuissnessException(CodeErrorBll.CHAMP_INVALIDE);}
+
         boolean emailIsValide = validateEmail(utilisateur.getEmail());
         if (taillePseudo<21 && telephooneIsNumeric && codePostalIsNumeric && emailIsValide){
         ok = true ;
         }
       return ok ;
-
     }
+
 
     /**
      * Verifie que le champs saisie dans l'input est bien de type numerique

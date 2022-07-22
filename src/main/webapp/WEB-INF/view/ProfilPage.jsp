@@ -23,9 +23,52 @@
         <jsp:include page="${pageContext.request.contextPath}/navbar-private"/>
     </c:if>
 </header>
-<c:if test="${!empty error}">
-    <jsp:include page="${pageContext.request.contextPath}/error-toast"/>
-</c:if>
+
+    <table>
+
+        <tr>
+            <th>Pseudo</th>
+            <td> ${login.pseudo}</td>
+
+        </tr>
+        <tr>
+            <th>Nom : </th>
+            <td> ${login.nom}</td>
+
+        </tr>
+        <tr>
+            <th>Prénom</th>
+            <td> ${login.prenom}</td>
+
+        </tr>
+
+        <tr>
+            <th>Email</th>
+            <td> ${login.email}</td>
+
+        </tr>
+        <tr>
+            <th>Téléphone</th>
+            <td> ${login.telephone}</td>
+
+        </tr>
+        <tr>
+            <th>Rue</th>
+            <td> ${login.rue}</td>
+
+        </tr>
+        <tr>
+            <th>Code postal</th>
+            <td> ${login.codePostal}</td>
+
+        </tr>
+        <tr>
+            <th>Ville</th>
+            <td> ${login.ville}</td>
+
+        </tr>
+    </table>
+
 <footer>
     <jsp:include page="${pageContext.request.contextPath}/footer"/>
 </footer>

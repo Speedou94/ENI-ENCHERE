@@ -62,7 +62,7 @@
                 <a class="navbar-item" href="${pageContext.request.contextPath}/vente">
                     <fmt:message key="navbar_private_sold" bundle="${message}"/>
                 </a>
-                <a class="navbar-item" href="${pageContext.request.contextPath}/utilisateurs?id=${utilisateur.noUtilisateur}">
+                <a class="navbar-item" href="${pageContext.request.contextPath}/utilisateurs?id=${login.noUtilisateur}">
                     <fmt:message key="navbar_private_profil" bundle="${message}"/>
                 </a>
                 <a class="button is-dark" href="${pageContext.request.contextPath}/login?logout">

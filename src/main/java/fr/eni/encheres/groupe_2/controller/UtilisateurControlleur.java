@@ -17,7 +17,15 @@ public class UtilisateurControlleur extends HttpServlet {
     UtilisateurManager manager = UtilisateurManager.getInstance();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/signup");
+
+        RequestDispatcher rd = null ;
+
+        if(request.getSession()!=null) {
+            rd = request.getRequestDispatcher("/profilPage");
+        }
+        else {
+            rd = request.getRequestDispatcher("/profilPage");
+        }
 
         rd.forward(request,resp);
     }
