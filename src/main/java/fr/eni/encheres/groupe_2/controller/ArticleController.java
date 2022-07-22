@@ -4,6 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.Date;
 
 @WebServlet(name = "ArticleController", value = "/articles/*")
 public class ArticleController extends HttpServlet {
@@ -15,6 +16,11 @@ rd.forward(request,response);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//ajout d un article a vendre
+RequestDispatcher rd = request.getRequestDispatcher("/");
+
+
+
+
+rd.forward(request,response);
     }
 }

@@ -16,11 +16,33 @@ import java.util.List;
 public class ArticleImplJdbc<ARTICLES_VENDUS> implements DAO<Article> {
    private final String SELECT_BY_ID_SQL = "SELECT * FROM dbo.ARTICLES_VENDUS WHERE no_article=?";
    private final  String SELECT_ALL_SQL = "SELECT * FROM dbo.ARTICLES_VENDUS JOIN UTILISATEURS U on U.no_utilisateur = ARTICLES_VENDUS.no_utilisateur JOIN CATEGORIES C on C.no_categorie = ARTICLES_VENDUS.no_categorie";
+
+   private final String ADD_NEW_ARTICLE_SQL="INSERT INTO dbo.ARTICLES_VENDUS (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) VALUES (?,?,?,?,?,?,?,?)";
     PreparedStatement ps;
     ResultSet rs;
     @Override
     public void addNew(Article object) {
+        PreparedStatement ps =null;
+        ResultSet rs=null;
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            ps= cnx.prepareStatement(ADD_NEW_ARTICLE_SQL,PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1,object.getNomArticle());
+            ps.setString(2,object.getDescription());
+            ps.setDate(3, (java.sql.Date) object.getDateDebutEncheres());
+            ps.setDate(4, (java.sql.Date) object.getDateFinEncheres());
+            ps.setInt(5,object.getPrixInitial());
+            ps.setInt(6,object.getPrixVente());
+            ps.setInt(7,object.getNoUtilisateur());
+            ps.setInt(8,object.getNoCategorie());
+            ps.executeUpdate();
+            rs= ps.getGeneratedKeys();
+            while (rs.next()){
+                object.setNoArticle(rs.getInt(1));
+            }
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

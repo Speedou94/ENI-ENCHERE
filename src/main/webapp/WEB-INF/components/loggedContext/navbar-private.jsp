@@ -17,9 +17,9 @@
 <body>
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <p class="navbar-item">
-            <fmt:message key="navbar_public_eni_enchere" bundle="${message}"/>
-        </p>
+        <a class="navbar-item" href="${pageContext.request.contextPath}/encheres/">
+            <img src="../../img/logo.png" alt="LogoEniEncheres" id="toto" width="128" height="28">
+        </a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" id="burger">
             <span aria-hidden="true"></span>

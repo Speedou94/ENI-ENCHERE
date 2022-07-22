@@ -21,7 +21,6 @@
 <body>
 <header>
     <c:if test="${empty login}">
-
        <jsp:include page="${pageContext.request.contextPath}/navbar-public"/>
     </c:if>
     <c:if test="${!empty login}">
@@ -32,13 +31,14 @@
     <h1 class="has-text-centered title is-1">
         <fmt:message key="enchere_page_liste_enchere" bundle="${message}"/>
     </h1>
-    <jsp:include page="${pageContext.request.contextPath}/search-article"/>
+    <c:if test="${empty login}">
+        <jsp:include page="${pageContext.request.contextPath}/search-article"/>
+    </c:if>
+    <c:if test="${!empty login}">
+        <jsp:include page="${pageContext.request.contextPath}/search-connected"/>
+    </c:if>
     <jsp:include page="${pageContext.request.contextPath}/card-article"/>
 </div>
-<div class="enchere-cards">
-
-</div>
-
 <div>
     <c:if test="${!empty error}">
        <jsp:include page="${pageContext.request.contextPath}/error-toast"/>

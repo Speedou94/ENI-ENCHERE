@@ -131,4 +131,21 @@
         <servlet-name>detail-article</servlet-name>
         <url-pattern>/detail-article</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>search-connected</servlet-name>
+        <jsp-file>/WEB-INF/components/EncherePage/search-connected.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>search-connected</servlet-name>
+        <url-pattern>/search-connected</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>nouvel-article</servlet-name>
+        <jsp-file>/WEB-INF/components/DetailVente/formulaire-vente.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>nouvel-article</servlet-name>
+        <url-pattern>/nouvel-article</url-pattern>
+    </servlet-mapping>
+
 </web-app>

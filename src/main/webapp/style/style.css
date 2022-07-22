@@ -70,3 +70,11 @@ Edit by Niko 18/07/2022
 .navbar-item> img{
     max-height: 4.75rem;
 }
+#search{
+    max-width: 50%;
+    margin-left: 1.2rem;
+
+}
+.max-width50{
+    max-width: 50%;
+}

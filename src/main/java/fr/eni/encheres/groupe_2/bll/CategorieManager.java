@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CategorieManager {
     private static CategorieManager instance;
-    private DAO<Categorie> categorieDAO = DaoFactory.categorieDAO();
+    private static DAO<Categorie> categorieDAO = DaoFactory.categorieDAO();
     public static CategorieManager getInstance(){
         if (instance == null){
             return instance = new CategorieManager();
@@ -18,8 +18,11 @@ public class CategorieManager {
 
    private CategorieManager() {
     }
-    public List<Categorie> getAllCategorie(){
+   private static List<Categorie> getAllCategorie(){
         return categorieDAO.selectALL();
 
+    }
+    public List<Categorie> catalogue(){
+        return getAllCategorie();
     }
 }

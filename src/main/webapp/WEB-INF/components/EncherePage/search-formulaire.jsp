@@ -16,9 +16,9 @@
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/encheres/">
-    <p class="subtitle is-3"><fmt:message key="search_form_filtres" bundle="${message}"/></p>
-    <div class="control">
-        <input class="input" name="search" type="text" placeholder="<fmt:message key="search_form_search" bundle="${message}"/>">
+    <div class="is-flex">
+        <label for="search"> <fmt:message key="search_form_filtres" bundle="${message}"/></label>
+        <input id="search" class="input" name="search" type="text" placeholder="<fmt:message key="search_form_search" bundle="${message}"/>">
     </div>
     <br>
     <label for="categories-select"><fmt:message key="search_form_categorie" bundle="${message}"/></label>
@@ -30,8 +30,10 @@
         <c:forEach items="${listDesCategories}" var="categorie">
             <option value="${categorie.noCategorie}">${categorie.libelle}</option>
         </c:forEach>
-
     </select>
+
+
+
 </form>
 </body>
 </html>

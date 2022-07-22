@@ -42,10 +42,13 @@ private DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
         boolean ok = false ;
         int taillePseudo = utilisateur.getPseudo().length();
         boolean telephooneIsNumeric =  isNumeric(utilisateur.getTelephone());
+        System.out.println("tele"+ telephooneIsNumeric);
         boolean codePostalIsNumeric = isNumeric(utilisateur.getCodePostal());
+        System.out.println("codep"+codePostalIsNumeric);
         boolean emailIsValide = validateEmail(utilisateur.getEmail());
+        System.out.println("email" +emailIsValide);
         if (taillePseudo<21 && telephooneIsNumeric && codePostalIsNumeric && emailIsValide){
-        ok = true ;
+        return true ;
         }
       return ok ;
 
@@ -66,7 +69,6 @@ private DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
      * @return booleen
      */
     private boolean validateEmail(String email){
-        return email.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$\n" +
-                "\n");
+        return email.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
     }
 }

@@ -23,24 +23,22 @@ public class HomeController extends HttpServlet {
         List<Categorie> listDesCategories = new ArrayList<>();
         List<Article> listDesArticles = new ArrayList<>();
         try {
-            listDesCategories = managerCategorie.getAllCategorie();
-            listDesArticles = managerArticle.getAllArticles();
+            listDesCategories = managerCategorie.catalogue();
+            listDesArticles = managerArticle.catalogue();
             request.getSession().setAttribute("listDesCategories", listDesCategories);
             request.getSession().setAttribute("articlesDisponible", listDesArticles);
+
             if (request.getParameter("Categories") != null) {
                 int idCategorie = Integer.parseInt(request.getParameter("Categories"));
-                listDesArticles = managerArticle.filteredListArticles(idCategorie);
+                String motClef = request.getParameter("search");
+                listDesArticles = managerArticle.filteredByCategorie(idCategorie);
                 request.setAttribute("articlesDisponible", listDesArticles);
-                System.out.println("ça marche pas");
-
+                if (motClef.length()>0){
+                    listDesArticles = managerArticle.filteredListArticlesByName(motClef,idCategorie);
+                    request.setAttribute("articlesDisponible", listDesArticles);
+                }
             }
-            if (request.getParameter("search") !=null){
-                System.out.println("ça marche");
-                String filtre = request.getParameter("search");
-                listDesArticles = managerArticle.filteredListArticlesByName(filtre);
-                request.setAttribute("articlesDisponible", listDesArticles);
 
-            }
         } finally {
 
         }
@@ -51,6 +49,9 @@ public class HomeController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+
 
     }
 }

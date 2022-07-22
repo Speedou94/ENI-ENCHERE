@@ -23,6 +23,12 @@
         <jsp:include page="${pageContext.request.contextPath}/navbar-private"/>
     </c:if>
 </header>
+
+
+
+
+
+
 <c:if test="${!empty error}">
     <jsp:include page="${pageContext.request.contextPath}/error-toast"/>
 </c:if>
