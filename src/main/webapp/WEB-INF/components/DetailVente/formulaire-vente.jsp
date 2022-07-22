@@ -1,22 +1,20 @@
 <%--
   Created by IntelliJ IDEA.
   User: niko
-  Date: 21/07/2022
-  Time: 23:05
+  Date: 22/07/2022
+  Time: 07:54
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${param.lang}" scope="session"/>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setBundle basename="message_jsp" var="message"/>
 <html>
 <head>
-    <title>Lougout</title>
+    <title>Title</title>
 </head>
 <body>
-Vous etes deconnecter de ENI enchere
-<!-- TODO : Mettre un bouton pour revenir a la page d'accueil en allant faire un get sur la servlet HomeController-->
 
 </body>
 </html>

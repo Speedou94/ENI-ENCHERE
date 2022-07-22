@@ -60,7 +60,7 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>,LoginDao {
     public Utilisateur selectById(int id) {
         return null;
     }
-//TODO:FAIRE LA METHODE SELECT BY ID ET UPDATE
+//TODO:FAIRE LA METHODE UPDATE string sql en private final
     @Override
     public void update(Utilisateur object) {
 // creer cette methode
