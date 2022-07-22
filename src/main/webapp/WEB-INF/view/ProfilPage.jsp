@@ -68,7 +68,12 @@
 
         </tr>
     </table>
-
+<div class="flex-btn-search">
+    <a href="${pageContext.request.contextPath}/profil?edit=true" class="button is-primary is-light"><fmt:message key="profil_page_button_modifier" bundle="${message}"/></a>
+<c:if test="${ !empty editProfil}">
+<jsp:include page="${pageContext.request.contextPath}/sign-up-form" />
+</c:if>
+</div>
 <footer>
     <jsp:include page="${pageContext.request.contextPath}/footer"/>
 </footer>

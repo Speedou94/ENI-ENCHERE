@@ -23,7 +23,7 @@
 </header>
 <div>
     <h1>
-        <fmt:message key="sign_up_form" bundle="${message}"/>
+        <fmt:message key="sign-up-sign_up" bundle="${message}"/>
     </h1>
 
 <jsp:include page="${pageContext.request.contextPath}/sign-up-form"/>
