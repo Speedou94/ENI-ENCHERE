@@ -24,14 +24,56 @@
     </c:if>
 </header>
 
+    <table>
 
+        <tr>
+            <th><fmt:message key="profil_page_pseudo" bundle="${message}"/></th>
+            <td> ${login.pseudo}</td>
 
+        </tr>
+        <tr>
+            <th><fmt:message key="profil_page_last_name" bundle="${message}"/></th>
+            <td> ${login.nom}</td>
 
+        </tr>
+        <tr>
+            <th><fmt:message key="profil_page_first_name" bundle="${message}"/></th>
+            <td> ${login.prenom}</td>
 
+        </tr>
 
-<c:if test="${!empty error}">
-    <jsp:include page="${pageContext.request.contextPath}/error-toast"/>
+        <tr>
+            <th><fmt:message key="profil_page_email" bundle="${message}"/></th>
+            <td> ${login.email}</td>
+
+        </tr>
+        <tr>
+            <th><fmt:message key="profil_page_telephone" bundle="${message}"/></th>
+            <td> ${login.telephone}</td>
+
+        </tr>
+        <tr>
+            <th><fmt:message key="profil_page_street" bundle="${message}"/></th>
+            <td> ${login.rue}</td>
+
+        </tr>
+        <tr>
+            <th><fmt:message key="profil_page_postal_code" bundle="${message}"/></th>
+            <td> ${login.codePostal}</td>
+
+        </tr>
+        <tr>
+            <th><fmt:message key="profil_page_ville" bundle="${message}"/></th>
+            <td> ${login.ville}</td>
+
+        </tr>
+    </table>
+<div class="flex-btn-search">
+    <a href="${pageContext.request.contextPath}/profil?edit=true" class="button is-primary is-light"><fmt:message key="profil_page_button_modifier" bundle="${message}"/></a>
+<c:if test="${ !empty editProfil}">
+<jsp:include page="${pageContext.request.contextPath}/sign-up-form" />
 </c:if>
+</div>
 <footer>
     <jsp:include page="${pageContext.request.contextPath}/footer"/>
 </footer>

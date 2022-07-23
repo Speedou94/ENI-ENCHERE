@@ -12,7 +12,7 @@
 <fmt:setBundle basename="message_jsp" var="message"/>
 <html>
 <head>
-    <title>Title</title>
+    <title> <fmt:message key="detail_article_titre" bundle="${message}"/></title>
 </head>
 <body>
 <c:if test="${!empty detailArticle}">

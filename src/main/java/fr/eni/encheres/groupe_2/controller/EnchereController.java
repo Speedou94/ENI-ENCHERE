@@ -68,6 +68,7 @@ public class EnchereController extends HttpServlet {
         rd = request.getRequestDispatcher("/accueil");
         rd.forward(request,response);
 
+
     }
 }
 

@@ -61,7 +61,7 @@
 
     <servlet>
         <servlet-name>profilUtilisateur</servlet-name>
-        <jsp-file>/WEB-INF/view/ProfilPAge.jsp</jsp-file>
+        <jsp-file>/WEB-INF/view/ProfilPage.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>profilUtilisateur</servlet-name>

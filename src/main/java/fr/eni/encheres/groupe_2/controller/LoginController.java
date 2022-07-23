@@ -49,5 +49,6 @@ public class LoginController extends HttpServlet {
             request.setAttribute("error", Integer.parseInt(e.getMessage()));
         }
         rd.forward(request, response);
+
     }
 }

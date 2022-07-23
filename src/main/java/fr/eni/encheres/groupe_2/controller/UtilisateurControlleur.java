@@ -12,18 +12,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet (name= "UtilisateurControlleur", value="/utilisateurs/*")
+@WebServlet(name = "UtilisateurControlleur", value = "/utilisateurs/*")
 public class UtilisateurControlleur extends HttpServlet {
     UtilisateurManager manager = UtilisateurManager.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/signup");
 
-        rd.forward(request,resp);
+        RequestDispatcher rd = null;
+
+        if (request.getSession().getAttribute("login") != null) {
+            rd = request.getRequestDispatcher("/profilPage");
+        } else {
+            rd = request.getRequestDispatcher("/signup");
+        }
+
+        rd.forward(request, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException{
+    protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher("");
 
         String pseudo = request.getParameter("pseudo");
@@ -36,32 +44,49 @@ public class UtilisateurControlleur extends HttpServlet {
         String codePostal = request.getParameter("codePostal");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
+        if (request.getParameter("addNewUtilisateur") != null) {
+            System.out.println("C'est bien un new");
+            try {
+                boolean valide = verifPassword(password, confirmPassword);
+                if (valide) {
+                    Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, password);
+                    manager.newUtilisateur(utilisateur);
+                    request.getSession().setAttribute("login", utilisateur);
+                    rd = request.getRequestDispatcher("/accueil");
 
-        try {
-            boolean valide = verifPassword(password,confirmPassword);
-            if(valide){
-                Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, password);
-                manager.newUtilisateur(utilisateur);
+                }
+            } catch (BuissnessException e) {
+
+                rd = request.getRequestDispatcher("/signup");
+                request.setAttribute("error", Integer.parseInt(e.getMessage()));
+            }
+        }
+        if (request.getParameter("editUtilisateur") != null) {
+            System.out.println("C'est bien modifié");
+            try {
+                int id = Integer.parseInt(request.getParameter("editUtilisateur"));
+                Utilisateur utilisateur = new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville);
+                manager.updateUtilisater(utilisateur);
                 request.getSession().setAttribute("login", utilisateur);
-                rd = request.getRequestDispatcher("/accueil");
+                rd = request.getRequestDispatcher("/profilPage");
 
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-        } catch (BuissnessException e){
 
-            rd = request.getRequestDispatcher("/signup");
-            request.setAttribute("error",Integer.parseInt(e.getMessage()));
-            }
-        rd.forward(request,resp);
-
-
-
+            rd.forward(request, resp);
+        }
     }
-    private boolean verifPassword (String password, String confirmPassword) throws BuissnessException {
-        boolean ok = true ;
+
+    private boolean verifPassword(String password, String confirmPassword) throws BuissnessException {
+        boolean ok = true;
         if (!password.equals(confirmPassword)) {
-            throw new BuissnessException(CodeErrorController.BAD_PASSWORD_CONFIRMATION);
+            try {
+                throw new BuissnessException(CodeErrorController.BAD_PASSWORD_CONFIRMATION);
+            } catch (BuissnessException e) {
+                throw new RuntimeException(e);
+            }
         }
         return ok;
     }
-
 }
