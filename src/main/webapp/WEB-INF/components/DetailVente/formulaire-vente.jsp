@@ -15,7 +15,7 @@
     <title>Title</title>
 </head>
 <body>
-<form class="form max-width50" action="${pageContext.request.contextPath}/vente?id=${login.noUtilisateur}" method="post">
+<form class="form max-width50 mx-auto" action="${pageContext.request.contextPath}/vente?id=${login.noUtilisateur}" method="post">
   <label for="nomArticle">nom article</label>
     <input class="input is-primary" type="text" placeholder="Primary input" id="nomArticle" name="nomArticle">
     <label for="description">Descrition</label>

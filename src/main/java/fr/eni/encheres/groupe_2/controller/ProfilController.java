@@ -18,7 +18,7 @@ public class ProfilController extends HttpServlet {
         if (request.getParameter("edit") != null) {
             request.setAttribute("editProfil", true);
         }
-//TODO : faire que lorsqu un ulisitateur clique sur  profil dans la navbar prive ca affiche son profil (indice le parameter "login" contient deja toute les info)
+
         rd.forward(request, response);
     }
 

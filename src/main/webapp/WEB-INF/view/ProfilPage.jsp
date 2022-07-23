@@ -73,6 +73,7 @@
 <c:if test="${ !empty editProfil}">
 <jsp:include page="${pageContext.request.contextPath}/sign-up-form" />
 </c:if>
+    <!-- mettre une modal pour confirmer par mdp-->
 </div>
 <footer>
     <jsp:include page="${pageContext.request.contextPath}/footer"/>

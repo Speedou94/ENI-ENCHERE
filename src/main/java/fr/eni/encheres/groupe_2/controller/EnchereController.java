@@ -63,8 +63,8 @@ public class EnchereController extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-
         }
+        //TODO : prerparer la methode pour echenrir
         rd = request.getRequestDispatcher("/accueil");
         rd.forward(request,response);
 

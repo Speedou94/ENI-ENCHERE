@@ -66,7 +66,7 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
     }
 
 
-    //TODO:FAIRE LA METHODE UPDATE string sql en private final
+    //TODO:ameliorer la methode pour verifier pseudo et mail ! attention le pseudo doit etre comparer et accepter que le meme pseudo
     @Override
     public void update(Utilisateur object) {
         PreparedStatement ps = null;
@@ -112,8 +112,6 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
                 String passdb = rs.getString("mot_de_passe");
                 StringBuilder passdecrypt = crypt.decrypt(passdb.replaceAll("\\s", "").toUpperCase(), 1);
                 String motdepasse = String.valueOf(passdecrypt);
-                System.out.println(motdepasse);
-
                 if (!motdepasse.equalsIgnoreCase(password)) {
                     throw new BuissnessException(ErrorCodeDAL.PASSWORD_INCORRECT);
                 } else {

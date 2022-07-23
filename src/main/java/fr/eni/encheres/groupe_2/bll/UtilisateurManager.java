@@ -21,6 +21,7 @@ private DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
 
     private UtilisateurManager() {
     }
+    //TODO:Faire la javadoc
     public Utilisateur login(String pseudo ,String password) throws BuissnessException {
         return loginDao.login(pseudo,password);
     }
@@ -37,18 +38,38 @@ private DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
         }
 
     }
-    //TODO:Faire la javadoc , essaye de remonte une erreur diffente par champs mal rempli (Code erreur a complete dans la class CodeErrorBLL
-    private boolean verifInput(Utilisateur utilisateur) {
+    //TODO:Faire la javadoc
+    public void updateUtilisater(Utilisateur utilisateur) throws BuissnessException {
+        boolean verifInputOk = verifInput(utilisateur);
+        if(verifInputOk){
+            utilisateurDAO.update(utilisateur);
+        }
+    }
+
+    /**
+     * Verif les champs des input de saisie nouvel utilisateur et renvoie une erreur le cas echeant
+     * Si input valide , autorise la transaction en dal
+     * @param utilisateur le nouvel utilisateur s'enregistrant dans le formulaire
+     * @return un booleen autorisant la suite de la fonction addnew
+     * @throws BuissnessException code erreur envoye au front pour indique a l'utilisateur quel champs est ma rempli
+     */
+    private boolean verifInput(Utilisateur utilisateur) throws BuissnessException {
         boolean ok = false ;
         int taillePseudo = utilisateur.getPseudo().length();
         boolean telephooneIsNumeric =  isNumeric(utilisateur.getTelephone());
-        System.out.println("tele"+ telephooneIsNumeric);
+        if(!telephooneIsNumeric){
+            throw new BuissnessException(CodeErrorBll.TELEPHONE_INVALIDE);
+        }
         boolean codePostalIsNumeric = isNumeric(utilisateur.getCodePostal());
-        System.out.println("codep"+codePostalIsNumeric);
+        if(!codePostalIsNumeric){
+            throw new BuissnessException(CodeErrorBll.CODE_POSTAL_INVALIDE);
+        }
         boolean emailIsValide = validateEmail(utilisateur.getEmail());
-        System.out.println("email" +emailIsValide);
-        if (taillePseudo<21 && telephooneIsNumeric && codePostalIsNumeric && emailIsValide){
-        return true ;
+        if (!emailIsValide){
+            throw new BuissnessException(CodeErrorBll.EMAIL_INVALIDE);
+        }
+        if (taillePseudo<21){
+        ok=true ;
         }
       return ok ;
 
@@ -71,4 +92,6 @@ private DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
     private boolean validateEmail(String email){
         return email.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
     }
+
+
 }

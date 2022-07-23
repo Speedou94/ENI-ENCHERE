@@ -45,7 +45,7 @@ public class UtilisateurControlleur extends HttpServlet {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
         if (request.getParameter("addNewUtilisateur") != null) {
-            System.out.println("C'est bien un new");
+
             try {
                 boolean valide = verifPassword(password, confirmPassword);
                 if (valide) {
@@ -62,7 +62,7 @@ public class UtilisateurControlleur extends HttpServlet {
             }
         }
         if (request.getParameter("editUtilisateur") != null) {
-            System.out.println("C'est bien modifié");
+
             try {
                 int id = Integer.parseInt(request.getParameter("editUtilisateur"));
                 Utilisateur utilisateur = new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville);
