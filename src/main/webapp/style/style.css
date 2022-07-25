@@ -2,6 +2,8 @@
 Edit by Niko 18/07/2022
  */
 .footer{
+
+    background-color: black;
     padding: 1rem 1.5rem 1rem;
 
 }
@@ -30,8 +32,10 @@ Edit by Niko 18/07/2022
 }
 
 .card{
-    display: flex;
+    display: inline-block;
     align-items: center;
+    padding-left: 2rem;
+    margin-inline-end: 5rem;
 }
 
 .form-login{
