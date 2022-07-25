@@ -15,7 +15,7 @@
     <title>Title</title>
 </head>
 <body>
-<form method="post" action="${pageContext.request.contextPath}/details-encheres/filtre/">
+<form method="post" action="${pageContext.request.contextPath}/articles/">
     <div class="is-flex">
             <label for="search"> <fmt:message key="search_form_filtres" bundle="${message}"/></label>
             <input id="search" class="input" name="search" type="text" placeholder="<fmt:message key="search_form_search" bundle="${message}"/>">
@@ -38,6 +38,7 @@
         <label for="achat">Achat</label>
         <input type="radio" name="select-option" id="achat"  value="achat" checked>
         <label for="ouverte">Enchere ouverte</label>
+        <input name="idUtilisateur" value="${login.noUtilisateur}" type="text" hidden>
         <input type="checkbox" name="ouverte" value="ouverte" id="ouverte" checked >
         <label for="mes-encheres">mes-encheres</label>
         <input type="checkbox" name="mes-encheres" value="mes-encheres" id="mes-encheres" >

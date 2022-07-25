@@ -33,8 +33,6 @@ public class ArticleController extends HttpServlet {
                     e.printStackTrace();
                 }
             }
-
-
         }
         else {
             rd=request.getRequestDispatcher("/loginpage");
@@ -45,27 +43,39 @@ public class ArticleController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-RequestDispatcher rd = request.getRequestDispatcher("/");
+        RequestDispatcher rd = request.getRequestDispatcher("/accueil");
         if (request.getSession().getAttribute("login")!=null){
+            int idUtilisateur = Integer.parseInt(request.getParameter("idUtilisateur"));
             boolean ouverte = request.getParameter("ouverte")!=null;
             boolean mesEncheres = request.getParameter("mes-encheres")!=null;
             boolean remporter =request.getParameter("remporte")!=null;
-            String enCours =request.getParameter("en-cours");
-            String nonDebuter =request.getParameter("non-debuter");
-            String terminer =request.getParameter("terminer");
+            boolean enCours =request.getParameter("en-cours")!=null;
+            boolean nonDebuter =request.getParameter("non-debuter")!=null;
+            boolean terminer =request.getParameter("terminer")!=null;
             int idCategorie = Integer.parseInt(request.getParameter("Categories"));
             String motClef = request.getParameter("search");
             try {
                 List<Article> listDesArticles = managerArticle.filteredListByEnchereOuverte(idCategorie,motClef,ouverte);
+              if(mesEncheres){
+                 List<Integer> listeDeMesEncheres = managerEnchere.listeMesEncheres(idUtilisateur);
+                 listDesArticles=managerArticle.filteredListByIdArticle(listeDeMesEncheres);
+              }
+              if(terminer){
+                  listDesArticles=managerArticle.filteredByStatusTermnine();
+              }
+              if (nonDebuter){
+                  listDesArticles=managerArticle.filteredByStatusNonCommencer();
+                  System.out.println("nondebuter");
+              }
+              if(enCours){
+                  listDesArticles=managerArticle.filteredByMesArticles(idUtilisateur);
+              }
                 request.setAttribute("articlesDisponible", listDesArticles);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
         }
-
-
-
-rd.forward(request,response);
+        rd.forward(request,response);
     }
 }

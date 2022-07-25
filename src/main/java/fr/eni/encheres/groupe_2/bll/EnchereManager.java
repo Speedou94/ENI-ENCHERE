@@ -5,6 +5,7 @@ import fr.eni.encheres.groupe_2.bo.Utilisateur;
 import fr.eni.encheres.groupe_2.dal.DAO;
 import fr.eni.encheres.groupe_2.dal.DaoFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EnchereManager {
@@ -12,6 +13,10 @@ public class EnchereManager {
     private static DAO<Enchere> enchereDAO = DaoFactory.enchereDAO();
     private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
 
+    /**
+     * Instance de Enchere Manager
+     * @return une instance du manager
+     */
     public static EnchereManager getInstance(){
         if(instance==null){
             return instance = new EnchereManager();
@@ -19,11 +24,26 @@ public class EnchereManager {
         return instance;
     }
 
+    /**
+     * Contructeur prive
+     */
     private EnchereManager() {
     }
+
+    /**
+     * Stocke la liste complet des encheres qui sont en BDD
+     * @return
+     */
     private static List<Enchere> catalogueEnchere(){
         return enchereDAO.selectALL();
     }
+
+    /**
+     * Faire une enchere , verifie si le montant est bie surperieur a l'enchere precedente`
+     * TODO : verifie que l'utilisateur est solvable
+     * @param enchere Enchere faite a partir de jsp card-detail-article
+     * @throws BuissnessException remonte une erreur en cas de non coformite d'enchere
+     */
     public void faireEnchere(Enchere enchere) throws BuissnessException {
         boolean nouvelleEnchere = nouvelleEnchere(enchere.getNo_article());
         boolean enchereValable = enchereValable(enchere.getNo_article(),enchere.getMontantEnchere());
@@ -38,6 +58,12 @@ public class EnchereManager {
             enchereDAO.update(enchere);
         }
     }
+
+    /**
+     * renvoie la meuilleure offre en cours sur un article donnee
+     * @param id l'id de l'article
+     * @return le montant de la meuilleur offre
+     */
     public int  montantMeuilleurOffre(int id){
         List<Enchere> listeDesEncheresEnCours = catalogueEnchere();
         int montant =0;
@@ -56,6 +82,11 @@ public class EnchereManager {
         return catalogueEnchere();
     }
 
+    /**
+     * Defini si c'est une premire enchere ou si c'est un update d'une ancienne
+     * @param idArticle l'id de l'article encheri
+     * @return si oui ou no nc'est une nouvelle enchere a mettre en bdd
+     */
     private boolean nouvelleEnchere(int idArticle){
         boolean nouvelleEnchere=true;
         List<Enchere> listeDesEncheresEnCours = catalogueEnchere();
@@ -67,6 +98,34 @@ public class EnchereManager {
         }
         return nouvelleEnchere;
     }
+
+    /**
+     * Filtre la liste des article mis en enchere par l'ulistateur
+     * @param id id de l'utilisateur
+     * @return la liste des id de ses produit mis en encheres
+     */
+    public List<Integer> listeMesEncheres(int id){
+        List<Enchere> listeDesEncheres = catalogue();
+        List<Integer> listeDesEnchresArenvoyer = new ArrayList<>();
+        for (Enchere e:listeDesEncheres
+             ) {
+            if(e.getNo_utilisateur()==id){
+                int idDeLenchers = e.getNo_article();
+                listeDesEnchresArenvoyer.add(idDeLenchers);
+            }
+
+        }
+        return listeDesEnchresArenvoyer;
+    }
+
+    /**
+     * Verifie si le montant propose par l'ulisateur est superieur la la derniere meuilleur offre
+     *
+     * @param idArticle le numero de l'article encheri
+     * @param montant le montant de l'enchere demander
+     * @return si oui ou non c'est superieur
+     * @throws BuissnessException remonte un message d'erreur dans la jsp
+     */
     private boolean enchereValable(int idArticle , int montant) throws BuissnessException {
         System.out.println("ici EV" + idArticle);
         List<Enchere> listeDesEncheresEnCours = catalogueEnchere();
@@ -82,6 +141,12 @@ public class EnchereManager {
 
         return true;
     }
+
+    /**
+     * Veridier les credit dispo de l'utlisateur .
+     * @param idUtilisateur
+     * @return
+     */
     private int  creditDisponible(int idUtilisateur){
         List<Utilisateur> utilisateurs = utilisateurDAO.selectALL();
         int creditDispo = 0;

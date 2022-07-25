@@ -19,6 +19,10 @@ public class ArticleManager {
 
     private static DAO<Article> articleDAO = DaoFactory.articleDao();
 
+    /**
+     * Instance de Article Manager
+     * @return une instance du manager
+     */
     public static ArticleManager getInstance() {
         if (instance == null) {
             return instance = new ArticleManager();
@@ -26,6 +30,9 @@ public class ArticleManager {
         return instance;
     }
 
+    /**
+     * Constructeur prive
+     */
     private ArticleManager() {
     }
 
@@ -55,6 +62,12 @@ public class ArticleManager {
 
         return enchereouverte ;
     }
+
+    /**
+     * Permet la selection d'un article par son ID
+     * @param id int envoyer par le controller
+     * @return L'article selectionner
+     */
     public Article getSelectedArticle(int id) {
         Article article = null;
         List<Article> listeDesArticle = catalogueArticle();
@@ -87,6 +100,13 @@ public class ArticleManager {
         }
         return listefiltre;
     }
+
+    /**
+     * Filtre les aricle par nom ( lettre contenues dans le titre de l'article)
+     * @param nomArticle le nom de l'article (String)
+     * @param idCategorie et l'id de se actergorie (si O = toutes les categories)
+     * @return La liste filtre des articles
+     */
     public List<Article> filteredListArticlesByName(String nomArticle , int idCategorie) {
         List<Article> listeAfiltrer = filteredByCategorie(idCategorie);
         List<Article> listeFiltre = new ArrayList<>();
@@ -102,6 +122,14 @@ public class ArticleManager {
         }
         return listeFiltre;
     }
+
+    /**
+     *Filtre les Article disponible pour les ecnheres ouverte a partir du jour de requete
+     * @param idCategorie l'id de la categorie (si O = toutes les categories)
+     * @param motClef   le nom de l'article (String) si renseigner
+     * @param ouverte
+     * @return
+     */
     public List<Article> filteredListByEnchereOuverte(int idCategorie,String motClef,boolean ouverte){
         List<Article> listeafiltrer = filteredListArticlesByName(motClef,idCategorie);
         List<Article> listarenvoyer = new ArrayList<>();
@@ -120,7 +148,75 @@ public class ArticleManager {
         }
         return listarenvoyer;
     };
+    public List<Article> filteredListByIdArticle(List<Integer> listeDesIdArticles){
+        List<Article> listeafiltrer = catalogueEnchereOuverte();
+        List<Article> listeFiltre =new ArrayList<>();
+        for (Article a:listeafiltrer
+             ) {
+           if (listeDesIdArticles.contains(a.getNoArticle())){
+               listeFiltre.add(a);
+           }
+        }
+        return listeFiltre;
+    }
 
+    /**
+     * filtre la liste des article dont les encheres sont terminer
+     * @return liste des articles
+     */
+    public List<Article> filteredByStatusTermnine(){
+        List<Article> listeafiltrer =catalogueArticle();
+        List<Article> listeFiltrer=new ArrayList<>();
+        Date today = new Date();
+        for (Article a:listeafiltrer
+             ) {
+            if (a.getDateFinEncheres().before(today)){
+                listeFiltrer.add(a);
+            }
+        }
+        return listeFiltrer;
+    }
+
+    /**
+     * filtre la liste des article dont les encheres sont pas commencer
+     * @return liste des articles
+     */
+    public List<Article> filteredByStatusNonCommencer(){
+        List<Article> listeafiltrer =catalogueArticle();
+        List<Article> listeFiltrer=new ArrayList<>();
+        Date today = new Date();
+        for (Article a:listeafiltrer
+             ) {
+            if(a.getDateDebutEncheres().after(today)){
+                listeFiltrer.add(a);
+            }
+        }
+        return listeFiltrer;
+    }
+
+    /**
+     * filtre la liste des articles dont l'utlisateur est le vendeur
+     * @param id int noUtilisteur ( vendeur )
+     * @return liste des articles
+     */
+    public List<Article> filteredByMesArticles(int id){
+        List<Article> toutLesArticles=catalogueArticle();
+        List<Article> listeFiltrer=new ArrayList<>();
+        for (Article a:toutLesArticles
+             ) {
+            if(a.getUtilisateur().getNoUtilisateur()==id){
+                listeFiltrer.add(a);
+            }
+        }
+        return listeFiltrer;
+    }
+
+    /**
+     * Ajoute un nouvel article a vendre en BDD
+     * @param article Article renseigner par l'utlisateur
+     * @throws BuissnessException Renvoye une erreur a l'utlistateur en cas de lever d'exception
+     * TODO: faire les exception en cas de date invalide , ou de montant non numerique
+     */
     public void addNewArticle(Article article) throws BuissnessException {
         articleDAO.addNew(article);
     }
