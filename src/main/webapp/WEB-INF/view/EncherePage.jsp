@@ -49,4 +49,5 @@
 </footer>
 </body>
 <script src="../../script/nav-bar-public.js"></script>
+<script src="../../script/main.js"></script>
 </html>

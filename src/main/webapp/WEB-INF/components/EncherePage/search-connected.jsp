@@ -31,26 +31,31 @@
                 <option value="${categorie.noCategorie}">${categorie.libelle}</option>
             </c:forEach>
         </select>
-    <label for="achat">Achat</label>
-  <input type="radio" name="select-option" id="achat">
-    <div>
+<div class="is-flex">
+
+
+    <div class="input-container">
+        <label for="achat">Achat</label>
+        <input type="radio" name="select-option" id="achat"  value="achat" checked>
         <label for="ouverte">Enchere ouverte</label>
-        <input type="checkbox" name="ouverte" value="ouverte" id="ouverte" >
+        <input type="checkbox" name="ouverte" value="ouverte" id="ouverte" checked >
         <label for="mes-encheres">mes-encheres</label>
         <input type="checkbox" name="mes-encheres" value="mes-encheres" id="mes-encheres" >
         <label for="remporte">Enchere remporte</label>
         <input type="checkbox" name="remporte" value="remporte" id="remporte" >
     </div>
-  <label for="vente">Mes Ventes</label>
-  <input type="radio" name="select-option" id="vente">
-    <div>
+
+    <div class="input-container">
+        <label for="vente">Mes Ventes</label>
+        <input type="radio" name="select-option" id="vente">
         <label for="en-cours">Mes encheres en-cours</label>
-        <input type="checkbox" name="en-cours" value="en-cours" id="en-cours" >
+        <input type="checkbox" name="en-cours" value="en-cours" id="en-cours" disabled>
         <label for="non-debuter">encheres non-debuter</label>
-        <input type="checkbox" name="non-debuter" value="non-debuter" id="non-debuter" >
+        <input type="checkbox" name="non-debuter" value="non-debuter" id="non-debuter" disabled>
         <label for="terminer">Enchere terminer</label>
-        <input type="checkbox" name="terminer" value="terminer" id="terminer" >
+        <input type="checkbox" name="terminer" value="terminer" id="terminer" disabled>
     </div>
+</div>
 </form>
 </body>
 </html>

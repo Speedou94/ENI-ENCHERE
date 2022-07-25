@@ -5,6 +5,8 @@ import fr.eni.encheres.groupe_2.bo.Categorie;
 import fr.eni.encheres.groupe_2.dal.DAO;
 import fr.eni.encheres.groupe_2.dal.DaoFactory;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,11 +41,30 @@ public class ArticleManager {
      * Permet d'acceder au catalogue hors du controller
      * @return toute la liste d'article stocker en static
      */
-    public List<Article> catalogue(){
-        return catalogueArticle();
+    public List<Article> catalogueEnchereOuverte(){
+        List<Article> enchereouverte =new ArrayList<>();
+        List<Article> toutLesArticles=catalogueArticle();
+        for (Article a:toutLesArticles
+             ) {
+            Date today = new Date();
+            System.out.println(today);
+            if(a.getDateDebutEncheres().before(today) && a.getDateFinEncheres().after(today)){
+                enchereouverte.add(a);
+            }
+        }
+
+        return enchereouverte ;
     }
     public Article getSelectedArticle(int id) {
-        return articleDAO.selectById(id);
+        Article article = null;
+        List<Article> listeDesArticle = catalogueArticle();
+        for (Article a:listeDesArticle
+             ) {
+            if(a.getNoArticle()==id){
+                article=a;
+            }
+        }
+    return article;
     }
 
     /**
@@ -87,9 +108,10 @@ public class ArticleManager {
         if(ouverte){
             for (Article a:listeafiltrer
                  ) {
-                long miliseconds = System.currentTimeMillis();
-                Date today = new Date(miliseconds);
-                if(a.getDateDebutEncheres().after(today)|| a.getDateDebutEncheres().equals(today)){
+
+                Date today = new Date();
+
+                if(a.getDateDebutEncheres().before(today) && a.getDateFinEncheres().after(today)){
                     listarenvoyer.add(a);
                 }
             }

@@ -56,7 +56,7 @@
 
         <div class="navbar-end">
             <div class="navbar-item">
-                <a class="navbar-item">
+                <a class="navbar-item" href="${pageContext.request.contextPath}/encheres/">
                     <fmt:message key="navbar_private_auction" bundle="${message}"/>
                 </a>
                 <a class="navbar-item" href="${pageContext.request.contextPath}/vente">

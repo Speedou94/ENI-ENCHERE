@@ -74,8 +74,8 @@ public class UtilisateurControlleur extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-            rd.forward(request, resp);
         }
+        rd.forward(request, resp);
     }
 
     private boolean verifPassword(String password, String confirmPassword) throws BuissnessException {

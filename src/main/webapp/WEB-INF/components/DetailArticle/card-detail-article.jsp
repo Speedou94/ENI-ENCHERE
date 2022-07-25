@@ -25,7 +25,7 @@
     <div class="card-content">
       <div class="media">
         <c:if test="${!empty login}">
-          <a href="${pageContext.request.contextPath}/details-encheres?id=${article.noArticle}">${article.nomArticle}</a>
+          <a href="${pageContext.request.contextPath}/articles?id=${article.noArticle}">${article.nomArticle}</a>
         </c:if>
         <c:if test="${empty login}">
           <div class="media-content">
@@ -36,22 +36,37 @@
     </div>
   </div>
   <div class="content">
-    <p>
-      <fmt:message key="card_detail_article_nom_article" bundle="${message}"/>${detailArticle.nomArticle}
-      <br>
-      <fmt:message key="card_detail_article_description" bundle="${message}"/>${detailArticle.description}
-      <br>
-      <fmt:message key="card_detail_article_date_debut" bundle="${message}"/>${detailArticle.dateDebutEncheres}
-      <br>
-      <fmt:message key="card_detail_article_date_fin" bundle="${message}"/>${detailArticle.dateFinEncheres}
-      <br>
-      <fmt:message key="card_detail_article_prix_in" bundle="${message}"/>${detailArticle.prixInitial}
-      <br>
-      <fmt:message key="card_detail_article_prix_vente" bundle="${message}"/>${detailArticle.prixVente}
-      <br>
-      <fmt:message key="card_detail_article_no_utilisateur" bundle="${message}"/>${detailArticle.noUtilisateur}
-      <br>
-    </p>
+   <div>
+     <p>
+       <fmt:message key="card_detail_article_nom_article" bundle="${message}"/>${detailArticle.nomArticle}
+       <br>
+       <fmt:message key="card_detail_article_description" bundle="${message}"/>${detailArticle.description}
+       <br>
+       <fmt:message key="card_detail_article_date_debut" bundle="${message}"/>${detailArticle.dateDebutEncheres}
+       <br>
+       <fmt:message key="card_detail_article_date_fin" bundle="${message}"/>${detailArticle.dateFinEncheres}
+       <br>
+       <fmt:message key="card_detail_article_prix_in" bundle="${message}"/>${detailArticle.prixInitial}
+       <br>
+       <fmt:message key="card_detail_article_montant_enchere" bundle="${message}"/>${meuilleurOffre}
+       <br>
+       <fmt:message key="card_detail_article_nom_vendeur" bundle="${message}"/>${detailArticle.utilisateur.pseudo}
+       <br>
+     </p>
+   </div>
+    <div>
+      <c:if test="${!empty login}">
+        <form method="post" action="${pageContext.request.contextPath}/details-encheres/">
+          <input value="${detailArticle.noArticle}" name="noArticle" hidden>
+          <input value="${login.noUtilisateur}" name="noUtilisateur" hidden>
+          <label for="montant" >Montant</label>
+          <input type="number" name="montant" placeholder="montant de votre enchere" id="montant" required>
+          <button name="encherir" type="submit" value="encherir">Encherir</button>
+        </form>
+
+      </c:if>
+
+    </div>
   </div>
 </c:if>
 </body>

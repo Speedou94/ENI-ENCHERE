@@ -26,7 +26,7 @@
         <div class="card-content">
             <div class="media">
                 <c:if test="${!empty login}">
-                    <a href="${pageContext.request.contextPath}/details-encheres?id=${article.noArticle}">${article.nomArticle}</a>
+                    <a href="${pageContext.request.contextPath}/articles?id=${article.noArticle}">${article.nomArticle}</a>
                 </c:if>
                 <c:if test="${empty login}">
                     <div class="media-content">
