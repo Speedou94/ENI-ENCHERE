@@ -68,28 +68,33 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
 
     //TODO:ameliorer la methode pour verifier pseudo et mail ! attention le pseudo doit etre comparer et accepter que le meme pseudo
     @Override
-    public void update(Utilisateur object) {
+    public void update(Utilisateur object) throws BuissnessException {
         PreparedStatement ps = null;
         ResultSet rs = null;
         System.out.println("update SQL");
-        try (Connection cnx = ConnectionProvider.getConnection()) {
-            ps = cnx.prepareStatement(UPDATE_UTILISATEUR);
-            System.out.println(object.getNoUtilisateur());
-            ps.setString(1, object.getPseudo());
-            ps.setString(2, object.getNom());
-            ps.setString(3, object.getPrenom());
-            ps.setString(4, object.getEmail());
-            ps.setString(5, object.getTelephone());
-            ps.setString(6, object.getRue());
-            ps.setString(7, object.getCodePostal());
-            ps.setString(8, object.getVille());
-            ps.setInt(9, object.getNoUtilisateur());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        boolean pseudoExistant = verifPseudoMailUpdate(object.getPseudo(),object.getEmail(),object.getNoUtilisateur());
+        if (!pseudoExistant) {
+
+            try (Connection cnx = ConnectionProvider.getConnection()) {
+                ps = cnx.prepareStatement(UPDATE_UTILISATEUR);
+                System.out.println(object.getNoUtilisateur());
+                ps.setString(1, object.getPseudo());
+                ps.setString(2, object.getNom());
+                ps.setString(3, object.getPrenom());
+                ps.setString(4, object.getEmail());
+                ps.setString(5, object.getTelephone());
+                ps.setString(6, object.getRue());
+                ps.setString(7, object.getCodePostal());
+                ps.setString(8, object.getVille());
+                ps.setInt(9, object.getNoUtilisateur());
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
-// creer cette methode
+// cr}eer cette methode
     }
+
 
     @Override
     public List<Utilisateur> selectALL() {
@@ -143,6 +148,14 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
      * @return
      * @throws BuissnessException
      */
+
+    /**
+     * méthode VerifPseudoAndMail à remonter dans BLL
+     * @param pseudo
+     * @param email
+     * @return
+     * @throws BuissnessException
+     */
     private boolean verifPseudoAndMail(String pseudo, String email) throws BuissnessException {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -171,6 +184,45 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
         }
 
         return true;
+    }
+
+    private boolean verifPseudoMailUpdate (String pseudo, String email, int id) throws BuissnessException{
+       boolean pseudoMailValide = verifPseudoAndMail(pseudo,email);
+
+       if(!pseudoMailValide){
+        String getPseudoMailSql = "SELECT pseudo, email FROM dbo.UTILISATEURS WHERE no_utilisateur = ?";
+
+            try (Connection cnx = ConnectionProvider.getConnection()) {
+                PreparedStatement preparedStatement = cnx.prepareStatement(getPseudoMailSql);
+                preparedStatement.setInt(1, id);
+                ResultSet rs = preparedStatement.executeQuery();
+                System.out.println("je fais mon PrepareSt");
+
+                while (rs.next()) {
+                    String pseudoOriginal = rs.getString("pseudo");
+                    String mailOriginal = rs.getString("email");
+                    System.out.println("je recupère  Pseudo Original et email Ori"+pseudoOriginal+mailOriginal);
+
+                    if (pseudoOriginal.equalsIgnoreCase((pseudo))) {
+
+                        pseudoMailValide = true;
+                    }
+                    if (mailOriginal.equalsIgnoreCase(email)) {
+                        pseudoMailValide = true;
+
+                    }
+
+
+                }
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+
+        }return pseudoMailValide;
+
+
+
     }
 
 }
