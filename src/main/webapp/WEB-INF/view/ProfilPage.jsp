@@ -75,6 +75,11 @@
 </c:if>
     <!-- mettre une modal pour confirmer par mdp-->
 </div>
+<div>
+    <c:if test="${!empty error}">
+        <jsp:include page="${pageContext.request.contextPath}/error-toast"/>
+    </c:if>
+</div>
 <footer>
     <jsp:include page="${pageContext.request.contextPath}/footer"/>
 </footer>

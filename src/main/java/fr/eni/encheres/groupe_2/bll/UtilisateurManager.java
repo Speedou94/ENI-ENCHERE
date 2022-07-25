@@ -58,13 +58,28 @@ private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
 
     //TODO:Faire la javadoc
     public void updateUtilisater(Utilisateur utilisateur) throws BuissnessException {
+
+        System.out.println("je passe au debut manager");
         boolean verifInputOk = verifInput(utilisateur);
         boolean pseudoAndMail = verifPseudoAndMail(utilisateur.getPseudo(), utilisateur.getEmail());
-        boolean updateValide = true;
+        System.out.println(pseudoAndMail);
 
-        if(verifInputOk && pseudoAndMail) {
+        boolean updateValide =true;
 
+        if(!pseudoAndMail){
+             updateValide = verifPseudoAndMailValide(utilisateur.getPseudo(),utilisateur.getEmail(), utilisateur.getNoUtilisateur());
+
+        }System.out.println(updateValide);
+
+        if(!updateValide){
+            throw new BuissnessException(CodeErrorBll.CHAMP_INVALIDE);
+        }
+
+        if(verifInputOk) {
+
+            System.out.println("je passe dans le manager");
             utilisateurDAO.update(utilisateur);
+
         }
     }
     private boolean verifPseudoAndMail(String pseudo, String email) throws BuissnessException {
@@ -75,6 +90,7 @@ private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
 
             if( u.getPseudo().equalsIgnoreCase(pseudo)){
                 toto = false;
+                System.out.println(u.getPseudo());
             }
             if(u.getEmail().equalsIgnoreCase(email)){
                 toto = false;
@@ -83,7 +99,49 @@ private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
 
 
     }
+    private boolean verifPseudoAndMailValide (String pseudo, String email, int id) throws BuissnessException{
+        List<Utilisateur> utilisateurs = catalogue();
+        boolean ok =true;
 
+
+            for (Utilisateur u:utilisateurs) {
+
+                if (u.getNoUtilisateur()==id){
+
+                    if(u.getPseudo().equalsIgnoreCase(pseudo)){
+                        ok =false;
+
+                    }
+                    if(u.getEmail().equalsIgnoreCase(email)){
+                        ok=false;
+                    }
+
+                }
+
+            }
+        return ok;
+
+
+    }
+
+
+/*
+private boolean verifId (int id) {
+    boolean ok = false;
+    List<Utilisateur> utilisateurs = catalogue();
+
+    for (Utilisateur u : utilisateurs) {
+
+        if (u.getNoUtilisateur() == id) {
+
+            ok = true;
+        }
+        return ok;
+
+
+    }
+    return ok;
+}*/
     /**
      * Verif les champs des input de saisie nouvel utilisateur et renvoie une erreur le cas echeant
      * Si input valide , autorise la transaction en dal
@@ -111,7 +169,7 @@ private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
         }
       return ok ;
 
-    }
+    };
 
     /**
      * Verifie que le champs saisie dans l'input est bien de type numerique
