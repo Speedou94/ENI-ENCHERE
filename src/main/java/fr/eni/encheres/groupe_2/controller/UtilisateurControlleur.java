@@ -64,18 +64,22 @@ public class UtilisateurControlleur extends HttpServlet {
         if (request.getParameter("editUtilisateur") != null) {
 
             try {
+                System.out.println("je passe Control");
                 int id = Integer.parseInt(request.getParameter("editUtilisateur"));
                 Utilisateur utilisateur = new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville);
                 manager.updateUtilisater(utilisateur);
                 request.getSession().setAttribute("login", utilisateur);
                 rd = request.getRequestDispatcher("/profilPage");
 
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            } catch (BuissnessException e) {
+                request.setAttribute("error", Integer.parseInt(e.getMessage()));
+                request.setAttribute("editProfil", true);
+                rd = request.getRequestDispatcher("/profilPage");
+
             }
 
-            rd.forward(request, resp);
-        }
+
+        }rd.forward(request, resp);
     }
 
     private boolean verifPassword(String password, String confirmPassword) throws BuissnessException {

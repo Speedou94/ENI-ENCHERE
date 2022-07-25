@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
+
+    private final String SELECT_ALL_USERS_SQL = "SELECT * FROM dbo.UTILISATEURS";
     private final String ADD_NEW_SQL = "INSERT INTO dbo.UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     private final String LOGIN_SQL = "SELECT * FROM dbo.UTILISATEURS WHERE pseudo = ?;";
     private final String VERIF_PSEUDO_ET_MAIL_SQL = "SELECT pseudo,email FROM dbo.UTILISATEURS";
@@ -72,8 +74,7 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         System.out.println("update SQL");
-        boolean pseudoExistant = verifPseudoMailUpdate(object.getPseudo(),object.getEmail(),object.getNoUtilisateur());
-        if (!pseudoExistant) {
+
 
             try (Connection cnx = ConnectionProvider.getConnection()) {
                 ps = cnx.prepareStatement(UPDATE_UTILISATEUR);
@@ -91,14 +92,41 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        }
-// cr}eer cette methode
+
     }
 
 
     @Override
     public List<Utilisateur> selectALL() {
-        return null;
+        PreparedStatement ps = null;
+        ResultSet rs= null;
+        List<Utilisateur> listUtilisateur = new ArrayList<>();
+
+        try (Connection cnx = ConnectionProvider.getConnection()){
+            ps = cnx.prepareStatement((SELECT_ALL_USERS_SQL));
+            rs = ps.executeQuery();
+            while (rs.next()){
+                int noUtilisateur = rs.getInt("no_utilisateur");
+                String pseudo = rs.getString("pseudo");
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String email = rs.getString("email");
+                String telephone = rs.getString("telephone");
+                String rue = rs.getString("rue");
+                String code_postal = rs.getString("code_postal");
+                String ville = rs.getString("ville");
+                String motDePasse = rs.getString("mot_de_passe");
+                int credit = rs.getInt("credit");
+                boolean admin = rs.getBoolean("administrateur");
+
+                Utilisateur utilisateurCopie = new Utilisateur(noUtilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,motDePasse,credit,admin);
+                listUtilisateur.add(utilisateurCopie);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listUtilisateur;
     }
 
     //TODO:Faire la javadoc
