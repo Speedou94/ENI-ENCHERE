@@ -13,12 +13,19 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
+
+    private final String SELECT_ALL_USERS_SQL = "SELECT * FROM dbo.UTILISATEURS";
     private final String ADD_NEW_SQL = "INSERT INTO dbo.UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     private final String LOGIN_SQL = "SELECT * FROM dbo.UTILISATEURS WHERE pseudo = ?;";
     private final String VERIF_PSEUDO_ET_MAIL_SQL = "SELECT pseudo,email FROM dbo.UTILISATEURS";
 
     private final String UPDATE_UTILISATEUR = "UPDATE dbo.UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=? WHERE no_utilisateur =?";
+    private final String DELETE_RETRAIT_SQL = "DELETE FROM dbo.RETRAITS where no_article in (select no_article from ARTICLES_VENDUS where no_utilisateur=?)";
+    private final String DELETE_ARTICLES="DELETE FROM dbo.ARTICLES_VENDUS where no_utilisateur = ?;";
+    private final String DELETE_ENCHERE_SQL = "DELETE FROM dbo.ENCHERES where no_utilisateur = ?;";
 
+    private final String DELETE_UTILISATEUR ="DELETE FROM dbo.UTILISATEURS where no_utilisateur=?;";
+    private final String CONFIRM_PASSWORD_SQL = "SELECT mot_de_passe FROM dbo.UTILISATEURS WHERE no_utilisateur=?";
     //PreparedStatement ps;
     // ResultSet rs;
     //TODO:Faire la javadoc
@@ -57,7 +64,28 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
 
     @Override
     public void delete(int id) {
+        PreparedStatement ps=null;
+        try(Connection cnx =ConnectionProvider.getConnection()) {
+            //TODO: trouver la bonne requete sql
 
+            ps= cnx.prepareStatement(DELETE_RETRAIT_SQL);
+            ps.setInt(1,id);
+            ps.executeUpdate();
+            ps= cnx.prepareStatement(DELETE_ARTICLES);
+            ps.setInt(1,id);
+            ps.executeUpdate();
+            ps= cnx.prepareStatement(DELETE_ENCHERE_SQL);
+            ps.setInt(1,id);
+            ps.executeUpdate();
+            ps= cnx.prepareStatement(DELETE_UTILISATEUR);
+            ps.setInt(1,id);
+            ps.executeUpdate();
+
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -68,32 +96,63 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
 
     //TODO:ameliorer la methode pour verifier pseudo et mail ! attention le pseudo doit etre comparer et accepter que le meme pseudo
     @Override
-    public void update(Utilisateur object) {
+    public void update(Utilisateur object) throws BuissnessException {
         PreparedStatement ps = null;
         ResultSet rs = null;
         System.out.println("update SQL");
-        try (Connection cnx = ConnectionProvider.getConnection()) {
-            ps = cnx.prepareStatement(UPDATE_UTILISATEUR);
-            System.out.println(object.getNoUtilisateur());
-            ps.setString(1, object.getPseudo());
-            ps.setString(2, object.getNom());
-            ps.setString(3, object.getPrenom());
-            ps.setString(4, object.getEmail());
-            ps.setString(5, object.getTelephone());
-            ps.setString(6, object.getRue());
-            ps.setString(7, object.getCodePostal());
-            ps.setString(8, object.getVille());
-            ps.setInt(9, object.getNoUtilisateur());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-// creer cette methode
+
+
+            try (Connection cnx = ConnectionProvider.getConnection()) {
+                ps = cnx.prepareStatement(UPDATE_UTILISATEUR);
+                System.out.println(object.getNoUtilisateur());
+                ps.setString(1, object.getPseudo());
+                ps.setString(2, object.getNom());
+                ps.setString(3, object.getPrenom());
+                ps.setString(4, object.getEmail());
+                ps.setString(5, object.getTelephone());
+                ps.setString(6, object.getRue());
+                ps.setString(7, object.getCodePostal());
+                ps.setString(8, object.getVille());
+                ps.setInt(9, object.getNoUtilisateur());
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
     }
+
 
     @Override
     public List<Utilisateur> selectALL() {
-        return null;
+        PreparedStatement ps = null;
+        ResultSet rs= null;
+        List<Utilisateur> listUtilisateur = new ArrayList<>();
+
+        try (Connection cnx = ConnectionProvider.getConnection()){
+            ps = cnx.prepareStatement((SELECT_ALL_USERS_SQL));
+            rs = ps.executeQuery();
+            while (rs.next()){
+                int noUtilisateur = rs.getInt("no_utilisateur");
+                String pseudo = rs.getString("pseudo");
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String email = rs.getString("email");
+                String telephone = rs.getString("telephone");
+                String rue = rs.getString("rue");
+                String code_postal = rs.getString("code_postal");
+                String ville = rs.getString("ville");
+                String motDePasse = rs.getString("mot_de_passe");
+                int credit = rs.getInt("credit");
+                boolean admin = rs.getBoolean("administrateur");
+
+                Utilisateur utilisateurCopie = new Utilisateur(noUtilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,motDePasse,credit,admin);
+                listUtilisateur.add(utilisateurCopie);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listUtilisateur;
     }
 
     //TODO:Faire la javadoc
@@ -135,9 +194,43 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
         return utilisateur;
     }
 
+    @Override
+    public boolean confirmPassword(String password , int id) {
+        PreparedStatement ps = null;
+        ResultSet rs =null;
+        JCrypt jCrypt = new JCrypt();
+        boolean mdpConfirmer = false;
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            ps= cnx.prepareStatement(CONFIRM_PASSWORD_SQL);
+            ps.setInt(1,id);
+            rs = ps.executeQuery();
+            while (rs.next()){
+               String mdpInDb = rs.getString("mot_de_passe");
+               StringBuilder mdpDecrypt = jCrypt.decrypt(mdpInDb.replaceAll("\\s", "").toUpperCase(),1);
+               String mdpAverifer = String.valueOf(mdpDecrypt);
+               if (mdpAverifer.equalsIgnoreCase(password)){
+                   mdpConfirmer=true;
+               }
+
+           }
+
+       } catch (SQLException e) {
+           throw new RuntimeException(e);
+       }
+       return mdpConfirmer;
+    }
+
     /**
      * TODO: FAIRE LA JAVADOC
      *
+     * @param pseudo
+     * @param email
+     * @return
+     * @throws BuissnessException
+     */
+
+    /**
+     * méthode VerifPseudoAndMail à remonter dans BLL
      * @param pseudo
      * @param email
      * @return
@@ -171,6 +264,45 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
         }
 
         return true;
+    }
+
+    private boolean verifPseudoMailUpdate (String pseudo, String email, int id) throws BuissnessException{
+       boolean pseudoMailValide = verifPseudoAndMail(pseudo,email);
+
+       if(!pseudoMailValide){
+        String getPseudoMailSql = "SELECT pseudo, email FROM dbo.UTILISATEURS WHERE no_utilisateur = ?";
+
+            try (Connection cnx = ConnectionProvider.getConnection()) {
+                PreparedStatement preparedStatement = cnx.prepareStatement(getPseudoMailSql);
+                preparedStatement.setInt(1, id);
+                ResultSet rs = preparedStatement.executeQuery();
+                System.out.println("je fais mon PrepareSt");
+
+                while (rs.next()) {
+                    String pseudoOriginal = rs.getString("pseudo");
+                    String mailOriginal = rs.getString("email");
+                    System.out.println("je recupère  Pseudo Original et email Ori"+pseudoOriginal+mailOriginal);
+
+                    if (pseudoOriginal.equalsIgnoreCase((pseudo))) {
+
+                        pseudoMailValide = true;
+                    }
+                    if (mailOriginal.equalsIgnoreCase(email)) {
+                        pseudoMailValide = true;
+
+                    }
+
+
+                }
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+
+        }return pseudoMailValide;
+
+
+
     }
 
 }

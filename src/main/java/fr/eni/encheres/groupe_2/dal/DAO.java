@@ -9,6 +9,6 @@ public interface DAO<T>{
     void addNew(T object) throws BuissnessException;
     void delete(int id);
     T selectById(int id);
-    void update(T object);
+    void update(T object) throws BuissnessException;
     List<T> selectALL();
 }

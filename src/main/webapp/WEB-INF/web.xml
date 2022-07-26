@@ -100,6 +100,14 @@
         <url-pattern>/error-toast</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>confirm-modal</servlet-name>
+        <jsp-file>/WEB-INF/components/public/modalConfirmation.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>confirm-modal</servlet-name>
+        <url-pattern>/confirm-modal</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>sign-up-form</servlet-name>
         <jsp-file>/WEB-INF/components/SignUp/sign-up-formulaire.jsp</jsp-file>
     </servlet>

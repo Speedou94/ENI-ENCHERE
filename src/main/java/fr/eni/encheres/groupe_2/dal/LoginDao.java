@@ -5,4 +5,5 @@ import fr.eni.encheres.groupe_2.bo.Utilisateur;
 
 public interface LoginDao {
     Utilisateur login(String pseudo , String password) throws BuissnessException;
+    boolean confirmPassword(String password , int id);
 }

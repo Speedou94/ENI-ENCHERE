@@ -45,7 +45,6 @@ public class UtilisateurControlleur extends HttpServlet {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
         if (request.getParameter("addNewUtilisateur") != null) {
-
             try {
                 boolean valide = verifPassword(password, confirmPassword);
                 if (valide) {
@@ -62,17 +61,22 @@ public class UtilisateurControlleur extends HttpServlet {
             }
         }
         if (request.getParameter("editUtilisateur") != null) {
-
             try {
                 int id = Integer.parseInt(request.getParameter("editUtilisateur"));
                 Utilisateur utilisateur = new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville);
-                manager.updateUtilisater(utilisateur);
-                request.getSession().setAttribute("login", utilisateur);
+                request.getSession().setAttribute("user",utilisateur);
+                request.setAttribute("confirmModal", "update");
                 rd = request.getRequestDispatcher("/profilPage");
 
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            }  finally {
+
             }
+
+
+        }
+        if(request.getParameter("delete")!=null){
+            rd = request.getRequestDispatcher("/profilPage");
+            request.setAttribute("confirmModal","delete");
 
         }
         rd.forward(request, resp);
