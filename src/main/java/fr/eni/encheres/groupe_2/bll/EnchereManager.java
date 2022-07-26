@@ -47,18 +47,29 @@ public class EnchereManager {
     public void faireEnchere(Enchere enchere) throws BuissnessException {
         boolean nouvelleEnchere = nouvelleEnchere(enchere.getNo_article());
         boolean enchereValable = enchereValable(enchere.getNo_article(),enchere.getMontantEnchere());
-       // int creditDisponible = creditDisponible(enchere.getNo_utilisateur());
-       /* if(creditDisponible<enchere.getMontantEnchere()){
+        int creditDisponible = creditDisponible(enchere.getNo_utilisateur());
+        if(creditDisponible<enchere.getMontantEnchere()){
             throw new BuissnessException(CodeErrorBll.CREDIT_INSUFFISANT);
-        }*/
+        }
         if(nouvelleEnchere){
             enchereDAO.addNew(enchere);
         }
         else if(enchereValable) {
             enchereDAO.update(enchere);
         }
+
+        int creditRestant = creditDisponible-enchere.getMontantEnchere();
+        utilisateurDAO.updateCredit(enchere.getNo_utilisateur(),creditDisponible);
+
+        //TODO faire methode update credits utilisateur  / encheres
     }
 
+
+    /*public updateCreditUtilisateur (Utilisateur utilisateur) throws BuisnessException {
+        utilisateurDAO.update(creditDisponible(enchereDAO.update(utilisateur.getCredit())));
+        return utilisateur.getCredit();
+    throw BuissnessException;
+    }*/
     /**
      * renvoie la meuilleure offre en cours sur un article donnee
      * @param id l'id de l'article
@@ -159,4 +170,20 @@ public class EnchereManager {
         return creditDispo;
 
     }
+   /* public void updateCredit () throws BuissnessException {
+        int creditRestant = 0;
+        int credit = creditDisponible()
+        if (this.creditDisponible(Integer.parseInt("id"))==0)
+        {
+            throw new BuissnessException(CodeErrorBll.CREDIT_INSUFFISANT);
+        }
+        else {
+            creditRestant =(credit-= this.creditDisponible(Integer.parseInt("id")));
+
+        }
+
+    }*/
+
+
+
 }
