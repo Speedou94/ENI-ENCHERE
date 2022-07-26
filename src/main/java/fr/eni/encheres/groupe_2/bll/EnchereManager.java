@@ -47,10 +47,10 @@ public class EnchereManager {
     public void faireEnchere(Enchere enchere) throws BuissnessException {
         boolean nouvelleEnchere = nouvelleEnchere(enchere.getNo_article());
         boolean enchereValable = enchereValable(enchere.getNo_article(),enchere.getMontantEnchere());
-        int creditDisponible = creditDisponible(enchere.getNo_utilisateur());
-        if(creditDisponible<enchere.getMontantEnchere()){
+       // int creditDisponible = creditDisponible(enchere.getNo_utilisateur());
+       /* if(creditDisponible<enchere.getMontantEnchere()){
             throw new BuissnessException(CodeErrorBll.CREDIT_INSUFFISANT);
-        }
+        }*/
         if(nouvelleEnchere){
             enchereDAO.addNew(enchere);
         }
