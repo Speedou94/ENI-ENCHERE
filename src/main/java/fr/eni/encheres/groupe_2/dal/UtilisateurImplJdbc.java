@@ -20,7 +20,9 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
     private final String VERIF_PSEUDO_ET_MAIL_SQL = "SELECT pseudo,email FROM dbo.UTILISATEURS";
 
     private final String UPDATE_UTILISATEUR = "UPDATE dbo.UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=? WHERE no_utilisateur =?";
-
+private final String DELETE_ENCHERE_ET_ARTICLE = "";
+    private final String DELETE_UTILISATEUR ="DELETE FROM dbo.UTILISATEURS WHERE no_utilisateur=?";
+private final String CONFIRM_PASSWORD_SQL = "SELECT mot_de_passe FROM dbo.UUTILISATEURS WHERE no_utilisateur=?";
     //PreparedStatement ps;
     // ResultSet rs;
     //TODO:Faire la javadoc
@@ -59,7 +61,16 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
 
     @Override
     public void delete(int id) {
+        PreparedStatement ps=null;
+        try(Connection cnx =ConnectionProvider.getConnection()) {
+            //TODO: trouver la bonne requete sql
 
+            ps= cnx.prepareStatement(DELETE_ENCHERE_ET_ARTICLE);
+            ps.setInt(1,id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -166,6 +177,32 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
         }
 
         return utilisateur;
+    }
+
+    @Override
+    public boolean confirmPassword(String password , int id) {
+        PreparedStatement ps = null;
+        ResultSet rs =null;
+        JCrypt jCrypt = new JCrypt();
+       boolean mdpConfirmer = false;
+       try(Connection cnx = ConnectionProvider.getConnection()) {
+           ps= cnx.prepareStatement(CONFIRM_PASSWORD_SQL);
+           ps.setInt(1,id);
+           rs = ps.executeQuery();
+           while (rs.next()){
+               String mdpInDb = rs.getString("mot_de_passe");
+               StringBuilder mdpDecrypt = jCrypt.decrypt(password.replaceAll("\\s", "").toUpperCase(),1);
+               String mdpAverifer = String.valueOf(mdpDecrypt);
+               if (mdpAverifer.equalsIgnoreCase(password)){
+                   mdpConfirmer=true;
+               }
+
+           }
+
+       } catch (SQLException e) {
+           throw new RuntimeException(e);
+       }
+       return mdpConfirmer;
     }
 
     /**

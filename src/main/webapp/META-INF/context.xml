@@ -8,7 +8,7 @@
             maxIdle="30"
             maxWaitMillis="10000"
             username="sa"
-            password="123456Passw0rd"
+            password="someThingComplicated1234"
             driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
             url="jdbc:sqlserver://localhost:1433;databaseName=ENCHERES;encrypt=true;trustServerCertificate=true"
     />

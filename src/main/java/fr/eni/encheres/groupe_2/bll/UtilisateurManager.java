@@ -82,6 +82,14 @@ private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
 
         }
     }
+    public void deleteUtilisateur(String password,int id) throws BuissnessException {
+      boolean mdpConfirmer =  loginDao.confirmPassword(password,id);
+      if(mdpConfirmer){
+          utilisateurDAO.delete(id);
+      }else {
+          throw new BuissnessException(CodeErrorBll.PASSWORD_INCORRECT);
+      }
+    }
     private boolean verifPseudoAndMail(String pseudo, String email) throws BuissnessException {
       List<Utilisateur> utilisateurs = catalogue();
       boolean toto = true ;
@@ -125,23 +133,6 @@ private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
     }
 
 
-/*
-private boolean verifId (int id) {
-    boolean ok = false;
-    List<Utilisateur> utilisateurs = catalogue();
-
-    for (Utilisateur u : utilisateurs) {
-
-        if (u.getNoUtilisateur() == id) {
-
-            ok = true;
-        }
-        return ok;
-
-
-    }
-    return ok;
-}*/
     /**
      * Verif les champs des input de saisie nouvel utilisateur et renvoie une erreur le cas echeant
      * Si input valide , autorise la transaction en dal

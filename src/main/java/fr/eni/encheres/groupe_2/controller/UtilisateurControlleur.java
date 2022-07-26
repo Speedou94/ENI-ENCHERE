@@ -45,7 +45,6 @@ public class UtilisateurControlleur extends HttpServlet {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
         if (request.getParameter("addNewUtilisateur") != null) {
-
             try {
                 boolean valide = verifPassword(password, confirmPassword);
                 if (valide) {
@@ -62,24 +61,33 @@ public class UtilisateurControlleur extends HttpServlet {
             }
         }
         if (request.getParameter("editUtilisateur") != null) {
-
             try {
-                System.out.println("je passe Control");
+
                 int id = Integer.parseInt(request.getParameter("editUtilisateur"));
                 Utilisateur utilisateur = new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville);
-                manager.updateUtilisater(utilisateur);
-                request.getSession().setAttribute("login", utilisateur);
+                //  manager.updateUtilisater(utilisateur);
+                request.setAttribute("user",utilisateur);
+                request.setAttribute("confirmModal", "update");
+                //  request.getSession().setAttribute("login", utilisateur);
                 rd = request.getRequestDispatcher("/profilPage");
 
-            } catch (BuissnessException e) {
+            } /*catch (BuissnessException e) {
                 request.setAttribute("error", Integer.parseInt(e.getMessage()));
                 request.setAttribute("editProfil", true);
                 rd = request.getRequestDispatcher("/profilPage");
 
+            }*/ finally {
+
             }
 
 
-        }rd.forward(request, resp);
+        }
+        if(request.getParameter("delete")!=null){
+            rd = request.getRequestDispatcher("/profilPage");
+            request.setAttribute("confirmModal","delete");
+
+        }
+        rd.forward(request, resp);
     }
 
     private boolean verifPassword(String password, String confirmPassword) throws BuissnessException {
