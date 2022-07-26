@@ -14,10 +14,12 @@ import java.util.List;
 public class UtilisateurManager {
     private static UtilisateurManager instance;
     private LoginDao loginDao = DaoFactory.loginDao();
+    private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
 
-
-
-private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
+    /**
+     * Instance du manager
+     * @return un instance
+     */
     public static UtilisateurManager getInstance(){
         if(instance==null){
             return instance = new UtilisateurManager();
@@ -27,50 +29,63 @@ private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
 
     private UtilisateurManager() {
     }
-    //TODO:Faire la javadoc
+
+    /**
+     * Fonction de login
+     * @param pseudo String du pseudo
+     * @param password String du mdp
+     * @return Les info de l'utlisateur et le log automatiquement
+     * @throws BuissnessException Renvoie les erreur en cas de mdp ou pseudo incorrect
+     */
     public Utilisateur login(String pseudo ,String password) throws BuissnessException {
         return loginDao.login(pseudo,password);
     }
 
+    /**
+     * Cherge la bdd utlisateur dans l'instance
+     * @return le catalogue complet des utlisateur
+     */
     private static List<Utilisateur> catalogueUtilisateur(){
         return utilisateurDAO.selectALL();
     }
 
-    public List<Utilisateur> catalogue (){
-
+    /**
+     * Permet d'acceder au catalogue depuis une instannce de manager
+     * @return le catalogue complet des utlisateur
+     */
+    private List<Utilisateur> catalogue (){
         return catalogueUtilisateur();
     }
 
 
-
-    //TODO:Faire la javadoc
+    /**
+     * Insertion d'un nouvel utlisateur apres verif du pseudo et mail non utlisier en BDD
+     * @param utilisateur Les info complete du nouvel utlisateur
+     * @throws BuissnessException renvoie les differentes erreur si les champs de saisie ne sont pas valide
+     */
     public void newUtilisateur (Utilisateur utilisateur)throws BuissnessException
     {
         boolean verifInputOk = verifInput(utilisateur);
         boolean pseudoAndMail = verifPseudoAndMail(utilisateur.getPseudo(), utilisateur.getEmail());
-
         if (verifInputOk && pseudoAndMail){
             utilisateurDAO.addNew(utilisateur);
         }
     }
 
-
-
-    //TODO:Faire la javadoc
+    /**
+     * Methode de mise a jour du profil utilisateur
+     * @param utilisateur les info de l'utlisateur saisie dans le formulaire
+     * @param password son mdp passe saise dans la modal de confirmation pour valider le update
+     * @throws BuissnessException renvoie les differente erreur de saisie possible
+     */
     public void updateUtilisater(Utilisateur utilisateur ,String password) throws BuissnessException {
-        System.out.println(utilisateur.getPseudo());
+
         boolean verifPassword = loginDao.confirmPassword(password,utilisateur.getNoUtilisateur());
-        System.out.println("verif pass" +  verifPassword);
         if(!verifPassword){
             throw new BuissnessException(CodeErrorBll.PASSWORD_INCORRECT);
         }
         boolean verifInputOk = verifInput(utilisateur);
-        System.out.println("verfifinpiu" + verifInputOk);
-
         boolean updateValide = verifPseudoUpdate(utilisateur.getPseudo(), utilisateur.getNoUtilisateur());;
-
-
-        System.out.println("verfif update"+updateValide);
         if(!updateValide){
             throw new BuissnessException(CodeErrorBll.CHAMP_INVALIDE);
         }
@@ -79,32 +94,51 @@ private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
             utilisateurDAO.update(utilisateur);
         }
     }
+
+    /**
+     * Methode de supression du profil de l'utlisateur apres verification par son mdp
+     * @param password son mot de passe saisie dans la modal de confirmation
+     * @param id le no de l'utilisateur
+     * @throws BuissnessException renvoie les differente erreur de saisie possible
+     */
     public void deleteUtilisateur(String password,int id) throws BuissnessException {
-      boolean mdpConfirmer =  loginDao.confirmPassword(password,id);
-      if(mdpConfirmer){
-          utilisateurDAO.delete(id);
-      }else {
+       boolean passwordIsVelide = validatePassword(password);
+       boolean mdpConfirmer =  loginDao.confirmPassword(password,id);
+       if(mdpConfirmer && passwordIsVelide){
+           utilisateurDAO.delete(id);
+       } else {
           throw new BuissnessException(CodeErrorBll.PASSWORD_INCORRECT);
-      }
+       }
     }
+
+    /**
+     * Verifie que le pseudo et le mail sont bien absent de la bdd pour validation
+     * @param pseudo le pseudo donner dans le formulaire
+     * @param email l'email donner dans le formulaire
+     * @throws BuissnessException renvoie les differente erreur de saisie possible
+     */
     private boolean verifPseudoAndMail(String pseudo, String email) throws BuissnessException {
       List<Utilisateur> utilisateurs = catalogue();
       boolean isValide = true ;
-
       for (Utilisateur u: utilisateurs) {
-
-            if( u.getPseudo().equalsIgnoreCase(pseudo)){
-                isValide = false;
-                System.out.println(u.getPseudo());
+            if(u.getPseudo().equalsIgnoreCase(pseudo)){
+               throw new BuissnessException(CodeErrorBll.PSEUDO_DEJA_UTILISE);
             }
             if(u.getEmail().equalsIgnoreCase(email)){
-                isValide = false;
+                throw new BuissnessException(CodeErrorBll.EMAIL_DEJA_UTILISE);
             }
-        } return isValide ;
-
-
+        }
+      return isValide ;
     }
-    private boolean verifPseudoUpdate (String pseudo , int id) throws BuissnessException{
+
+    /**
+     * Verifie que le pseudo  envoye dans la mise a jour du profil etait bien ceux de l'utilisateur connecter
+     * verfie que le nouveau pseudo ne soit pas deja utiliser
+     * @param pseudo Le nouveau pseudo
+     * @param id le numero de l'utilsateur
+     * @return un booleen autorisant ou non la suite de la requete
+     */
+    private boolean verifPseudoUpdate (String pseudo , int id) {
         List<Utilisateur> utilisateurs = catalogue();
         boolean ok =true;
             for (Utilisateur u:utilisateurs) {
@@ -147,12 +181,24 @@ private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
         if (!emailIsValide){
             throw new BuissnessException(CodeErrorBll.EMAIL_INVALIDE);
         }
+        boolean passwordIsValide = validatePassword(utilisateur.getMotDePasse());
+        if(!passwordIsValide){
+            throw new BuissnessException(CodeErrorBll.PASSWORD_NON_ALPHABETIC);
+        }
         if (taillePseudo<21){
         ok=true ;
         }
-      return ok ;
+        return ok ;
+    }
 
-    };
+    /**
+     * Verifie que la chaine de carater passer est bien un mot alphabetique
+     * @param motDePasse String du mot de passe saisie
+     * @return booleen
+     */
+    private boolean validatePassword(String motDePasse) {
+        return  motDePasse.matches("/^[A-Za-z]+$/");
+    }
 
     /**
      * Verifie que le champs saisie dans l'input est bien de type numerique
