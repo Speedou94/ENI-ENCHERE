@@ -30,9 +30,7 @@
             <label for="password">Mot de passe</label>
             <input type="password" name="password" id="password">
             <input name="idUtilisateur" value="${login.noUtilisateur}" hidden >
-            <c:if test="${!empty user}">
-               <c:set var="user" value="${user}" scope="request"/>
-            </c:if>
+
         </section>
         <footer class="modal-card-foot">
             <button class="button is-success" type="submit" name="valider">Valider</button>

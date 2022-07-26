@@ -57,29 +57,26 @@ private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
 
 
     //TODO:Faire la javadoc
-    public void updateUtilisater(Utilisateur utilisateur) throws BuissnessException {
-
-        System.out.println("je passe au debut manager");
+    public void updateUtilisater(Utilisateur utilisateur ,String password) throws BuissnessException {
+        System.out.println(utilisateur.getPseudo());
+        boolean verifPassword = loginDao.confirmPassword(password,utilisateur.getNoUtilisateur());
+        System.out.println("verif pass" +  verifPassword);
+        if(!verifPassword){
+            throw new BuissnessException(CodeErrorBll.PASSWORD_INCORRECT);
+        }
         boolean verifInputOk = verifInput(utilisateur);
-        boolean pseudoAndMail = verifPseudoAndMail(utilisateur.getPseudo(), utilisateur.getEmail());
-        System.out.println(pseudoAndMail);
+        System.out.println("verfifinpiu" + verifInputOk);
 
-        boolean updateValide =true;
+        boolean updateValide = verifPseudoUpdate(utilisateur.getPseudo(), utilisateur.getNoUtilisateur());;
 
-        if(!pseudoAndMail){
-             updateValide = verifPseudoAndMailValide(utilisateur.getPseudo(),utilisateur.getEmail(), utilisateur.getNoUtilisateur());
 
-        }System.out.println(updateValide);
-
+        System.out.println("verfif update"+updateValide);
         if(!updateValide){
             throw new BuissnessException(CodeErrorBll.CHAMP_INVALIDE);
         }
-
         if(verifInputOk) {
-
             System.out.println("je passe dans le manager");
             utilisateurDAO.update(utilisateur);
-
         }
     }
     public void deleteUtilisateur(String password,int id) throws BuissnessException {
@@ -92,44 +89,39 @@ private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
     }
     private boolean verifPseudoAndMail(String pseudo, String email) throws BuissnessException {
       List<Utilisateur> utilisateurs = catalogue();
-      boolean toto = true ;
+      boolean isValide = true ;
 
       for (Utilisateur u: utilisateurs) {
 
             if( u.getPseudo().equalsIgnoreCase(pseudo)){
-                toto = false;
+                isValide = false;
                 System.out.println(u.getPseudo());
             }
             if(u.getEmail().equalsIgnoreCase(email)){
-                toto = false;
+                isValide = false;
             }
-        } return toto ;
+        } return isValide ;
 
 
     }
-    private boolean verifPseudoAndMailValide (String pseudo, String email, int id) throws BuissnessException{
+    private boolean verifPseudoUpdate (String pseudo , int id) throws BuissnessException{
         List<Utilisateur> utilisateurs = catalogue();
         boolean ok =true;
-
-
             for (Utilisateur u:utilisateurs) {
-
-                if (u.getNoUtilisateur()==id){
-
-                    if(u.getPseudo().equalsIgnoreCase(pseudo)){
-                        ok =false;
-
-                    }
-                    if(u.getEmail().equalsIgnoreCase(email)){
-                        ok=false;
-                    }
-
+                if(u.getPseudo().equalsIgnoreCase(pseudo)){
+                    ok=false;
                 }
-
             }
-        return ok;
-
-
+            if(!ok){
+                for (Utilisateur u:utilisateurs
+                     ) {
+                    if(u.getNoUtilisateur()==id){
+                        if(u.getPseudo().equalsIgnoreCase(pseudo))
+                            ok=true;
+                    }
+                }
+            }
+            return ok;
     }
 
 

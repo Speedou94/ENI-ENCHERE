@@ -28,18 +28,30 @@
 
             </label>
 
+
             <label>
                 <fmt:message key="sign_up_first_name" bundle="${message}"/>
                 <input class="input" type="text"
                        placeholder="prenom" name="prenom"
                        value="${login.prenom}">
             </label>
-            <label>
-                <fmt:message key="sign_up_email" bundle="${message}"/>
-                <input class="input" type="email"
-                       placeholder="email" name="email"
-                       value="${login.email}">
-            </label>
+            <c:if test="${empty login}">
+                <label>
+                    <fmt:message key="sign_up_email" bundle="${message}"/>
+                    <input class="input" type="email"
+                           placeholder="email" name="email"
+                          >
+                </label>
+            </c:if>
+            <c:if test="${!empty login}">
+                <label>
+                    <fmt:message key="sign_up_email" bundle="${message}"/>
+                    <input class="input" type="email"
+                           placeholder="email" name="email"
+                           value="${login.email}" readonly>
+                </label>
+            </c:if>
+
             <label>
                 <fmt:message key="sign_up_phone" bundle="${message}"/>
                 <input class="input" type="tel"
@@ -62,14 +74,17 @@
                 <fmt:message key="sign_up_town" bundle="${message}"/>
                 <input class="input" type="text" placeholder="ville" name="ville" value="${login.ville}">
             </label>
-            <label>
-                <fmt:message key="sign_up_password" bundle="${message}"/>
-                <input class="input" type="password" placeholder="mot de passe" name="password">
-            </label>
-            <label>
-                <fmt:message key="sign_up_confirmation" bundle="${message}"/>
-                <input class="input" type="password" placeholder="confirm" name="confirmPassword">
-            </label>
+            <c:if test="${empty login}">
+                <label>
+                    <fmt:message key="sign_up_password" bundle="${message}"/>
+                    <input class="input" type="password" placeholder="mot de passe" name="password">
+                </label>
+                <label>
+                    <fmt:message key="sign_up_confirmation" bundle="${message}"/>
+                    <input class="input" type="password" placeholder="confirm" name="confirmPassword">
+                </label>
+            </c:if>
+
 
         </div>
     </div>

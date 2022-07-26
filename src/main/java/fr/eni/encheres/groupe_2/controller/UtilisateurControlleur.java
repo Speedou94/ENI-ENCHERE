@@ -62,21 +62,13 @@ public class UtilisateurControlleur extends HttpServlet {
         }
         if (request.getParameter("editUtilisateur") != null) {
             try {
-
                 int id = Integer.parseInt(request.getParameter("editUtilisateur"));
                 Utilisateur utilisateur = new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville);
-                //  manager.updateUtilisater(utilisateur);
-                request.setAttribute("user",utilisateur);
+                request.getSession().setAttribute("user",utilisateur);
                 request.setAttribute("confirmModal", "update");
-                //  request.getSession().setAttribute("login", utilisateur);
                 rd = request.getRequestDispatcher("/profilPage");
 
-            } /*catch (BuissnessException e) {
-                request.setAttribute("error", Integer.parseInt(e.getMessage()));
-                request.setAttribute("editProfil", true);
-                rd = request.getRequestDispatcher("/profilPage");
-
-            }*/ finally {
+            }  finally {
 
             }
 

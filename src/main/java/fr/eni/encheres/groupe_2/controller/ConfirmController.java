@@ -2,6 +2,7 @@ package fr.eni.encheres.groupe_2.controller;
 
 import fr.eni.encheres.groupe_2.bll.BuissnessException;
 import fr.eni.encheres.groupe_2.bll.UtilisateurManager;
+import fr.eni.encheres.groupe_2.bo.Utilisateur;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -39,11 +40,21 @@ if(request.getSession().getAttribute("login")!=null){
           rd.forward(request,response);
       }
       if(action.equals("update")){
-          System.out.println("update");
-          System.out.println(request.getAttribute("user"));
 
-          rd = request.getRequestDispatcher("/loginpage");
+          String password = request.getParameter("password");
+          Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");
+          try {
+              manager.updateUtilisater(utilisateur,password);
+              request.getSession().setAttribute("login", utilisateur);
+              rd=request.getRequestDispatcher("/profilPage");
+          } catch (BuissnessException e) {
+              request.setAttribute("error", Integer.parseInt(e.getMessage()));
+              rd=request.getRequestDispatcher("/profilPage");
+          }
+
+
       }
+      rd.forward(request,response);
 
     }
 
