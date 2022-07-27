@@ -100,8 +100,16 @@
         <url-pattern>/error-toast</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>succes-toast</servlet-name>
+        <jsp-file>/WEB-INF/components/public/succes-message-toast.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>succes-toast</servlet-name>
+        <url-pattern>/succes-toast</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>confirm-modal</servlet-name>
-        <jsp-file>/WEB-INF/components/public/modalConfirmation.jsp</jsp-file>
+        <jsp-file>/WEB-INF/components/public/modal-confirmation.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>confirm-modal</servlet-name>
@@ -117,7 +125,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>change-password</servlet-name>
-        <jsp-file>/WEB-INF/components/SignUp/modalChangePassword.jsp</jsp-file>
+        <jsp-file>/WEB-INF/components/SignUp/modal-change-password.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>change-password</servlet-name>

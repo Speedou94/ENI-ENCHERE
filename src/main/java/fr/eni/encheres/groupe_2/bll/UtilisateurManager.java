@@ -80,6 +80,7 @@ public class UtilisateurManager {
      */
     public void updateUtilisater(Utilisateur utilisateur ,String password) throws BuissnessException {
 
+
         boolean verifPassword = loginDao.confirmPassword(password,utilisateur.getNoUtilisateur());
         if(!verifPassword){
             throw new BuissnessException(CodeErrorBll.PASSWORD_INCORRECT);

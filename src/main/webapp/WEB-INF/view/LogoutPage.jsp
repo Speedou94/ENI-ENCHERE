@@ -12,11 +12,22 @@
 <fmt:setBundle basename="message_jsp" var="message"/>
 <html>
 <head>
-    <title>Lougout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="../../style/style.css">
+    <title>Logout</title>
 </head>
-<body>
-Vous etes deconnecter de ENI enchere
-<!-- TODO : Mettre un bouton pour revenir a la page d'accueil en allant faire un get sur la servlet HomeController-->
+<body onload="returnAccueil()">
+
+
+<div class="notification is-link is-light mx-auto max-width50 mt-6">
+   <p class="">
+       <strong class="is-size-4 has-text-centered">Deconnection de l'application en cours merci de patienter</strong>
+   </p>
+    <progress class="progress is-large is-info mt-6" max="100"></progress>
+</div>
+
 
 </body>
+<script src="../../script/logout.js"></script>
 </html>

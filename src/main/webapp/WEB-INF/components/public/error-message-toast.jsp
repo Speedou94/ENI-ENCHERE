@@ -13,9 +13,10 @@
 <head>
     <title>Error-toast</title>
 </head>
-<body>
-<div class="notification is-danger">
+<body onload="toast()">
+<div class="notification is-danger" id="toast">
     <strong><fmt:message key="${error}" bundle="${errors}"/></strong>
 </div>
 </body>
+<script src="../../../script/taost.js"></script>
 </html>

@@ -33,7 +33,7 @@ public class ConfirmController extends HttpServlet {
                      manager.deleteUtilisateur(password,id);
                      request.removeAttribute("login");
                      request.getSession().invalidate();
-                      rd=request.getRequestDispatcher("/logout");
+                     rd=request.getRequestDispatcher("/logout");
                  }
                 catch (BuissnessException e) {
                     request.setAttribute("editProfil", true);
@@ -45,9 +45,11 @@ public class ConfirmController extends HttpServlet {
             if(action.equals("update")){
                     String password = request.getParameter("password");
                     Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");
+                    utilisateur.setMotDePasse(password);
                     try {
                         manager.updateUtilisater(utilisateur,password);
                         request.getSession().setAttribute("login", utilisateur);
+                        request.setAttribute("succes",50001);
                         rd=request.getRequestDispatcher("/profilPage");
                     } catch (BuissnessException e) {
                         request.setAttribute("editProfil", true);
@@ -70,17 +72,20 @@ public class ConfirmController extends HttpServlet {
 
                              if(inputConfirm){
                                  manager.updatePassword(password,newpassord,id);
+                                 request.setAttribute("succes",50000);
                                  rd=request.getRequestDispatcher("/profilPage");
                                 }
                         } catch (BuissnessException e) {
+
                             request.setAttribute("editProfil", true);
                             rd=request.getRequestDispatcher("/profilPage");
                             request.setAttribute("error", Integer.parseInt(e.getMessage()));
 
+
                         }
                 rd.forward(request,response);
         }
-
+            rd.forward(request,response);
     }
 }
     else {
