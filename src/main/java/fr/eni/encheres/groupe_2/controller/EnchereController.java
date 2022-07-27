@@ -38,14 +38,19 @@ public class EnchereController extends HttpServlet {
             int noArticle = Integer.parseInt(request.getParameter("noArticle"));
             int noUilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
             int montant = 0;
+            int prixInitial = Integer.parseInt(request.getParameter("prixInitial"));
             try{
                 montant = Integer.parseInt(request.getParameter("montant"));
             } catch (NumberFormatException e) {
                 request.setAttribute("error",20020);
             }
             Timestamp dateEnchere = Timestamp.valueOf(LocalDateTime.now());
-            System.out.println(dateEnchere);
             rd = request.getRequestDispatcher("/detailArticle");
+            if(montant<prixInitial){
+                request.setAttribute("error",20010);
+                rd.forward(request,response);
+                return;
+            }
             Enchere nouvelleEnchere = new Enchere(dateEnchere,montant,noArticle,noUilisateur);
             try {
                 managerEnchere.faireEnchere(nouvelleEnchere);

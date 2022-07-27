@@ -50,7 +50,11 @@ public class EnchereManager {
         boolean nouvelleEnchere = nouvelleEnchere(enchere.getNo_article());
         boolean enchereValable = enchereValable(enchere.getNo_article(),enchere.getMontantEnchere());
         int creditDisponible = creditDisponible(enchere.getNo_utilisateur());
-        boolean isDernierEncherisseur = isDernierEncherisseur(enchere.getNo_utilisateur(),enchere.getNo_article());
+        boolean isDernierEncherisseur = false;
+        if(!nouvelleEnchere){
+           isDernierEncherisseur = isDernierEncherisseur(enchere.getNo_utilisateur(),enchere.getNo_article());
+        }
+
         if(creditDisponible<enchere.getMontantEnchere()){
             throw new BuissnessException(CodeErrorBll.CREDIT_INSUFFISANT);
         }
@@ -60,14 +64,14 @@ public class EnchereManager {
         }
         else if(enchereValable && !isDernierEncherisseur) {
             int idArticle = enchere.getNo_article();
-         //Met à jour les credit Ancien Encherisseur
+            //Met à jour les credits l'ancien Encherisseur => lui rend sa mise
             Enchere ancienneEnchere = getAnciennEnchere (idArticle);
             int creditAncienEncherisseur = creditDisponible (ancienneEnchere.getNo_utilisateur());
             int nouveauCredit = creditAncienEncherisseur + ancienneEnchere.getMontantEnchere();
             encheresFeatureUtilisateur.updateCredit(ancienneEnchere.getNo_utilisateur(),nouveauCredit);
             enchereDAO.addNew(enchere);
         }
-        // Met à jour Credits Utilisateurs
+        // Met à jour Credits Utilisateurs => debit la mise de son compte
         int creditRestant = creditDisponible-enchere.getMontantEnchere();
         encheresFeatureUtilisateur.updateCredit(enchere.getNo_utilisateur(),creditRestant);
     }

@@ -58,6 +58,7 @@
       <c:if test="${!empty login}">
         <form method="post" action="${pageContext.request.contextPath}/details-encheres/">
           <input value="${detailArticle.noArticle}" name="noArticle" hidden>
+          <input value="${detailArticle.prixInitial}" name="prixInitial" hidden>
           <input value="${login.noUtilisateur}" name="noUtilisateur" hidden>
           <label for="montant" >Montant</label>
           <input type="number" name="montant" placeholder="montant de votre enchere" id="montant" required>
