@@ -54,7 +54,24 @@ private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
         }
     }
 
+    /**
+     * Methode pour recuperer profil user connecté
+     * @param id no Utilisateur envoye par controlleur
+     * @return Profil
+     */
+    public Utilisateur getProfil(int id){
 
+        List<Utilisateur> utilisateurs = catalogue();
+        Utilisateur profil = null;
+    for (Utilisateur u : utilisateurs) {
+
+        if(u.getNoUtilisateur()==id){
+            profil = u;
+
+        }
+
+    }return profil;
+}
 
     //TODO:Faire la javadoc
     public void updateUtilisater(Utilisateur utilisateur ,String password) throws BuissnessException {

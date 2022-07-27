@@ -22,7 +22,12 @@ public class UtilisateurControlleur extends HttpServlet {
         RequestDispatcher rd = null;
 
         if (request.getSession().getAttribute("login") != null) {
+            System.out.println("Profil");
+            int id = Integer.parseInt(request.getParameter("id"));
+            Utilisateur utilisateur = manager.getProfil(id);
+            request.setAttribute("login",utilisateur);
             rd = request.getRequestDispatcher("/profilPage");
+
         } else {
             rd = request.getRequestDispatcher("/signup");
         }

@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao, EncheresDAO {
 
-    private final String UPDATE_CREDIT_UTILISATEUR = "UPDATE dbo.UTILISATEURS SET credit =? WHERE =?";
+    private final String UPDATE_CREDIT_UTILISATEUR = "UPDATE dbo.UTILISATEURS SET credit =? WHERE no_utilisateur=?";
     private final String SELECT_ALL_USERS_SQL = "SELECT * FROM dbo.UTILISATEURS";
     private final String ADD_NEW_SQL = "INSERT INTO dbo.UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     private final String LOGIN_SQL = "SELECT * FROM dbo.UTILISATEURS WHERE pseudo = ?;";
@@ -311,12 +311,14 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao, Encheres
     @Override
     public void updateCredit(int id, int nouveauCredit) {
         PreparedStatement ps = null;
-        ResultSet rs = null;
+
+       // ResultSet rs = null;
 
         try (Connection cnx = ConnectionProvider.getConnection()){
              ps = cnx.prepareStatement(UPDATE_CREDIT_UTILISATEUR);
-             ps.setInt(1,id);
-             ps.setInt(2,nouveauCredit);
+             ps.setInt(1,nouveauCredit);
+             ps.setInt(2,id);
+
              ps.executeUpdate();
         } catch (SQLException e) {
              throw new RuntimeException(e);

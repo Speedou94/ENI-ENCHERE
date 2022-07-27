@@ -67,6 +67,15 @@
             <td> ${login.ville}</td>
 
         </tr>
+        <<tr>
+        <th>credit
+
+        </th>
+        <td>
+            ${login.credit}</td>
+
+    </tr>
+
     </table>
 <div class="flex-btn-search">
     <a href="${pageContext.request.contextPath}/profil?edit=true" class="button is-primary is-light"><fmt:message key="profil_page_button_modifier" bundle="${message}"/></a>

@@ -37,7 +37,13 @@ public class EnchereController extends HttpServlet {
         if(request.getSession().getAttribute("login")!=null){
             int noArticle = Integer.parseInt(request.getParameter("noArticle"));
             int noUilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
-            int montant = Integer.parseInt(request.getParameter("montant"));
+            int montant = 0;
+            try{
+                montant = Integer.parseInt(request.getParameter("montant"));
+            } catch (NumberFormatException e) {
+                request.setAttribute("error",20020);
+            }
+
             Timestamp dateEnchere = Timestamp.valueOf(LocalDateTime.now());
             System.out.println(dateEnchere);
             rd = request.getRequestDispatcher("/detailArticle");

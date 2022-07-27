@@ -12,5 +12,5 @@ public interface DAO<T>{
     void update(T object) throws BuissnessException;
     List<T> selectALL();
 
-    void updateCredit(int no_utilisateur, int creditDisponible);
+
 }

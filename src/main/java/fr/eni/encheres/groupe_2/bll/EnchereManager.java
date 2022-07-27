@@ -4,6 +4,7 @@ import fr.eni.encheres.groupe_2.bo.Enchere;
 import fr.eni.encheres.groupe_2.bo.Utilisateur;
 import fr.eni.encheres.groupe_2.dal.DAO;
 import fr.eni.encheres.groupe_2.dal.DaoFactory;
+import fr.eni.encheres.groupe_2.dal.EncheresDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,9 @@ public class EnchereManager {
     private static DAO<Enchere> enchereDAO = DaoFactory.enchereDAO();
     private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
 
-    /**
+    private static EncheresDAO encheresFeatureUtilisateur = DaoFactory.encheresFeatureUtilisateur();
+
+        /**
      * Instance de Enchere Manager
      * @return une instance du manager
      */
@@ -45,31 +48,31 @@ public class EnchereManager {
      * @throws BuissnessException remonte une erreur en cas de non coformite d'enchere
      */
     public void faireEnchere(Enchere enchere) throws BuissnessException {
+
+
         boolean nouvelleEnchere = nouvelleEnchere(enchere.getNo_article());
         boolean enchereValable = enchereValable(enchere.getNo_article(),enchere.getMontantEnchere());
         int creditDisponible = creditDisponible(enchere.getNo_utilisateur());
+        boolean isDernierEncherisseur = isDernierEncherisseur(enchere.getNo_utilisateur(),enchere.getNo_article());
         if(creditDisponible<enchere.getMontantEnchere()){
             throw new BuissnessException(CodeErrorBll.CREDIT_INSUFFISANT);
         }
         if(nouvelleEnchere){
             enchereDAO.addNew(enchere);
         }
-        else if(enchereValable) {
+        else if(enchereValable && !isDernierEncherisseur) {
             enchereDAO.update(enchere);
+
         }
 
-        int creditRestant = creditDisponible-enchere.getMontantEnchere();
-        utilisateurDAO.updateCredit(enchere.getNo_utilisateur(),creditDisponible);
+        // Met à jour Credits Utilisateurs
 
-        //TODO faire methode update credits utilisateur  / encheres
+        int creditRestant = creditDisponible-enchere.getMontantEnchere();
+        encheresFeatureUtilisateur.updateCredit(enchere.getNo_utilisateur(),creditRestant);
+
+
     }
 
-
-    /*public updateCreditUtilisateur (Utilisateur utilisateur) throws BuisnessException {
-        utilisateurDAO.update(creditDisponible(enchereDAO.update(utilisateur.getCredit())));
-        return utilisateur.getCredit();
-    throw BuissnessException;
-    }*/
     /**
      * renvoie la meuilleure offre en cours sur un article donnee
      * @param id l'id de l'article
@@ -170,19 +173,18 @@ public class EnchereManager {
         return creditDispo;
 
     }
-   /* public void updateCredit () throws BuissnessException {
-        int creditRestant = 0;
-        int credit = creditDisponible()
-        if (this.creditDisponible(Integer.parseInt("id"))==0)
-        {
-            throw new BuissnessException(CodeErrorBll.CREDIT_INSUFFISANT);
-        }
-        else {
-            creditRestant =(credit-= this.creditDisponible(Integer.parseInt("id")));
 
-        }
-
-    }*/
+  private boolean isDernierEncherisseur (int idUtilisateur, int noArticle) throws BuissnessException {
+        boolean isDernier = false;
+        List<Enchere> enchereList = catalogueEnchere();
+      for (Enchere e: enchereList) {
+          if (e.getNo_article()==noArticle){
+              if(e.getNo_utilisateur()==idUtilisateur){
+               throw new BuissnessException(CodeErrorBll.MEME_ENCHERISSEUR);
+              }
+          }
+      }return  isDernier;
+  }
 
 
 

@@ -17,4 +17,8 @@ public class DaoFactory {
     public static AdminDao adminDao(){return new AdminImplJdbc();}
     public static DAO<Retrait> retraitDAO(){return new RetraitImplJdbc();}
     public static DAO<Enchere> enchereDAO(){return new EnchereImplJdbc();}
-}
+
+    public  static  EncheresDAO encheresFeatureUtilisateur (){
+
+        return new UtilisateurImplJdbc();}
+    }
