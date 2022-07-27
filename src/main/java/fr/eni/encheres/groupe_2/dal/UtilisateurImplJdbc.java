@@ -27,6 +27,8 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao, Encheres
 
     private final String DELETE_UTILISATEUR ="DELETE FROM dbo.UTILISATEURS where no_utilisateur=?;";
     private final String CONFIRM_PASSWORD_SQL = "SELECT mot_de_passe FROM dbo.UTILISATEURS WHERE no_utilisateur=?";
+
+    private final String UPDATE_PRIX_VENTE_SQL="UPDATE dbo.ARTICLES_VENDUS SET prix_vente=? WHERE no_article=?";
     //PreparedStatement ps;
     // ResultSet rs;
     //TODO:Faire la javadoc
@@ -324,6 +326,19 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao, Encheres
              throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public void updatePrixVente(int no_article, int montantEnchere) {
+        PreparedStatement ps;
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            ps= cnx.prepareStatement(UPDATE_PRIX_VENTE_SQL);
+            ps.setInt(1,montantEnchere);
+            ps.setInt(2,no_article);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

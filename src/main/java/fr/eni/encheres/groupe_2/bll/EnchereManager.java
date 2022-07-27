@@ -70,6 +70,7 @@ public class EnchereManager {
             int nouveauCredit = creditAncienEncherisseur + ancienneEnchere.getMontantEnchere();
             encheresFeatureUtilisateur.updateCredit(ancienneEnchere.getNo_utilisateur(),nouveauCredit);
             enchereDAO.addNew(enchere);
+            //TODO:mettre lancienne enchere a 0 lors d'une nouvelle.
         }
         // Met à jour Credits Utilisateurs => debit la mise de son compte
         int creditRestant = creditDisponible-enchere.getMontantEnchere();
@@ -177,7 +178,7 @@ public class EnchereManager {
      * @param idUtilisateur
      * @return les credits disponibles
      */
-    private int  creditDisponible(int idUtilisateur){
+    public static int  creditDisponible(int idUtilisateur){
         List<Utilisateur> utilisateurs = utilisateurDAO.selectALL();
         int creditDispo = 0;
         for (Utilisateur u: utilisateurs
@@ -197,7 +198,7 @@ public class EnchereManager {
      * @return true si user dernier
      * @throws BuissnessException
      */
-  private boolean isDernierEncherisseur (int idUtilisateur, int noArticle) throws BuissnessException {
+  public boolean isDernierEncherisseur (int idUtilisateur, int noArticle) throws BuissnessException {
         boolean isDernier = false;
         List<Enchere> enchereList = catalogueEnchere();
         List<Enchere> listeMemeArticle = new ArrayList<>();

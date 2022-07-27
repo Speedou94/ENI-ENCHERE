@@ -8,4 +8,5 @@ public interface EncheresDAO {
      */
     void updateCredit (int id, int nouveauCredit);
 
+    void updatePrixVente(int no_article, int montantEnchere);
 }

@@ -18,6 +18,7 @@ import java.util.List;
 @WebServlet(name = "LoginController", value = "/login")
 public class LoginController extends HttpServlet {
     UtilisateurManager manager = UtilisateurManager.getInstance();
+    ArticleManager managerArticle = ArticleManager.getInstance();
 
 
     @Override
@@ -41,6 +42,7 @@ public class LoginController extends HttpServlet {
         try {
             utilisateur = manager.login(pseudo, password);
             request.getSession().setAttribute("login", utilisateur);
+            managerArticle.verifEnchereFini(utilisateur.getNoUtilisateur());
             rd = request.getRequestDispatcher("/accueil");
 
         } catch (BuissnessException e) {

@@ -2,8 +2,11 @@ package fr.eni.encheres.groupe_2.bll;
 
 import fr.eni.encheres.groupe_2.bo.Article;
 import fr.eni.encheres.groupe_2.bo.Categorie;
+import fr.eni.encheres.groupe_2.bo.Enchere;
+import fr.eni.encheres.groupe_2.bo.Utilisateur;
 import fr.eni.encheres.groupe_2.dal.DAO;
 import fr.eni.encheres.groupe_2.dal.DaoFactory;
+import fr.eni.encheres.groupe_2.dal.EncheresDAO;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -18,6 +21,10 @@ public class ArticleManager {
     private static ArticleManager instance;
 
     private static DAO<Article> articleDAO = DaoFactory.articleDao();
+
+    private static EncheresDAO encheresFeatureUtilisateur = DaoFactory.encheresFeatureUtilisateur();
+
+    private static DAO<Enchere> enchereDAO = DaoFactory.enchereDAO();
 
     /**
      * Instance de Article Manager
@@ -54,8 +61,9 @@ public class ArticleManager {
         for (Article a:toutLesArticles
              ) {
             Date today = new Date();
-            System.out.println(today);
-            if(a.getDateDebutEncheres().before(today) && a.getDateFinEncheres().after(today)){
+            Date yesterday = new Date(today.getTime()-(1000 * 60 * 60 * 24));
+            if(a.getDateDebutEncheres().before(today) && a.getDateFinEncheres().after(yesterday) ){
+
                 enchereouverte.add(a);
             }
         }
@@ -136,10 +144,11 @@ public class ArticleManager {
         if(ouverte){
             for (Article a:listeafiltrer
                  ) {
-
+//TODO verifier les methode de date
                 Date today = new Date();
+                Date tomorrow = new Date(today.getTime()+ (1000 * 60 * 60 * 24));
 
-                if(a.getDateDebutEncheres().before(today) && a.getDateFinEncheres().after(today)){
+                if(a.getDateDebutEncheres().before(today) && a.getDateFinEncheres().after(tomorrow)){
                     listarenvoyer.add(a);
                 }
             }
@@ -191,6 +200,7 @@ public class ArticleManager {
         List<Article> listeafiltrer =catalogueArticle();
         List<Article> listeFiltrer=new ArrayList<>();
         Date today = new Date();
+        //TODO verifier les methode de date
         for (Article a:listeafiltrer
              ) {
             if(a.getDateDebutEncheres().after(today)){
@@ -232,7 +242,52 @@ public class ArticleManager {
         }
 
     }
-    //TODO methode qui credite vendeur quand enchere termine
+
+    public void verifEnchereFini(int id) {
+        List<Article> mesArticles = filteredByMesArticles(id);
+        List<Enchere> listeDesEncheres = enchereDAO.selectALL();
+        List<Article> mesVentesTermine = new ArrayList<>();
+        List<Enchere> encheresSurMemeArticle = new ArrayList<>();
+        Date today = new Date();
+        for (Article a:mesArticles
+             ) {
+            if(a.getDateFinEncheres().before(today)){
+                mesVentesTermine.add(a);
+            }
+        }
+        for (Enchere e:listeDesEncheres
+             ) {
+            for (Article b:mesVentesTermine
+                 ) {
+                if(b.getPrixVente()==0 && e.getNo_article()==b.getNoArticle()){
+                    System.out.println("dans liste esma:"+ e.getNo_article());
+                    encheresSurMemeArticle.add(e);
+                }
+            }
+            int index = encheresSurMemeArticle.size();
+            System.out.println(index);
+            if(index>1){
+                Enchere enchere = encheresSurMemeArticle.get(index-1);
+                System.out.println ("no article avec get+1 : " +enchere.getNo_article());
+                int creditDispo =  EnchereManager.creditDisponible(id);
+                int nouveauCredit = creditDispo+enchere.getMontantEnchere();
+                encheresFeatureUtilisateur.updateCredit(id,nouveauCredit);
+                encheresFeatureUtilisateur.updatePrixVente(enchere.getNo_article(),enchere.getMontantEnchere());
+            //TODO: amerolier ca avec la maj de nouvelle encheres!!!
+            }
+            if(index==1){
+                Enchere enchere = encheresSurMemeArticle.get(0);
+                System.out.println ("no article avec get+0 : " +enchere.getNo_article());
+                System.out.println ("no article avec get prix : " +enchere.getMontantEnchere());
+                int creditDispo =  EnchereManager.creditDisponible(id);
+                int nouveauCredit = creditDispo+enchere.getMontantEnchere();
+                encheresFeatureUtilisateur.updateCredit(id,nouveauCredit);
+                encheresFeatureUtilisateur.updatePrixVente(enchere.getNo_article(),enchere.getMontantEnchere());
+            }
+
+        }
+    }
+
 
 
 }
