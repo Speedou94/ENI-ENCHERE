@@ -42,7 +42,8 @@ rd.forward(request,response);
        Retrait retrait = new Retrait(article.getNoArticle(),rue,ville,codepostal);
        retraitManager.addNew(retrait);
    } catch (BuissnessException e) {
-       throw new RuntimeException(e);
+       //rd = request.getRequestDispatcher("/loginpage");
+       request.setAttribute("error", Integer.parseInt(e.getMessage()));
    }
         rd.forward(request,response);
     }

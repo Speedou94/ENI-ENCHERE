@@ -56,14 +56,33 @@ public class EnchereManager {
         }
         if(nouvelleEnchere){
             enchereDAO.addNew(enchere);
+
         }
         else if(enchereValable && !isDernierEncherisseur) {
-            enchereDAO.update(enchere);
-
+            int idArticle = enchere.getNo_article();
+         //Met à jour les credit Ancien Encherisseur
+            Enchere ancienneEnchere = getAnciennEnchere (idArticle);
+            int creditAncienEncherisseur = creditDisponible (ancienneEnchere.getNo_utilisateur());
+            int nouveauCredit = creditAncienEncherisseur + ancienneEnchere.getMontantEnchere();
+            encheresFeatureUtilisateur.updateCredit(ancienneEnchere.getNo_utilisateur(),nouveauCredit);
+            enchereDAO.addNew(enchere);
         }
         // Met à jour Credits Utilisateurs
         int creditRestant = creditDisponible-enchere.getMontantEnchere();
         encheresFeatureUtilisateur.updateCredit(enchere.getNo_utilisateur(),creditRestant);
+    }
+
+    private Enchere getAnciennEnchere(int idArticle) {
+        List<Enchere> enchereList = catalogueEnchere();
+        Enchere ancienneEnchere = null;
+
+        for (Enchere e:enchereList) {
+            if(e.getNo_article()==idArticle) {
+
+                ancienneEnchere = e;
+            }
+
+        }return ancienneEnchere ;
     }
 
     /**
@@ -177,13 +196,20 @@ public class EnchereManager {
   private boolean isDernierEncherisseur (int idUtilisateur, int noArticle) throws BuissnessException {
         boolean isDernier = false;
         List<Enchere> enchereList = catalogueEnchere();
-      for (Enchere e: enchereList) {
+        List<Enchere> listeMemeArticle = new ArrayList<>();
+        for (Enchere e: enchereList) {
           if (e.getNo_article()==noArticle){
-              if(e.getNo_utilisateur()==idUtilisateur){
-               throw new BuissnessException(CodeErrorBll.MEME_ENCHERISSEUR);
-              }
+             listeMemeArticle.add(e);
           }
-      }return  isDernier;
+      }
+        int index = listeMemeArticle.size();
+      Enchere derniereEnchere = listeMemeArticle.get(index-1);
+        if(derniereEnchere.getNo_utilisateur() == idUtilisateur) {
+            throw new BuissnessException(CodeErrorBll.MEME_ENCHERISSEUR);
+        }
+
+      return  isDernier;
+
   }
 
 }

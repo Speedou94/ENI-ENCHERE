@@ -221,17 +221,19 @@ public class ArticleManager {
      * Ajoute un nouvel article a vendre en BDD
      * @param article Article renseigner par l'utlisateur
      * @throws BuissnessException Renvoye une erreur a l'utlistateur en cas de lever d'exception
-     * TODO: faire les exception en cas de date invalide , ou de montant non numerique
      */
     public void addNewArticle(Article article) throws BuissnessException {
-        boolean dateValide = false;
-        if(article.getDateDebutEncheres()<article.getDateFinEncheres()){
 
+        if(article.getDateDebutEncheres().after(article.getDateFinEncheres())){
+            throw new BuissnessException(CodeErrorBll.CHAMP_INVALIDE);
+        }
+        else {
+            articleDAO.addNew(article);
         }
 
-
-        articleDAO.addNew(article);
     }
+    //TODO methode qui credite vendeur quand enchere termine
+
 
 }
 

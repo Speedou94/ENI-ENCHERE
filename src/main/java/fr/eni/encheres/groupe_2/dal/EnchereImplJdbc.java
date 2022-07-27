@@ -9,7 +9,7 @@ import java.util.List;
 public class EnchereImplJdbc implements DAO<Enchere> {
     private final String ADD_NEW_ENCHERE_SQL="INSERT INTO dbo.ENCHERES (date_enchere,montant_enchere,no_article,no_utilisateur) VALUES (?,?,?,?)";
    private final String SELECT_ALL_ENCHERE_SQL="SELECT * FROM dbo.ENCHERES";
-   private final String UPDATE_ENCHERE_SQL="UPDATE dbo.ENCHERES SET date_enchere=?,montant_enchere=?,no_utilisateur=?";
+   private final String UPDATE_ENCHERE_SQL="UPDATE dbo.ENCHERES SET date_enchere=?,montant_enchere=?,no_utilisateur=? WHERE no_article=?";
 
     /**
      * ajoute une nouvelle enchere en BDD
@@ -52,6 +52,7 @@ try(Connection cnx = ConnectionProvider.getConnection()) {
     ps.setTimestamp(1,object.getDateEnchere());
     ps.setInt(2,object.getMontantEnchere());
     ps.setInt(3,object.getNo_utilisateur());
+    ps.setInt(4,object.getNo_article());
     ps.executeUpdate();
 
 } catch (SQLException e) {
