@@ -17,14 +17,11 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
     private final String SELECT_ALL_USERS_SQL = "SELECT * FROM dbo.UTILISATEURS";
     private final String ADD_NEW_SQL = "INSERT INTO dbo.UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     private final String LOGIN_SQL = "SELECT * FROM dbo.UTILISATEURS WHERE pseudo = ?;";
-  //  private final String VERIF_PSEUDO_ET_MAIL_SQL = "SELECT pseudo,email FROM dbo.UTILISATEURS";
-
     private final String UPDATE_UTILISATEUR = "UPDATE dbo.UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=? WHERE no_utilisateur =?";
     private final String DELETE_RETRAIT_SQL = "DELETE FROM RETRAITS where no_article in (select no_article from ARTICLES_VENDUS where no_utilisateur=?)";
-    private final String DELETE_ARTICLES="DELETE FROM dbo.ARTICLES_VENDUS where no_utilisateur = ?;";
+    private final String DELETE_ARTICLES= "DELETE FROM dbo.ARTICLES_VENDUS where no_utilisateur = ?;";
     private final String DELETE_ENCHERE_SQL = "DELETE FROM dbo.ENCHERES where no_utilisateur = ?;";
-
-    private final String DELETE_UTILISATEUR ="DELETE FROM dbo.UTILISATEURS where no_utilisateur=?;";
+    private final String DELETE_UTILISATEUR = "DELETE FROM dbo.UTILISATEURS where no_utilisateur=?;";
     private final String CONFIRM_PASSWORD_SQL = "SELECT mot_de_passe FROM dbo.UTILISATEURS WHERE no_utilisateur=?";
 
     /**
@@ -237,41 +234,6 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
        }
        return mdpConfirmer;
     }
-
-
-
-
-  /*  private boolean verifPseudoAndMail(String pseudo, String email) throws BuissnessException {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        List<String> listePseudo = new ArrayList<>();
-        List<String> listeEmail = new ArrayList<>();
-        try (Connection cnx = ConnectionProvider.getConnection()) {
-            ps = cnx.prepareStatement(VERIF_PSEUDO_ET_MAIL_SQL);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                String pseudoDb = rs.getString("pseudo");
-                String emailDb = rs.getString("email");
-                listeEmail.add(emailDb);
-                listePseudo.add(pseudoDb);
-            }
-            if (listePseudo.contains(pseudo)) {
-
-                throw new BuissnessException(ErrorCodeDAL.PSEUDO_DEJA_UTILISE);
-            }
-            if (listeEmail.contains(email)) {
-
-                throw new BuissnessException(ErrorCodeDAL.EMAIL_DEJA_UTILISE);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return true;
-    }*/
-
-
 
 }
 

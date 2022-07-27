@@ -169,16 +169,19 @@ public class UtilisateurManager {
     private boolean verifInput(Utilisateur utilisateur) throws BuissnessException {
         boolean ok = false ;
         int taillePseudo = utilisateur.getPseudo().length();
+        if(taillePseudo==0){
+            throw new BuissnessException(CodeErrorBll.PSEUDO_INCORRECT);
+        }
         boolean telephooneIsNumeric =  isNumeric(utilisateur.getTelephone());
         if(!telephooneIsNumeric){
             throw new BuissnessException(CodeErrorBll.TELEPHONE_INVALIDE);
         }
         boolean codePostalIsNumeric = isNumeric(utilisateur.getCodePostal());
-        if(!codePostalIsNumeric){
+        if(!codePostalIsNumeric || utilisateur.getCodePostal()==null){
             throw new BuissnessException(CodeErrorBll.CODE_POSTAL_INVALIDE);
         }
         boolean emailIsValide = validateEmail(utilisateur.getEmail());
-        if (!emailIsValide){
+        if (!emailIsValide || utilisateur.getEmail()==null){
             throw new BuissnessException(CodeErrorBll.EMAIL_INVALIDE);
         }
         boolean passwordIsValide = validatePassword(utilisateur.getMotDePasse());
@@ -217,6 +220,5 @@ public class UtilisateurManager {
     private boolean validateEmail(String email){
         return email.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
     }
-
 
 }
