@@ -116,6 +116,14 @@
         <url-pattern>/sign-up-form</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>change-password</servlet-name>
+        <jsp-file>/WEB-INF/components/SignUp/modalChangePassword.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>change-password</servlet-name>
+        <url-pattern>/change-password</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>card-article</servlet-name>
         <jsp-file>/WEB-INF/components/EncherePage/card-encheres.jsp</jsp-file>
     </servlet>

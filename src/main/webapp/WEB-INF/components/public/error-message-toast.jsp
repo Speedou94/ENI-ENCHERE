@@ -15,8 +15,6 @@
 </head>
 <body>
 <div class="notification is-danger">
-    <button class="delete"></button>
-
     <strong><fmt:message key="${error}" bundle="${errors}"/></strong>
 </div>
 </body>

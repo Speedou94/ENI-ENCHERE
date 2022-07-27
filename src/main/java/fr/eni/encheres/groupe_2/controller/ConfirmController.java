@@ -19,49 +19,89 @@ public class ConfirmController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-RequestDispatcher rd = request.getRequestDispatcher("/");
-if(request.getSession().getAttribute("login")!=null){
-    if(request.getParameter("valider")!=null){
-        String action = request.getParameter("action");
-      if(action.equals("delete")){
-          try {
+    RequestDispatcher rd = request.getRequestDispatcher("/");
+    if(request.getSession().getAttribute("login")!=null){
 
-              String password = request.getParameter("password");
-              int id = Integer.parseInt(request.getParameter("idUtilisateur"));
-              manager.deleteUtilisateur(password,id);
-              request.removeAttribute("login");
-              request.getSession().invalidate();
-              rd=request.getRequestDispatcher("/logout");
-          }
-          catch (BuissnessException e) {
-              request.setAttribute("error", Integer.parseInt(e.getMessage()));
-              rd=request.getRequestDispatcher("/profilPage");
-          }
-          rd.forward(request,response);
-      }
-      if(action.equals("update")){
+        if(request.getParameter("valider")!=null){
 
-          String password = request.getParameter("password");
-          Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");
-          try {
-              manager.updateUtilisater(utilisateur,password);
-              request.getSession().setAttribute("login", utilisateur);
-              rd=request.getRequestDispatcher("/profilPage");
-          } catch (BuissnessException e) {
-              request.setAttribute("error", Integer.parseInt(e.getMessage()));
-              rd=request.getRequestDispatcher("/profilPage");
-          }
+            String action = request.getParameter("action");
+
+             if(action.equals("delete")){
+                try {
+                     String password = request.getParameter("password");
+                     int id = Integer.parseInt(request.getParameter("idUtilisateur"));
+                     manager.deleteUtilisateur(password,id);
+                     request.removeAttribute("login");
+                     request.getSession().invalidate();
+                      rd=request.getRequestDispatcher("/logout");
+                 }
+                catch (BuissnessException e) {
+                    request.setAttribute("editProfil", true);
+                    request.setAttribute("error", Integer.parseInt(e.getMessage()));
+                    rd=request.getRequestDispatcher("/profilPage");
+                }
+            }
+
+            if(action.equals("update")){
+                    String password = request.getParameter("password");
+                    Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");
+                    try {
+                        manager.updateUtilisater(utilisateur,password);
+                        request.getSession().setAttribute("login", utilisateur);
+                        rd=request.getRequestDispatcher("/profilPage");
+                    } catch (BuissnessException e) {
+                        request.setAttribute("editProfil", true);
+                        rd=request.getRequestDispatcher("/profilPage");
+                        request.setAttribute("error", Integer.parseInt(e.getMessage()));
+                    }
+            }
+
+            if (action.equals("newpassword")){
+                    String password = request.getParameter("password");
+                    String confimpassword = request.getParameter("confirmPassword");
+                    String newpassord =request.getParameter("newPassword");
 
 
-      }
-      rd.forward(request,response);
+                    try {
+
+                        boolean inputConfirm = verifPassword(password,confimpassword);
+                        System.out.println(inputConfirm);
+                        int id = Integer.parseInt(request.getParameter("idUtilisateur"));
+
+                             if(inputConfirm){
+                                 manager.updatePassword(password,newpassord,id);
+                                 rd=request.getRequestDispatcher("/profilPage");
+                                }
+                        } catch (BuissnessException e) {
+                            request.setAttribute("editProfil", true);
+                            rd=request.getRequestDispatcher("/profilPage");
+                            request.setAttribute("error", Integer.parseInt(e.getMessage()));
+
+                        }
+                rd.forward(request,response);
+        }
+
+    }
+}
+    else {
+        rd = request.getRequestDispatcher("/loginpage");
+        rd.forward(request,response);
+         }
 
     }
 
-
-}else {
-    rd = request.getRequestDispatcher("/loginpage");
-}
-rd.forward(request,response);
+    /**
+     * Verifie que les input mot de passe et confirm mot de passe sont bien les meme
+     * @param password la valeur de l'input mot de passe
+     * @param confirmPassword la valeur de l'input confirm mot de passe
+     * @return un boolen true si les chmaps sont identique
+     * @throws BuissnessException Remonte l'erreur a l'utlisateur en cas de mauvaise saisie
+     */
+    private boolean verifPassword(String password, String confirmPassword) throws BuissnessException {
+        boolean ok = true;
+        if (!password.equals(confirmPassword)) {
+           throw new BuissnessException(CodeErrorController.BAD_PASSWORD_CONFIRMATION);
+        }
+        return ok;
     }
 }

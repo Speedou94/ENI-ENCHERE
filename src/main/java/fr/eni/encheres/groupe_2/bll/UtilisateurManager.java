@@ -90,8 +90,29 @@ public class UtilisateurManager {
             throw new BuissnessException(CodeErrorBll.CHAMP_INVALIDE);
         }
         if(verifInputOk) {
-            System.out.println("je passe dans le manager");
+
             utilisateurDAO.update(utilisateur);
+        }
+    }
+
+    /**
+     * Mise a jour du mot de passe avec verification de l'ancien mdp en bdd
+     * Verfiei aussi si le nouveau est bien valable dans la regex
+     * @param oldPassword L'ancien mot de passe
+     * @param newPassword le nouveau mot de passe
+     * @param idUtilisateur l'id de l utilisateur pour le update en bdd
+     * @throws BuissnessException renvoie les differente erreur de saisie possible
+     */
+    public void updatePassword(String oldPassword ,String newPassword ,int idUtilisateur) throws BuissnessException {
+        boolean oldPasswordInput = validatePassword(oldPassword);
+        boolean newPasswordInput = validatePassword(newPassword);
+        if(oldPasswordInput && newPasswordInput){
+          boolean verifPassword= loginDao.confirmPassword(oldPassword,idUtilisateur);
+          if(verifPassword){
+              loginDao.changePassword(newPassword,idUtilisateur);
+          }
+        }else {
+            throw new BuissnessException(CodeErrorBll.PASSWORD_INCORRECT);
         }
     }
 
@@ -102,9 +123,9 @@ public class UtilisateurManager {
      * @throws BuissnessException renvoie les differente erreur de saisie possible
      */
     public void deleteUtilisateur(String password,int id) throws BuissnessException {
-       boolean passwordIsVelide = validatePassword(password);
+       boolean passwordIsValide = validatePassword(password);
        boolean mdpConfirmer =  loginDao.confirmPassword(password,id);
-       if(mdpConfirmer && passwordIsVelide){
+       if(mdpConfirmer && passwordIsValide){
            utilisateurDAO.delete(id);
        } else {
           throw new BuissnessException(CodeErrorBll.PASSWORD_INCORRECT);
@@ -200,7 +221,8 @@ public class UtilisateurManager {
      * @return booleen
      */
     private boolean validatePassword(String motDePasse) {
-        return  motDePasse.matches("/^[A-Za-z]+$/");
+
+        return  motDePasse.matches("^[A-Za-z]+$");
     }
 
     /**

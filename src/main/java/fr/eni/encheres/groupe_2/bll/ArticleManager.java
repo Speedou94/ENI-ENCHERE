@@ -218,6 +218,7 @@ public class ArticleManager {
      * TODO: faire les exception en cas de date invalide , ou de montant non numerique
      */
     public void addNewArticle(Article article) throws BuissnessException {
+
         articleDAO.addNew(article);
     }
 

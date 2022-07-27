@@ -84,6 +84,9 @@
                     <input class="input" type="password" placeholder="confirm" name="confirmPassword">
                 </label>
             </c:if>
+            <c:if test="${!empty login}">
+                <button class="button is-danger" value="changePassword" name="changePassword" type="submit">Changer de mot de passe</button>
+            </c:if>
 
 
         </div>
@@ -101,6 +104,7 @@
         <fmt:message key="sign_up_modif" bundle="${message}"/>
     </button>
       <button type="submit" value="delete" name="delete" class="button">Delete</button>
+
     <a href="${pageContext.request.contextPath}/encheres/" class="button">
             <fmt:message key="sign-up-cancel" bundle="${message}"/></a>
     </c:if>

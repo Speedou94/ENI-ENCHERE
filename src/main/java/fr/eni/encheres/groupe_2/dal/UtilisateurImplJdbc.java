@@ -24,6 +24,8 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
     private final String DELETE_UTILISATEUR = "DELETE FROM dbo.UTILISATEURS where no_utilisateur=?;";
     private final String CONFIRM_PASSWORD_SQL = "SELECT mot_de_passe FROM dbo.UTILISATEURS WHERE no_utilisateur=?";
 
+    private final String UPDATE_PASSWORD_SQL = "UPDATE dbo.UTILISATEURS SET mot_de_passe = ? WHERE no_utilisateur=?";
+
     /**
      * Insertion d'un nouvel utilisateur en bdd
      * @param object Utilisateur
@@ -155,7 +157,6 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
         return listUtilisateur;
     }
 
-    //TODO:Faire la javadoc
 
     /**
      * Fonction permetant de se logue a l'appli , verifie le pseudo et le mot de passe crypter
@@ -233,6 +234,26 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
            throw new RuntimeException(e);
        }
        return mdpConfirmer;
+    }
+
+    /**
+     * Methode pour changer le mot de passe de l'utlisateur en bdd
+     * @param newpassword le nouveau mot de passe a enregister
+     * @param id le numero de l'utlisteur
+     */
+    @Override
+    public void changePassword(String newpassword, int id) {
+        PreparedStatement ps =null;
+        JCrypt jCrypt =new JCrypt();
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            ps= cnx.prepareStatement(UPDATE_PASSWORD_SQL);
+            StringBuilder cryptedPassw = jCrypt.encrypt(newpassword.replaceAll("\\s", "").toUpperCase(), 1);
+            ps.setString(1,String.valueOf(cryptedPassw));
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

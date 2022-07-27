@@ -79,6 +79,10 @@ public class UtilisateurControlleur extends HttpServlet {
             request.setAttribute("confirmModal","delete");
 
         }
+        if(request.getParameter("changePassword")!=null){
+            rd = request.getRequestDispatcher("/profilPage");
+            request.setAttribute("newPasswordModal",true);
+        }
         rd.forward(request, resp);
     }
 
