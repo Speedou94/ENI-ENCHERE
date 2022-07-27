@@ -18,12 +18,12 @@
     <div class="form-new-user">
         <div class="input-container">
             <label> <fmt:message key="sign_up_pseudo" bundle="${message}"/>
-                <input class="input" type="text" placeholder="pseudo" name="pseudo" value="${login.pseudo}">
+                <input class="input" type="text" placeholder="<fmt:message key="sign_up_pseudo" bundle="${message}"/>" name="pseudo" value="${login.pseudo}">
             </label>
             <label>
                 <fmt:message key="sign_up_last_name" bundle="${message}"/>
                 <input class="input" type="text"
-                       placeholder="nom" name="nom"
+                       placeholder="<fmt:message key="sign_up_last_name" bundle="${message}"/>" name="nom"
                        value="${login.nom}">
 
             </label>
@@ -32,14 +32,14 @@
             <label>
                 <fmt:message key="sign_up_first_name" bundle="${message}"/>
                 <input class="input" type="text"
-                       placeholder="prenom" name="prenom"
+                       placeholder="<fmt:message key="sign_up_first_name" bundle="${message}"/>" name="prenom"
                        value="${login.prenom}">
             </label>
             <c:if test="${empty login}">
                 <label>
                     <fmt:message key="sign_up_email" bundle="${message}"/>
                     <input class="input" type="email"
-                           placeholder="email" name="email"
+                           placeholder="<fmt:message key="sign_up_email" bundle="${message}"/>" name="email"
                           >
                 </label>
             </c:if>
@@ -47,7 +47,7 @@
                 <label>
                     <fmt:message key="sign_up_email" bundle="${message}"/>
                     <input class="input" type="email"
-                           placeholder="email" name="email"
+                           placeholder="<fmt:message key="sign_up_email" bundle="${message}"/>" name="email"
                            value="${login.email}" readonly>
                 </label>
             </c:if>
@@ -55,7 +55,7 @@
             <label>
                 <fmt:message key="sign_up_phone" bundle="${message}"/>
                 <input class="input" type="tel"
-                       placeholder="telephone" name="telephone"
+                       placeholder=" <fmt:message key="sign_up_phone" bundle="${message}"/>" name="telephone"
                        value="${login.telephone}">
             </label>
 
@@ -63,25 +63,25 @@
         <div class="input-container">
             <label>
                 <fmt:message key="sign_up_adress" bundle="${message}"/>
-                <input class="input" type="text" placeholder="adresse" name="rue" value="${login.rue}">
+                <input class="input" type="text" placeholder="<fmt:message key="sign_up_adress" bundle="${message}"/>" name="rue" value="${login.rue}">
             </label>
             <label>
                 <fmt:message key="sign_up_postal_code" bundle="${message}"/>
-                <input class="input" type="text" placeholder="code postale" name="codePostal"
+                <input class="input" type="text" placeholder="<fmt:message key="sign_up_postal_code" bundle="${message}"/>" name="codePostal"
                        value="${login.codePostal}">
             </label>
             <label>
                 <fmt:message key="sign_up_town" bundle="${message}"/>
-                <input class="input" type="text" placeholder="ville" name="ville" value="${login.ville}">
+                <input class="input" type="text" placeholder=" <fmt:message key="sign_up_town" bundle="${message}"/>" name="ville" value="${login.ville}">
             </label>
             <c:if test="${empty login}">
                 <label>
                     <fmt:message key="sign_up_password" bundle="${message}"/>
-                    <input class="input" type="password" placeholder="mot de passe" name="password">
+                    <input class="input" type="password" placeholder="<fmt:message key="sign_up_password" bundle="${message}"/>" name="password">
                 </label>
                 <label>
                     <fmt:message key="sign_up_confirmation" bundle="${message}"/>
-                    <input class="input" type="password" placeholder="confirm" name="confirmPassword">
+                    <input class="input" type="password" placeholder="<fmt:message key="sign_up_confirmation" bundle="${message}"/>" name="confirmPassword">
                 </label>
             </c:if>
 
@@ -90,7 +90,7 @@
     </div>
 
 <c:if test="${empty login}">
-    <button class="button" type="submit" name="addNewUtilisateur"><fmt:message key="sign_up_create"
+    <div class ="button-create"><button class="button" type="submit" name="addNewUtilisateur"><fmt:message key="sign_up_create"
                                                                               bundle="${message}"/></button>
     <a href="${pageContext.request.contextPath}/encheres/" class="button"> <fmt:message key="sign-up-cancel"
                                                                                         bundle="${message}"/>
@@ -104,7 +104,7 @@
     <a href="${pageContext.request.contextPath}/encheres/" class="button">
             <fmt:message key="sign-up-cancel" bundle="${message}"/></a>
     </c:if>
-
+    </div>
 
 </form>
 </body>

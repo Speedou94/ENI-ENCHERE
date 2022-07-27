@@ -20,7 +20,7 @@
     <div class="card">
         <div class="card-image">
             <figure class="image is-128x128">
-                <img src="" alt="Placeholder image">
+                <img src="/img/wip.jpg" alt="Placeholder image">
             </figure>
         </div>
         <div class="card-content">
@@ -37,7 +37,7 @@
 
             <div class="content">
                 <p><fmt:message key="card_encheres_content" bundle="${message}"/>${article.prixInitial} <fmt:message key="card_encheres_price" bundle="${message}"/><br>
-                    <fmt:message key="card_encheres_fin_enchere" bundle="${message}"/>${article.dateFinEncheres}<br>
+                    <fmt:message key="card_encheres_fin_enchere" bundle="${message}"/>${article.dateFinEncheres}<br><br>
                     <fmt:message key="card_encheres_vendeur" bundle="${message}"/>${article.utilisateur.pseudo}</p>
             </div>
         </div>

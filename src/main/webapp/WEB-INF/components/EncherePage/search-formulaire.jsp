@@ -10,30 +10,32 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setBundle basename="message_jsp" var="message"/>
+
+
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/encheres/">
+    <div class="filtres"><label for="search" ><fmt:message key="search_form_filtres" bundle="${message}"/></label>
+    </div>
     <div class="is-flex">
-        <label for="search"> <fmt:message key="search_form_filtres" bundle="${message}"/></label>
-        <input id="search" class="input" name="search" type="text" placeholder="<fmt:message key="search_form_search" bundle="${message}"/>">
+        <input id="search" class="input" name="search" type="text"
+               placeholder="<fmt:message key="search_form_search" bundle="${message}"/>">
     </div>
-    <br>
-    <label for="categories-select"><fmt:message key="search_form_categorie" bundle="${message}"/></label>
-    <div class="flex-btn-search">
-        <button class="button is-primary is-light"><fmt:message key="search_form_button" bundle="${message}"/></button>
-    </div>
-    <select name="Categories" id="Categories-select">
+    <div class="categories"><label for="categories-select"><fmt:message key="search_form_categorie" bundle="${message}"/></label></div>
+
+    <div class="categorie-select"><select name="Categories" id="Categories-select">
         <option value="0"><fmt:message key="search_form_select_option" bundle="${message}"/></option>
         <c:forEach items="${listDesCategories}" var="categorie">
             <option value="${categorie.noCategorie}">${categorie.libelle}</option>
         </c:forEach>
     </select>
-
-
-
+    </div>
+    <div class="flex-btn-search">
+        <button class="button is-primary is-light"><fmt:message key="search_form_button" bundle="${message}"/></button>
+    </div>
 </form>
 </body>
 </html>

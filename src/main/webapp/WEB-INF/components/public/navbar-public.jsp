@@ -18,7 +18,7 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="${pageContext.request.contextPath}/encheres/">
-            <img src="../../img/logo.png" alt="LogoEniEncheres" id="toto" width="128" height="28">
+            <img src="../../img/logo.png" alt="LogoEniEncheres" id="logo" width="128" height="28">
         </a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" id="burger">

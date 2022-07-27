@@ -18,14 +18,14 @@
 <form method="post" action="${pageContext.request.contextPath}/details-encheres/filtre/">
     <div class="is-flex">
             <label for="search"> <fmt:message key="search_form_filtres" bundle="${message}"/></label>
-            <input id="search" class="input" name="search" type="text" placeholder="<fmt:message key="search_form_search" bundle="${message}"/>">
+            <input id="search" class="search" name="search" type="text" placeholder="<fmt:message key="search_form_search" bundle="${message}"/>">
     </div>
         <br>
     <label for="categories-select"><fmt:message key="search_form_categorie" bundle="${message}"/></label>
     <div class="flex-btn-search">
         <button class="button is-primary is-light" type="submit"><fmt:message key="search_form_button" bundle="${message}"/></button>
     </div>
-        <select name="Categories" id="Categories-select">
+        <select class ="categories" name="Categories" id="Categories-select">
             <option value="0"><fmt:message key="search_form_select_option" bundle="${message}"/></option>
             <c:forEach items="${listDesCategories}" var="categorie">
                 <option value="${categorie.noCategorie}">${categorie.libelle}</option>
