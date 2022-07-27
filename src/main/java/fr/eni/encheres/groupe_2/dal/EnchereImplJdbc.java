@@ -10,7 +10,12 @@ public class EnchereImplJdbc implements DAO<Enchere> {
     private final String ADD_NEW_ENCHERE_SQL="INSERT INTO dbo.ENCHERES (date_enchere,montant_enchere,no_article,no_utilisateur) VALUES (?,?,?,?)";
    private final String SELECT_ALL_ENCHERE_SQL="SELECT * FROM dbo.ENCHERES";
    private final String UPDATE_ENCHERE_SQL="UPDATE dbo.ENCHERES SET date_enchere=?,montant_enchere=?,no_utilisateur=?";
-    @Override
+
+    /**
+     * ajoute une nouvelle enchere en BDD
+     * @param object enchere
+     */
+   @Override
     public void addNew(Enchere object) {
         PreparedStatement ps = null;
         try(Connection cnx = ConnectionProvider.getConnection()) {
@@ -28,7 +33,6 @@ public class EnchereImplJdbc implements DAO<Enchere> {
 
     @Override
     public void delete(int id) {
-
     }
 
     @Override
@@ -36,6 +40,10 @@ public class EnchereImplJdbc implements DAO<Enchere> {
         return null;
     }
 
+    /**
+     * Met à jour la BDD en fonction des encheres effectuees
+     * @param object enchere
+     */
     @Override
     public void update(Enchere object) {
 PreparedStatement ps;
@@ -51,6 +59,10 @@ try(Connection cnx = ConnectionProvider.getConnection()) {
 }
     }
 
+    /**
+     * recupere toutes les encheres dans une liste
+     * @return liste encheres
+     */
     @Override
     public List<Enchere> selectALL() {
         PreparedStatement ps =null;
@@ -72,7 +84,5 @@ try(Connection cnx = ConnectionProvider.getConnection()) {
             throw new RuntimeException(e);
         }
         return listeDesEncheres;
-
-
     }
 }

@@ -38,7 +38,7 @@ public class ArticleManager {
 
     /**
      * Charge le catalogue d'article existant en BDD
-     * @return toute la liste d'article en dbb
+     * @return toute la liste d'article en BDD
      */
     private static List<Article> catalogueArticle(){
         return articleDAO.selectALL();
@@ -104,7 +104,7 @@ public class ArticleManager {
     /**
      * Filtre les aricle par nom ( lettre contenues dans le titre de l'article)
      * @param nomArticle le nom de l'article (String)
-     * @param idCategorie et l'id de se actergorie (si O = toutes les categories)
+     * @param idCategorie et l'id de se categorie (si O = toutes les categories)
      * @return La liste filtre des articles
      */
     public List<Article> filteredListArticlesByName(String nomArticle , int idCategorie) {
@@ -124,11 +124,11 @@ public class ArticleManager {
     }
 
     /**
-     *Filtre les Article disponible pour les ecnheres ouverte a partir du jour de requete
+     *Filtre les Article disponible pour les encheres ouverte a partir du jour de requete
      * @param idCategorie l'id de la categorie (si O = toutes les categories)
      * @param motClef   le nom de l'article (String) si renseigner
      * @param ouverte
-     * @return
+     * @return liste encheres ouverte
      */
     public List<Article> filteredListByEnchereOuverte(int idCategorie,String motClef,boolean ouverte){
         List<Article> listeafiltrer = filteredListArticlesByName(motClef,idCategorie);
@@ -148,6 +148,12 @@ public class ArticleManager {
         }
         return listarenvoyer;
     };
+
+    /**
+     * Filtre la liste des articles (des enchers ouverte) par numero d'article
+     * @param listeDesIdArticles
+     * @return liste des articles
+     */
     public List<Article> filteredListByIdArticle(List<Integer> listeDesIdArticles){
         List<Article> listeafiltrer = catalogueEnchereOuverte();
         List<Article> listeFiltre =new ArrayList<>();
@@ -218,6 +224,12 @@ public class ArticleManager {
      * TODO: faire les exception en cas de date invalide , ou de montant non numerique
      */
     public void addNewArticle(Article article) throws BuissnessException {
+        boolean dateValide = false;
+        if(article.getDateDebutEncheres()<article.getDateFinEncheres()){
+
+        }
+
+
         articleDAO.addNew(article);
     }
 

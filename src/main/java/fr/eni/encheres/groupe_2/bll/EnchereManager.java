@@ -13,7 +13,6 @@ public class EnchereManager {
     private static EnchereManager instance;
     private static DAO<Enchere> enchereDAO = DaoFactory.enchereDAO();
     private static DAO<Utilisateur> utilisateurDAO = DaoFactory.utilisateurDAO();
-
     private static EncheresDAO encheresFeatureUtilisateur = DaoFactory.encheresFeatureUtilisateur();
 
         /**
@@ -35,20 +34,18 @@ public class EnchereManager {
 
     /**
      * Stocke la liste complet des encheres qui sont en BDD
-     * @return
+     * @return liste encheres
      */
     private static List<Enchere> catalogueEnchere(){
         return enchereDAO.selectALL();
     }
 
     /**
-     * Faire une enchere , verifie si le montant est bie surperieur a l'enchere precedente`
-     * TODO : verifie que l'utilisateur est solvable
+     * Faire une enchere , verifie si le montant est bien surperieur a l'enchere precedente`
      * @param enchere Enchere faite a partir de jsp card-detail-article
      * @throws BuissnessException remonte une erreur en cas de non coformite d'enchere
      */
     public void faireEnchere(Enchere enchere) throws BuissnessException {
-
 
         boolean nouvelleEnchere = nouvelleEnchere(enchere.getNo_article());
         boolean enchereValable = enchereValable(enchere.getNo_article(),enchere.getMontantEnchere());
@@ -64,13 +61,9 @@ public class EnchereManager {
             enchereDAO.update(enchere);
 
         }
-
         // Met à jour Credits Utilisateurs
-
         int creditRestant = creditDisponible-enchere.getMontantEnchere();
         encheresFeatureUtilisateur.updateCredit(enchere.getNo_utilisateur(),creditRestant);
-
-
     }
 
     /**
@@ -91,7 +84,10 @@ public class EnchereManager {
     }
 
 
-
+    /**
+     * recupere catalogueEnchere Private en catalogue Public
+     * @return catalogue
+     */
     public List<Enchere> catalogue(){
         return catalogueEnchere();
     }
@@ -127,7 +123,6 @@ public class EnchereManager {
                 int idDeLenchers = e.getNo_article();
                 listeDesEnchresArenvoyer.add(idDeLenchers);
             }
-
         }
         return listeDesEnchresArenvoyer;
     }
@@ -151,15 +146,13 @@ public class EnchereManager {
               }
             }
         }
-
-
         return true;
     }
 
     /**
      * Veridier les credit dispo de l'utlisateur .
      * @param idUtilisateur
-     * @return
+     * @return les credits disponibles
      */
     private int  creditDisponible(int idUtilisateur){
         List<Utilisateur> utilisateurs = utilisateurDAO.selectALL();
@@ -174,6 +167,13 @@ public class EnchereManager {
 
     }
 
+    /**
+     * Verifie si user est dernier encherisseur pour empecher rencherir sur meme enchere
+     * @param idUtilisateur
+     * @param noArticle
+     * @return true si user dernier
+     * @throws BuissnessException
+     */
   private boolean isDernierEncherisseur (int idUtilisateur, int noArticle) throws BuissnessException {
         boolean isDernier = false;
         List<Enchere> enchereList = catalogueEnchere();
@@ -185,7 +185,5 @@ public class EnchereManager {
           }
       }return  isDernier;
   }
-
-
 
 }

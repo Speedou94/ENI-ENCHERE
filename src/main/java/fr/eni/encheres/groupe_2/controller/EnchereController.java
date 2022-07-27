@@ -19,15 +19,15 @@ import java.util.List;
 
 @WebServlet(name = "EnchereController", value = "/details-encheres/*")
 public class EnchereController extends HttpServlet {
-
+    /**
+     * recupere une Instance de Enchere
+     */
    EnchereManager managerEnchere = EnchereManager.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher  rd = request.getRequestDispatcher("/accueil");
-
         rd.forward(request,response);
-
     }
 
     @Override
@@ -43,7 +43,6 @@ public class EnchereController extends HttpServlet {
             } catch (NumberFormatException e) {
                 request.setAttribute("error",20020);
             }
-
             Timestamp dateEnchere = Timestamp.valueOf(LocalDateTime.now());
             System.out.println(dateEnchere);
             rd = request.getRequestDispatcher("/detailArticle");
@@ -60,11 +59,7 @@ public class EnchereController extends HttpServlet {
         else {
             rd=request.getRequestDispatcher("/loginpage");
         }
-        //TODO : prerparer la methode pour echenrir
-
         rd.forward(request,response);
-
-
     }
 }
 
