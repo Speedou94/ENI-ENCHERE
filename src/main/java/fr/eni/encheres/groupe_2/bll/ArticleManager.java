@@ -274,5 +274,32 @@ public class ArticleManager {
             }
         }
     }
+
+    public void rembourseEncherisseur(int idUtilisateur) {
+        List<Article> mesArticles = filteredByMesArticles(idUtilisateur);
+        List<Enchere> listeDesEncheres = enchereDAO.selectALL();
+        Date today = new Date();
+        Date yesterday = new Date(today.getTime()-(1000 * 60 * 60 * 24));
+        int montant =0;
+        int idEncherisseur=0;
+        for (Article a:mesArticles
+             ) {
+            if( a.getDateFinEncheres().after(yesterday)){
+                montant =0 ;
+                for (Enchere e:listeDesEncheres
+                     ) {
+                    if(e.getNo_article()==a.getNoArticle() && e.getMontantEnchere()>montant){
+                        montant=e.getMontantEnchere();
+                        idEncherisseur=e.getNo_utilisateur();
+                    }
+                }
+                if(montant>0){
+                    int nouveauTotal = montant + EnchereManager.creditDisponible(idEncherisseur);
+                    encheresFeatureUtilisateur.updateCredit(idEncherisseur,nouveauTotal);
+                }
+            }
+        }
+
+    }
 }
 

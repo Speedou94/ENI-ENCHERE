@@ -1,5 +1,6 @@
 package fr.eni.encheres.groupe_2.controller;
 
+import fr.eni.encheres.groupe_2.bll.ArticleManager;
 import fr.eni.encheres.groupe_2.bll.BuissnessException;
 import fr.eni.encheres.groupe_2.bll.UtilisateurManager;
 import fr.eni.encheres.groupe_2.bo.Utilisateur;
@@ -12,6 +13,7 @@ import java.io.IOException;
 @WebServlet(name = "ConfirmController", value = "/confirm/*")
 public class ConfirmController extends HttpServlet {
     UtilisateurManager manager = UtilisateurManager.getInstance();
+    ArticleManager managerArticle = ArticleManager.getInstance();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -28,6 +30,7 @@ if(request.getSession().getAttribute("login")!=null){
 
               String password = request.getParameter("password");
               int id = Integer.parseInt(request.getParameter("idUtilisateur"));
+              managerArticle.rembourseEncherisseur(id);
               manager.deleteUtilisateur(password,id);
               request.removeAttribute("login");
               request.getSession().invalidate();
