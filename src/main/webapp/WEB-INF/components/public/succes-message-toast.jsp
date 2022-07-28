@@ -14,8 +14,11 @@
     <title>SuccesMessage</title>
 </head>
 <body onload="toast()">
-<div class="notification is-primary" id="toast">
-    <strong><fmt:message key="${succes}" bundle="${message}"/></strong>
+<div class="notification is-primary is-top" id="toast">
+   <p class="has-text-centered"><strong><fmt:message key="${succes}" bundle="${message}"/></strong></p>
+    <c:if test="${!empty totalGagne}">
+        <p class="has-text-centered">${totalGagne}</p>
+    </c:if>
 </div>
 </body>
 <script src="../../../script/taost.js"></script>

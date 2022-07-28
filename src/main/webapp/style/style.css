@@ -335,3 +335,11 @@ Edit by Niko 18/07/2022
 .max-width50 {
     max-width: 50%;
 }
+/* Edit By Niko 28/07/2022 CSS Toast/
+
+ */
+.is-top{
+    position: fixed;
+    top: 5rem;
+    width: 100%;
+}

@@ -248,11 +248,12 @@ public class ArticleManager {
      * montant le plus eleve des encheres faite , si aucune enchere sur l'article , la valeur de vente finale passe a -1
      * @param idUtilisateur le numero de l'utlisteur qui se connecte
      */
-    public void verifEnchereFini(int idUtilisateur) {
+    public int verifEnchereFini(int idUtilisateur) {
         List<Article> mesArticles = filteredByMesArticles(idUtilisateur);
         List<Enchere> listeDesEncheres = enchereDAO.selectALL();
         Date today = new Date();
         int montant =0;
+        int totalGagneVenteFini=0;
         for (Article a:mesArticles) {
             if(a.getDateFinEncheres().before(today) && a.getPrixVente()==0) {
                 montant = 0;
@@ -265,6 +266,7 @@ public class ArticleManager {
                 if(montant > 0){
                     // on peut crediter pour cet article
                     int nouveauTotal = montant + EnchereManager.creditDisponible(idUtilisateur);
+                    totalGagneVenteFini = totalGagneVenteFini+montant;
                     encheresFeatureUtilisateur.updatePrixVente(a.getNoArticle(),montant);
                     encheresFeatureUtilisateur.updateCredit(idUtilisateur,nouveauTotal);
                 } else {
@@ -273,6 +275,7 @@ public class ArticleManager {
                 }
             }
         }
+        return totalGagneVenteFini;
     }
 
     public void rembourseEncherisseur(int idUtilisateur) {

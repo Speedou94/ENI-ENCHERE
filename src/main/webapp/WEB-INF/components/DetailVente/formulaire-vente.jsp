@@ -9,7 +9,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setBundle basename="message_jsp" var="message"/>
-<c:set var="langue_choisie" value="${param.lang}"/>
+<c:set var="langue_choisie" value="${param.lang}"/>no_categorie
 
 <html>
 <head>
@@ -27,12 +27,12 @@
       method="post">
     <label for="nomArticle" class="nameArticle"><fmt:message key="formulaire_vente_name_article" bundle="${message}"/>
     </label>
-    <input class="input is-primary" type="text" placeholder=
-    <fmt:message key="formulaire_vente_name_article" bundle="${message}"/> id="nomArticle" name="nomArticle">
+    <input class="input is-primary" type="text" placeholder="
+    <fmt:message key="formulaire_vente_name_article" bundle="${message}"/>" id="nomArticle" name="nomArticle">
     <label for="description" class="description"> <fmt:message key="formulaire_vente_description" bundle="${message}"/>
     </label>
-    <textarea class="textarea is-primary" placeholder=
-    <fmt:message key="formulaire_vente_description" bundle="${message}"/> id="description"
+    <textarea class="textarea is-primary" placeholder="
+    <fmt:message key="formulaire_vente_description" bundle="${message}"/>" id="description"
               name="description"></textarea>
 
         <select name="categorie" class="categoriesSell">
@@ -53,7 +53,7 @@
       </span>
     </span>
             <span class="file-name">
-      son nom ici en variable
+      Fonctionabilite non presente
     </span>
         </label>
     </div>
@@ -81,9 +81,9 @@
         <button class="button is-primary is-medium" name="valider" type="submit"><fmt:message
                 key="formulaire_vente_confirm"
                 bundle="${message}"/></button>
-        <button class="button is-danger is-medium" name="annuler" type="submit"><fmt:message
-                key="formulaire_vente_cancel"
-                bundle="${message}"/></button>
+        <a href="${pageContext.request.contextPath}/encheres/" class="button is-danger is-medium"> <fmt:message key="sign-up-cancel"
+                                                                                            bundle="${message}"/>
+        </a>
     </div>
 
 </form>

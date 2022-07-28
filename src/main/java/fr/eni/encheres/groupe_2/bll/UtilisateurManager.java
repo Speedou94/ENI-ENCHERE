@@ -159,6 +159,7 @@ public class UtilisateurManager {
       List<Utilisateur> utilisateurs = catalogue();
       boolean isValide = true ;
 
+
       for (Utilisateur u: utilisateurs) {
             if(u.getPseudo().equalsIgnoreCase(pseudo)){
                throw new BuissnessException(CodeErrorBll.PSEUDO_DEJA_UTILISE);
@@ -178,8 +179,12 @@ public class UtilisateurManager {
      * @param id le numero de l'utilsateur
      * @return un booleen autorisant ou non la suite de la requete
      */
-    private boolean verifPseudoUpdate (String pseudo , int id) {
+    private boolean verifPseudoUpdate (String pseudo , int id) throws BuissnessException {
         List<Utilisateur> utilisateurs = catalogue();
+        int taillePseudo = pseudo.length();
+        if (taillePseudo > 29) {
+            throw new BuissnessException(CodeErrorBll.CHAMP_INVALIDE);
+        }
         boolean ok =true;
             for (Utilisateur u:utilisateurs) {
                 if(u.getPseudo().equalsIgnoreCase(pseudo)){
@@ -207,8 +212,9 @@ public class UtilisateurManager {
      * @throws BuissnessException code erreur envoye au front pour indique a l'utilisateur quel champs est mal rempli
      */
     private boolean verifInput(Utilisateur utilisateur) throws BuissnessException {
-        boolean ok = false;
+        boolean ok = true;
         int taillePseudo = utilisateur.getPseudo().length();
+        System.out.println(taillePseudo);
         boolean telephooneIsNumeric = isNumeric(utilisateur.getTelephone());
         if (!telephooneIsNumeric) {
             throw new BuissnessException(CodeErrorBll.TELEPHONE_INVALIDE);
@@ -221,8 +227,8 @@ public class UtilisateurManager {
         if (!emailIsValide) {
             throw new BuissnessException(CodeErrorBll.EMAIL_INVALIDE);
         }
-        if (taillePseudo < 21) {
-            ok = true;
+        if (taillePseudo > 29) {
+            throw new BuissnessException(CodeErrorBll.CHAMP_INVALIDE);
         }
         return ok;
     }

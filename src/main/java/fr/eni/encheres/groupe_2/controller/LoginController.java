@@ -42,7 +42,13 @@ public class LoginController extends HttpServlet {
         try {
             utilisateur = manager.login(pseudo, password);
             request.getSession().setAttribute("login", utilisateur);
-            managerArticle.verifEnchereFini(utilisateur.getNoUtilisateur());
+            int totalGagne =  managerArticle.verifEnchereFini(utilisateur.getNoUtilisateur());
+            if(totalGagne>0){
+                request.setAttribute("succes",50002);
+                request.setAttribute("totalGagne",totalGagne);
+            }
+
+
             rd = request.getRequestDispatcher("/accueil");
 
         } catch (BuissnessException e) {

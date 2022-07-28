@@ -81,6 +81,12 @@
     </c:if>
 </div>
 <div>
+    <c:if test="${!empty newPasswordModal}">
+        <jsp:include page="${pageContext.request.contextPath}/change-password"/>
+    </c:if>
+</div>
+
+<div>
     <c:if test="${!empty error}">
         <jsp:include page="${pageContext.request.contextPath}/error-toast"/>
     </c:if>
