@@ -33,7 +33,7 @@
 
 
 
-            <div class="navbar-item has-dropdown is-hoverable is-info">
+            <div class="navbar-item has-dropdown is-hoverable ">
                 <p class="navbar-link">
                     <fmt:message key="navbar_public_choix_langue" bundle="${message}"/>
                 </p>

@@ -286,6 +286,7 @@ public class ArticleManager {
              ) {
             if( a.getDateFinEncheres().after(yesterday)){
                 montant =0 ;
+                idEncherisseur=0;
                 for (Enchere e:listeDesEncheres
                      ) {
                     if(e.getNo_article()==a.getNoArticle() && e.getMontantEnchere()>montant){
