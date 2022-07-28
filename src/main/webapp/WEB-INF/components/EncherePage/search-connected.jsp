@@ -15,7 +15,7 @@
     <title>Title</title>
 </head>
 <body>
-<form method="post" action="${pageContext.request.contextPath}/details-encheres/filtre/">
+<form method="post" action="${pageContext.request.contextPath}/articles/">
     <div class="is-flex">
         <label for="search"> <fmt:message key="search_form_filtres" bundle="${message}"/></label>
         <input id="search" class="search" name="search" type="text"
@@ -30,11 +30,12 @@
         </c:forEach>
     </select>
     <div class="flex-btn-search">
+        <input value="${login.noUtilisateur}" name="idUtilisateur" hidden>
         <button class="button is-primary is-light" type="submit"><fmt:message key="search_form_button"
                                                                               bundle="${message}"/></button>
     </div>
     <br>
-    <div class="oépenlist">
+    <div class="openlist">
         <label for="achat">Achat</label>
         <input type="radio" name="select-option" id="achat">
         <label for="ouverte">Enchere ouverte</label>

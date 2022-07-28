@@ -45,6 +45,7 @@ public class ArticleController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher("/accueil");
         if (request.getSession().getAttribute("login")!=null){
+            System.out.println("je suis sla ");
             int idUtilisateur = Integer.parseInt(request.getParameter("idUtilisateur"));
             boolean ouverte = request.getParameter("ouverte")!=null;
             boolean mesEncheres = request.getParameter("mes-encheres")!=null;

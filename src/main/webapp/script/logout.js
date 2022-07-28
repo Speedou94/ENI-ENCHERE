@@ -1,5 +1,5 @@
 function returnAccueil(){
     setTimeout(()=>{
         document.location.href="http://localhost:8080/encheres/"
-    },5000)
+    },4000)
 }
