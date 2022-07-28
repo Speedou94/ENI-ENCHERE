@@ -17,11 +17,14 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
     private final String SELECT_ALL_USERS_SQL = "SELECT * FROM dbo.UTILISATEURS";
     private final String ADD_NEW_SQL = "INSERT INTO dbo.UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     private final String LOGIN_SQL = "SELECT * FROM dbo.UTILISATEURS WHERE pseudo = ?;";
+    private final String VERIF_PSEUDO_ET_MAIL_SQL = "SELECT pseudo,email FROM dbo.UTILISATEURS";
+
     private final String UPDATE_UTILISATEUR = "UPDATE dbo.UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=? WHERE no_utilisateur =?";
-    private final String DELETE_RETRAIT_SQL = "DELETE FROM RETRAITS where no_article in (select no_article from ARTICLES_VENDUS where no_utilisateur=?)";
-    private final String DELETE_ARTICLES= "DELETE FROM dbo.ARTICLES_VENDUS where no_utilisateur = ?;";
+    private final String DELETE_RETRAIT_SQL = "DELETE FROM dbo.RETRAITS where no_article in (select no_article from ARTICLES_VENDUS where no_utilisateur=?)";
+    private final String DELETE_ARTICLES="DELETE FROM dbo.ARTICLES_VENDUS where no_utilisateur = ?;";
     private final String DELETE_ENCHERE_SQL = "DELETE FROM dbo.ENCHERES where no_utilisateur = ?;";
-    private final String DELETE_UTILISATEUR = "DELETE FROM dbo.UTILISATEURS where no_utilisateur=?;";
+
+    private final String DELETE_UTILISATEUR ="DELETE FROM dbo.UTILISATEURS where no_utilisateur=?;";
     private final String CONFIRM_PASSWORD_SQL = "SELECT mot_de_passe FROM dbo.UTILISATEURS WHERE no_utilisateur=?";
 
     private final String UPDATE_PASSWORD_SQL = "UPDATE dbo.UTILISATEURS SET mot_de_passe = ? WHERE no_utilisateur=?";
@@ -31,12 +34,18 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
      * @param object Utilisateur
      * @throws BuissnessException remonte les erreur en cas de mauvaise saisie
      */
+
+    private final String UPDATE_PRIX_VENTE_SQL="UPDATE dbo.ARTICLES_VENDUS SET prix_vente=? WHERE no_article=?";
+    //PreparedStatement ps;
+    // ResultSet rs;
+    //TODO:Faire la javadoc
     @Override
     public void addNew(Utilisateur object) throws BuissnessException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        //Methode maison pour crypter le mot d
+        boolean pseudoAndMailDispo = verifPseudoAndMail(object.getPseudo(), object.getEmail());
         JCrypt jCrypt = new JCrypt();
+        if (pseudoAndMailDispo) {
             try (Connection cnx = ConnectionProvider.getConnection()) {
                 ps = cnx.prepareStatement(ADD_NEW_SQL, PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setString(1, object.getPseudo());
@@ -58,7 +67,7 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
-
+            }
         }
 
     }
@@ -69,7 +78,6 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
      */
     @Override
     public void delete(int id) {
-        System.out.println(id);
         PreparedStatement ps=null;
         try(Connection cnx =ConnectionProvider.getConnection()) {
             ps= cnx.prepareStatement(DELETE_RETRAIT_SQL);
@@ -103,6 +111,10 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
     @Override
     public void update(Utilisateur object) throws BuissnessException {
         PreparedStatement ps = null;
+        ResultSet rs = null;
+        System.out.println("update SQL");
+
+
             try (Connection cnx = ConnectionProvider.getConnection()) {
                 ps = cnx.prepareStatement(UPDATE_UTILISATEUR);
                 System.out.println(object.getNoUtilisateur());
@@ -131,6 +143,7 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
         PreparedStatement ps = null;
         ResultSet rs= null;
         List<Utilisateur> listUtilisateur = new ArrayList<>();
+
         try (Connection cnx = ConnectionProvider.getConnection()){
             ps = cnx.prepareStatement((SELECT_ALL_USERS_SQL));
             rs = ps.executeQuery();
@@ -147,6 +160,7 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
                 String motDePasse = rs.getString("mot_de_passe");
                 int credit = rs.getInt("credit");
                 boolean admin = rs.getBoolean("administrateur");
+
                 Utilisateur utilisateurCopie = new Utilisateur(noUtilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,motDePasse,credit,admin);
                 listUtilisateur.add(utilisateurCopie);
             }
@@ -254,7 +268,15 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+
     }
 
-}
+
+
+
+
+    }
+
+
 

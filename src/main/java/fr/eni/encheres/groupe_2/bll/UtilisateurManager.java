@@ -41,32 +41,23 @@ public class UtilisateurManager {
         return loginDao.login(pseudo,password);
     }
 
-    /**
-     * Cherge la bdd utlisateur dans l'instance
-     * @return le catalogue complet des utlisateur
-     */
     private static List<Utilisateur> catalogueUtilisateur(){
         return utilisateurDAO.selectALL();
     }
 
-    /**
-     * Permet d'acceder au catalogue depuis une instannce de manager
-     * @return le catalogue complet des utlisateur
-     */
-    private List<Utilisateur> catalogue (){
+    public List<Utilisateur> catalogue (){
+
         return catalogueUtilisateur();
     }
 
 
-    /**
-     * Insertion d'un nouvel utlisateur apres verif du pseudo et mail non utlisier en BDD
-     * @param utilisateur Les info complete du nouvel utlisateur
-     * @throws BuissnessException renvoie les differentes erreur si les champs de saisie ne sont pas valide
-     */
+
+    //TODO:Faire la javadoc
     public void newUtilisateur (Utilisateur utilisateur)throws BuissnessException
     {
         boolean verifInputOk = verifInput(utilisateur);
         boolean pseudoAndMail = verifPseudoAndMail(utilisateur.getPseudo(), utilisateur.getEmail());
+
         if (verifInputOk && pseudoAndMail){
             utilisateurDAO.addNew(utilisateur);
         }
@@ -78,20 +69,45 @@ public class UtilisateurManager {
      * @param password son mdp passe saise dans la modal de confirmation pour valider le update
      * @throws BuissnessException renvoie les differente erreur de saisie possible
      */
+    /**
+     * Methode pour recuperer profil user connecté
+     * @param id no Utilisateur envoye par controlleur
+     * @return Profil
+     */
+    public Utilisateur getProfil(int id){
+
+        List<Utilisateur> utilisateurs = catalogue();
+        Utilisateur profil = null;
+    for (Utilisateur u : utilisateurs) {
+
+        if(u.getNoUtilisateur()==id){
+            profil = u;
+
+        }
+
+    }return profil;
+}
+
+    //TODO:Faire la javadoc
     public void updateUtilisater(Utilisateur utilisateur ,String password) throws BuissnessException {
-
-
+        System.out.println(utilisateur.getPseudo());
         boolean verifPassword = loginDao.confirmPassword(password,utilisateur.getNoUtilisateur());
+        System.out.println("verif pass" +  verifPassword);
         if(!verifPassword){
             throw new BuissnessException(CodeErrorBll.PASSWORD_INCORRECT);
         }
         boolean verifInputOk = verifInput(utilisateur);
+        System.out.println("verfifinpiu" + verifInputOk);
+
         boolean updateValide = verifPseudoUpdate(utilisateur.getPseudo(), utilisateur.getNoUtilisateur());;
+
+
+        System.out.println("verfif update"+updateValide);
         if(!updateValide){
             throw new BuissnessException(CodeErrorBll.CHAMP_INVALIDE);
         }
         if(verifInputOk) {
-
+            System.out.println("je passe dans le manager");
             utilisateurDAO.update(utilisateur);
         }
     }
@@ -130,7 +146,7 @@ public class UtilisateurManager {
            utilisateurDAO.delete(id);
        } else {
           throw new BuissnessException(CodeErrorBll.PASSWORD_INCORRECT);
-       }
+      }
     }
 
     /**
@@ -142,6 +158,7 @@ public class UtilisateurManager {
     private boolean verifPseudoAndMail(String pseudo, String email) throws BuissnessException {
       List<Utilisateur> utilisateurs = catalogue();
       boolean isValide = true ;
+
       for (Utilisateur u: utilisateurs) {
             if(u.getPseudo().equalsIgnoreCase(pseudo)){
                throw new BuissnessException(CodeErrorBll.PSEUDO_DEJA_UTILISE);
@@ -149,8 +166,9 @@ public class UtilisateurManager {
             if(u.getEmail().equalsIgnoreCase(email)){
                 throw new BuissnessException(CodeErrorBll.EMAIL_DEJA_UTILISE);
             }
-        }
-      return isValide ;
+        } return isValide ;
+
+
     }
 
     /**
@@ -191,30 +209,22 @@ public class UtilisateurManager {
     private boolean verifInput(Utilisateur utilisateur) throws BuissnessException {
         boolean ok = false ;
         int taillePseudo = utilisateur.getPseudo().length();
-        if(taillePseudo==0){
-            throw new BuissnessException(CodeErrorBll.PSEUDO_INCORRECT);
-        }
         boolean telephooneIsNumeric =  isNumeric(utilisateur.getTelephone());
         if(!telephooneIsNumeric){
             throw new BuissnessException(CodeErrorBll.TELEPHONE_INVALIDE);
         }
         boolean codePostalIsNumeric = isNumeric(utilisateur.getCodePostal());
-        if(!codePostalIsNumeric || utilisateur.getCodePostal()==null){
+        if(!codePostalIsNumeric){
             throw new BuissnessException(CodeErrorBll.CODE_POSTAL_INVALIDE);
         }
         boolean emailIsValide = validateEmail(utilisateur.getEmail());
-        if (!emailIsValide || utilisateur.getEmail()==null){
+        if (!emailIsValide){
             throw new BuissnessException(CodeErrorBll.EMAIL_INVALIDE);
-        }
-        boolean passwordIsValide = validatePassword(utilisateur.getMotDePasse());
-        if(!passwordIsValide){
-            throw new BuissnessException(CodeErrorBll.PASSWORD_NON_ALPHABETIC);
         }
         if (taillePseudo<21){
         ok=true ;
         }
-        return ok ;
-    }
+      return ok ;
 
     /**
      * Verifie que la chaine de carater passer est bien un mot alphabetique
@@ -243,5 +253,6 @@ public class UtilisateurManager {
     private boolean validateEmail(String email){
         return email.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
     }
+
 
 }

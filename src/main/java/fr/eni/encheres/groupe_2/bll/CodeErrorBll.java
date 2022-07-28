@@ -14,5 +14,7 @@ abstract class CodeErrorBll {
     public static final int PSEUDO_INCORRECT =20008;
     public static final int MONTANT_ENCHERE_INVALIDE=20010;
     public static final int CREDIT_INSUFFISANT=20011;
+    public static final int MEME_ENCHERISSEUR=20012;
+
 
 }

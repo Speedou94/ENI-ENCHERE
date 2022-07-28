@@ -82,17 +82,16 @@ public class ConfirmController extends HttpServlet {
                             request.setAttribute("error", Integer.parseInt(e.getMessage()));
 
 
-                        }
-                rd.forward(request,response);
-        }
-            rd.forward(request,response);
-    }
-}
-    else {
-        rd = request.getRequestDispatcher("/loginpage");
-        rd.forward(request,response);
-         }
+      }
+      rd.forward(request,response);
 
+    }
+
+
+}else {
+    rd = request.getRequestDispatcher("/loginpage");
+}
+rd.forward(request,response);
     }
 
     /**

@@ -9,7 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setBundle basename="message_jsp" var="message"/>
-<c:set var="langue_choisie" value="${param.lang}"/>
+<c:set var="langue_choisie" value="${param.lang}" scope="session"/>
 <html>
 <head>
     <title>Title</title>
@@ -46,11 +46,14 @@
                     <a href="/encheres?lang=en" class="navbar-item">
                         <span> <img class="image is-24x24 mr-4" src="../../img/drapeau-en.png" alt="drapeau anglais"> </span>  <fmt:message key="navbar_public_anglais" bundle="${message}"/>
                     </a>
-                    <a></a>
 
                 </div>
-            </div>
 
+            </div>
+            <div class="navbar-item">
+                <button class="button is-info" onclick="window.location.reload()" > recharger la page </button>
+
+            </div>
 
         </div>
 

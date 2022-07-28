@@ -70,7 +70,8 @@ public class ArticleController extends HttpServlet {
               if(enCours){
                   listDesArticles=managerArticle.filteredByMesArticles(idUtilisateur);
               }
-                request.setAttribute("articlesDisponible", listDesArticles);
+              request.setAttribute("enchereDisponible", true);
+              request.setAttribute("articlesDisponible", listDesArticles);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

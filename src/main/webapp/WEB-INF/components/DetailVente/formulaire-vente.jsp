@@ -47,7 +47,7 @@
     <label for="prix">Prix</label>
     <input class="input is-primary" type="number" placeholder="Primary input" id="prix" name="prix">
     <label for="datedebut">Date de debut</label>
-    <input type="date" name="datedebut" id="datedebut"  placeholder="date de debut" class="input is-primary">
+    <input type="date" name="datedebut" id="datedebut"  placeholder="date de debut" class="input is-primary" >
     <label for="datefin">Date de fin</label>
     <input type="date" name="datefin" id="datefin" placeholder="date de fin" class="input is-primary" >
     <fieldset>
