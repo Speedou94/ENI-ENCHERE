@@ -216,11 +216,11 @@ public class UtilisateurManager {
         int taillePseudo = utilisateur.getPseudo().length();
         System.out.println(taillePseudo);
         boolean telephooneIsNumeric = isNumeric(utilisateur.getTelephone());
-        if (!telephooneIsNumeric) {
+        if (!telephooneIsNumeric || utilisateur.getTelephone().length()>15) {
             throw new BuissnessException(CodeErrorBll.TELEPHONE_INVALIDE);
         }
         boolean codePostalIsNumeric = isNumeric(utilisateur.getCodePostal());
-        if (!codePostalIsNumeric) {
+        if (!codePostalIsNumeric || utilisateur.getCodePostal().length()>10) {
             throw new BuissnessException(CodeErrorBll.CODE_POSTAL_INVALIDE);
         }
         boolean emailIsValide = validateEmail(utilisateur.getEmail());
