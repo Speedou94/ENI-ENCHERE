@@ -12,40 +12,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
+public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao,EncheresDAO {
 
     private final String SELECT_ALL_USERS_SQL = "SELECT * FROM dbo.UTILISATEURS";
     private final String ADD_NEW_SQL = "INSERT INTO dbo.UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     private final String LOGIN_SQL = "SELECT * FROM dbo.UTILISATEURS WHERE pseudo = ?;";
-    private final String VERIF_PSEUDO_ET_MAIL_SQL = "SELECT pseudo,email FROM dbo.UTILISATEURS";
+  //  private final String VERIF_PSEUDO_ET_MAIL_SQL = "SELECT pseudo,email FROM dbo.UTILISATEURS";
 
     private final String UPDATE_UTILISATEUR = "UPDATE dbo.UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=? WHERE no_utilisateur =?";
-    private final String DELETE_RETRAIT_SQL = "DELETE FROM dbo.RETRAITS where no_article in (select no_article from ARTICLES_VENDUS where no_utilisateur=?)";
+    private final String DELETE_RETRAIT_SQL = "DELETE FROM RETRAITS where no_article in (select no_article from ARTICLES_VENDUS where no_utilisateur=?);";
     private final String DELETE_ARTICLES="DELETE FROM dbo.ARTICLES_VENDUS where no_utilisateur = ?;";
-    private final String DELETE_ENCHERE_SQL = "DELETE FROM dbo.ENCHERES where no_utilisateur = ?;";
+    private final String DELETE_ENCHERE_SQL = "DELETE FROM dbo.ENCHERES where no_article in (select no_article from ARTICLES_VENDUS where no_utilisateur=?);";
 
     private final String DELETE_UTILISATEUR ="DELETE FROM dbo.UTILISATEURS where no_utilisateur=?;";
     private final String CONFIRM_PASSWORD_SQL = "SELECT mot_de_passe FROM dbo.UTILISATEURS WHERE no_utilisateur=?";
 
     private final String UPDATE_PASSWORD_SQL = "UPDATE dbo.UTILISATEURS SET mot_de_passe = ? WHERE no_utilisateur=?";
+    private final String UPDATE_CREDIT_UTILISATEUR = "UPDATE dbo.UTILISATEURS SET credit =? WHERE no_utilisateur=?";
 
+
+    private final String UPDATE_PRIX_VENTE_SQL="UPDATE dbo.ARTICLES_VENDUS SET prix_vente=? WHERE no_article=?";
     /**
      * Insertion d'un nouvel utilisateur en bdd
      * @param object Utilisateur
      * @throws BuissnessException remonte les erreur en cas de mauvaise saisie
      */
-
-    private final String UPDATE_PRIX_VENTE_SQL="UPDATE dbo.ARTICLES_VENDUS SET prix_vente=? WHERE no_article=?";
-    //PreparedStatement ps;
-    // ResultSet rs;
-    //TODO:Faire la javadoc
     @Override
     public void addNew(Utilisateur object) throws BuissnessException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        boolean pseudoAndMailDispo = verifPseudoAndMail(object.getPseudo(), object.getEmail());
+       // boolean pseudoAndMailDispo = verifPseudoAndMail(object.getPseudo(), object.getEmail());
         JCrypt jCrypt = new JCrypt();
-        if (pseudoAndMailDispo) {
+
             try (Connection cnx = ConnectionProvider.getConnection()) {
                 ps = cnx.prepareStatement(ADD_NEW_SQL, PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setString(1, object.getPseudo());
@@ -68,7 +66,7 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        }
+
 
     }
 
@@ -273,10 +271,38 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao {
     }
 
 
+    @Override
+    public void updateCredit(int id, int nouveauCredit) {
+        PreparedStatement ps = null;
 
+        // ResultSet rs = null;
 
+        try (Connection cnx = ConnectionProvider.getConnection()){
+            ps = cnx.prepareStatement(UPDATE_CREDIT_UTILISATEUR);
+            ps.setInt(1,nouveauCredit);
+            ps.setInt(2,id);
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
+
+    @Override
+    public void updatePrixVente(int no_article, int montantEnchere) {
+        PreparedStatement ps;
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            ps= cnx.prepareStatement(UPDATE_PRIX_VENTE_SQL);
+            ps.setInt(1,montantEnchere);
+            ps.setInt(2,no_article);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+}
 
 
 
