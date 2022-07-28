@@ -340,5 +340,8 @@ public class UtilisateurImplJdbc implements DAO<Utilisateur>, LoginDao, Encheres
             throw new RuntimeException(e);
         }
     }
+
+
+
 }
 

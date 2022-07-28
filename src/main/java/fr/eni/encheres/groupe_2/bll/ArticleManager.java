@@ -243,52 +243,36 @@ public class ArticleManager {
 
     }
 
-    public void verifEnchereFini(int id) {
-        List<Article> mesArticles = filteredByMesArticles(id);
+    /**
+     * Verifie a la connextion de l'utlisateur si ses produit mis en vente sont en ecnhere termnie et recupere le
+     * montant le plus eleve des encheres faite , si aucune enchere sur l'article , la valeur de vente finale passe a -1
+     * @param idUtilisateur le numero de l'utlisteur qui se connecte
+     */
+    public void verifEnchereFini(int idUtilisateur) {
+        List<Article> mesArticles = filteredByMesArticles(idUtilisateur);
         List<Enchere> listeDesEncheres = enchereDAO.selectALL();
-        List<Article> mesVentesTermine = new ArrayList<>();
-        List<Enchere> encheresSurMemeArticle = new ArrayList<>();
         Date today = new Date();
-        for (Article a:mesArticles
-             ) {
-            if(a.getDateFinEncheres().before(today)){
-                mesVentesTermine.add(a);
-            }
-        }
-        for (Enchere e:listeDesEncheres
-             ) {
-            for (Article b:mesVentesTermine
-                 ) {
-                if(b.getPrixVente()==0 && e.getNo_article()==b.getNoArticle()){
-                    System.out.println("dans liste esma:"+ e.getNo_article());
-                    encheresSurMemeArticle.add(e);
+        int montant =0;
+        for (Article a:mesArticles) {
+            if(a.getDateFinEncheres().before(today) && a.getPrixVente()==0) {
+                montant = 0;
+                for(Enchere e:listeDesEncheres) {
+                    // Si le numero de l'article correspond a l'"enchere et le montant est plus eleve
+                    if(e.getNo_article() == a.getNoArticle() && e.getMontantEnchere() > montant){
+                            montant = e.getMontantEnchere();
+                    }
+                }
+                if(montant > 0){
+                    // on peut crediter pour cet article
+                    int nouveauTotal = montant + EnchereManager.creditDisponible(idUtilisateur);
+                    encheresFeatureUtilisateur.updatePrixVente(a.getNoArticle(),montant);
+                    encheresFeatureUtilisateur.updateCredit(idUtilisateur,nouveauTotal);
+                } else {
+                    // il n'y a pas eu d'enchere on credite a -1 pour par boucler dessus
+                    encheresFeatureUtilisateur.updatePrixVente(a.getNoArticle(),-1);
                 }
             }
-            int index = encheresSurMemeArticle.size();
-            System.out.println(index);
-            if(index>1){
-                Enchere enchere = encheresSurMemeArticle.get(index-1);
-                System.out.println ("no article avec get+1 : " +enchere.getNo_article());
-                int creditDispo =  EnchereManager.creditDisponible(id);
-                int nouveauCredit = creditDispo+enchere.getMontantEnchere();
-                encheresFeatureUtilisateur.updateCredit(id,nouveauCredit);
-                encheresFeatureUtilisateur.updatePrixVente(enchere.getNo_article(),enchere.getMontantEnchere());
-            //TODO: amerolier ca avec la maj de nouvelle encheres!!!
-            }
-            if(index==1){
-                Enchere enchere = encheresSurMemeArticle.get(0);
-                System.out.println ("no article avec get+0 : " +enchere.getNo_article());
-                System.out.println ("no article avec get prix : " +enchere.getMontantEnchere());
-                int creditDispo =  EnchereManager.creditDisponible(id);
-                int nouveauCredit = creditDispo+enchere.getMontantEnchere();
-                encheresFeatureUtilisateur.updateCredit(id,nouveauCredit);
-                encheresFeatureUtilisateur.updatePrixVente(enchere.getNo_article(),enchere.getMontantEnchere());
-            }
-
         }
     }
-
-
-
 }
 
