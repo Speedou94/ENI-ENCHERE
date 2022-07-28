@@ -25,6 +25,7 @@ public class HomeController extends HttpServlet {
         try {
             listDesCategories = managerCategorie.catalogue();
             listDesArticles = managerArticle.catalogueEnchereOuverte();
+
             request.getSession().setAttribute("listDesCategories", listDesCategories);
             request.getSession().setAttribute("articlesDisponible", listDesArticles);
 

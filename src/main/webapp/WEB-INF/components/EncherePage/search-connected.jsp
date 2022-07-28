@@ -35,6 +35,7 @@
                                                                               bundle="${message}"/></button>
     </div>
     <br>
+
     <div class="openlist">
         <label for="achat">Achat</label>
         <input type="radio" name="select-option" id="achat">

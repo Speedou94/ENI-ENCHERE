@@ -47,8 +47,7 @@ public class LoginController extends HttpServlet {
                 request.setAttribute("succes",50002);
                 request.setAttribute("totalGagne",totalGagne);
             }
-
-
+            request.setAttribute("enchereOuverte",true);
             rd = request.getRequestDispatcher("/accueil");
 
         } catch (BuissnessException e) {

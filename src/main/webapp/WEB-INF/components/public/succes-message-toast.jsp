@@ -15,9 +15,9 @@
 </head>
 <body onload="toast()">
 <div class="notification is-primary is-top" id="toast">
-   <p class="has-text-centered"><strong><fmt:message key="${succes}" bundle="${message}"/></strong></p>
+   <p class="has-text-centered title is-4"><strong><fmt:message key="${succes}" bundle="${message}"/></strong></p>
     <c:if test="${!empty totalGagne}">
-        <p class="has-text-centered">${totalGagne}</p>
+        <p class="has-text-centered title is-2">${totalGagne}</p>
     </c:if>
 </div>
 </body>

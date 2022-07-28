@@ -10,6 +10,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ArticleController", value = "/articles/*")
@@ -45,7 +46,6 @@ public class ArticleController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher("/accueil");
         if (request.getSession().getAttribute("login")!=null){
-            System.out.println("je suis sla ");
             int idUtilisateur = Integer.parseInt(request.getParameter("idUtilisateur"));
             boolean ouverte = request.getParameter("ouverte")!=null;
             boolean mesEncheres = request.getParameter("mes-encheres")!=null;
@@ -56,7 +56,23 @@ public class ArticleController extends HttpServlet {
             int idCategorie = Integer.parseInt(request.getParameter("Categories"));
             String motClef = request.getParameter("search");
             try {
-                List<Article> listDesArticles = managerArticle.filteredListByEnchereOuverte(idCategorie,motClef,ouverte);
+                List<Article> listDesArticles = new ArrayList<>();
+                if(!ouverte && !mesEncheres && !remporter && !enCours && !nonDebuter && !terminer){
+
+                    if(motClef.length()==0){
+
+                        rd = request.getRequestDispatcher("/accueil");
+                        request.setAttribute("error", 30001);
+                        rd.forward(request,response);
+                        return;
+                    }
+                    listDesArticles =managerArticle.filteredListArticlesByName(motClef,idCategorie);
+                }
+                if(ouverte){
+                    listDesArticles =  managerArticle.filteredListByEnchereOuverte(idCategorie,motClef);
+                    request.setAttribute("enchereOuverte",true);
+                }
+
               if(mesEncheres){
                  List<Integer> listeDeMesEncheres = managerEnchere.listeMesEncheres(idUtilisateur);
                  listDesArticles=managerArticle.filteredListByIdArticle(listeDeMesEncheres);
@@ -71,7 +87,11 @@ public class ArticleController extends HttpServlet {
               if(enCours){
                   listDesArticles=managerArticle.filteredByMesArticles(idUtilisateur);
               }
-              request.setAttribute("enchereDisponible", true);
+              if(remporter){
+                  System.out.println("remporte");
+                  listDesArticles=managerArticle.filteredByMesAchats(idUtilisateur);
+              }
+             // request.setAttribute("enchereDisponible", true);
               request.setAttribute("articlesDisponible", listDesArticles);
             } catch (Exception e) {
                 throw new RuntimeException(e);

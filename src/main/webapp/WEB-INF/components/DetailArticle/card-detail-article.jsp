@@ -55,7 +55,7 @@
      </p>
    </div>
     <div>
-      <c:if test="${!empty login}">
+      <c:if test="${!empty enchereOuverte}">
         <form method="post" action="${pageContext.request.contextPath}/details-encheres/">
           <input value="${detailArticle.noArticle}" name="noArticle" hidden>
           <input value="${detailArticle.prixInitial}" name="prixInitial" hidden>

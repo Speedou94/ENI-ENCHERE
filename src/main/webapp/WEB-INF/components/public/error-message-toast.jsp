@@ -14,8 +14,8 @@
     <title>Error-toast</title>
 </head>
 <body onload="toast()">
-<div class="notification is-danger" id="toast">
-    <strong><fmt:message key="${error}" bundle="${errors}"/></strong>
+<div class="notification is-danger is-top" id="toast">
+   <p class="title is-4 has-text-centered"> <strong><fmt:message key="${error}" bundle="${errors}"/></strong></p>
 </div>
 </body>
 <script src="../../../script/taost.js"></script>

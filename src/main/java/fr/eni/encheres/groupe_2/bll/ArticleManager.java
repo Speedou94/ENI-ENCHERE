@@ -135,16 +135,15 @@ public class ArticleManager {
      *Filtre les Article disponible pour les encheres ouverte a partir du jour de requete
      * @param idCategorie l'id de la categorie (si O = toutes les categories)
      * @param motClef   le nom de l'article (String) si renseigner
-     * @param ouverte
      * @return liste encheres ouverte
      */
-    public List<Article> filteredListByEnchereOuverte(int idCategorie,String motClef,boolean ouverte){
+    public List<Article> filteredListByEnchereOuverte(int idCategorie,String motClef){
         List<Article> listeafiltrer = filteredListArticlesByName(motClef,idCategorie);
         List<Article> listarenvoyer = new ArrayList<>();
-        if(ouverte){
+
             for (Article a:listeafiltrer
                  ) {
-//TODO verifier les methode de date
+
                 Date today = new Date();
                 Date tomorrow = new Date(today.getTime()+ (1000 * 60 * 60 * 24));
 
@@ -152,9 +151,7 @@ public class ArticleManager {
                     listarenvoyer.add(a);
                 }
             }
-        }else {
-            listarenvoyer = listeafiltrer;
-        }
+
         return listarenvoyer;
     };
 
@@ -226,6 +223,22 @@ public class ArticleManager {
         }
         return listeFiltrer;
     }
+    public List<Article> filteredByMesAchats(int idUtilisateur){
+        List<Article> listeDesArticles= filteredByStatusTermnine();
+        List<Enchere> listeDesEnchere = enchereDAO.selectALL();
+        List<Article> mesAchats = new ArrayList<>();
+        for (Article a:listeDesArticles
+             ) {
+            if(a.getPrixVente()>0){
+                for (Enchere e:listeDesEnchere
+                     ) {
+                    if(a.getNoArticle()==e.getNo_article() && a.getPrixVente()==e.getMontantEnchere())
+                        mesAchats.add(a);
+                }
+            }
+        }
+        return mesAchats;
+    }
 
     /**
      * Ajoute un nouvel article a vendre en BDD
@@ -278,6 +291,11 @@ public class ArticleManager {
         return totalGagneVenteFini;
     }
 
+    /***
+     * Rembouses les utlisateurs ayant encherie sur un article en status non termnier et ouvert
+     * si le possesseur des articles ferme son compte
+     * @param idUtilisateur le numero de l'utlisateur qui cloture son compte
+     */
     public void rembourseEncherisseur(int idUtilisateur) {
         List<Article> mesArticles = filteredByMesArticles(idUtilisateur);
         List<Enchere> listeDesEncheres = enchereDAO.selectALL();
@@ -293,11 +311,13 @@ public class ArticleManager {
                 for (Enchere e:listeDesEncheres
                      ) {
                     if(e.getNo_article()==a.getNoArticle() && e.getMontantEnchere()>montant){
+                        //retrouve l'id du meuilleur encherisseur et le montant de son enchere
                         montant=e.getMontantEnchere();
                         idEncherisseur=e.getNo_utilisateur();
                     }
                 }
                 if(montant>0){
+                    // remet a jour les credit de l'encherisseur
                     int nouveauTotal = montant + EnchereManager.creditDisponible(idEncherisseur);
                     encheresFeatureUtilisateur.updateCredit(idEncherisseur,nouveauTotal);
                 }
