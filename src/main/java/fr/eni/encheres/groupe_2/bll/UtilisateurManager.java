@@ -207,52 +207,54 @@ public class UtilisateurManager {
      * @throws BuissnessException code erreur envoye au front pour indique a l'utilisateur quel champs est mal rempli
      */
     private boolean verifInput(Utilisateur utilisateur) throws BuissnessException {
-        boolean ok = false ;
+        boolean ok = false;
         int taillePseudo = utilisateur.getPseudo().length();
-        boolean telephooneIsNumeric =  isNumeric(utilisateur.getTelephone());
-        if(!telephooneIsNumeric){
+        boolean telephooneIsNumeric = isNumeric(utilisateur.getTelephone());
+        if (!telephooneIsNumeric) {
             throw new BuissnessException(CodeErrorBll.TELEPHONE_INVALIDE);
         }
         boolean codePostalIsNumeric = isNumeric(utilisateur.getCodePostal());
-        if(!codePostalIsNumeric){
+        if (!codePostalIsNumeric) {
             throw new BuissnessException(CodeErrorBll.CODE_POSTAL_INVALIDE);
         }
         boolean emailIsValide = validateEmail(utilisateur.getEmail());
-        if (!emailIsValide){
+        if (!emailIsValide) {
             throw new BuissnessException(CodeErrorBll.EMAIL_INVALIDE);
         }
-        if (taillePseudo<21){
-        ok=true ;
+        if (taillePseudo < 21) {
+            ok = true;
         }
-      return ok ;
-
-    /**
-     * Verifie que la chaine de carater passer est bien un mot alphabetique
-     * @param motDePasse String du mot de passe saisie
-     * @return booleen
-     */
-    private boolean validatePassword(String motDePasse) {
-
-        return  motDePasse.matches("^[A-Za-z]+$");
+        return ok;
     }
 
-    /**
-     * Verifie que le champs saisie dans l'input est bien de type numerique
-     * @param texteATester String du champs rempli par l'utilisateur
-     * @return booleen
-     */
-    private boolean isNumeric(String texteATester) {
-        return texteATester.matches("[+-]?\\d*(\\.\\d+)?");
-    };
+        /**
+         * Verifie que la chaine de carater passer est bien un mot alphabetique
+         * @param motDePasse String du mot de passe saisie
+         * @return booleen
+         */
+        private boolean validatePassword(String motDePasse){
 
-    /**
-     * Verifie que le champs saisie dans l'input email est bien de type Email
-     * @param email String
-     * @return booleen
-     */
-    private boolean validateEmail(String email){
-        return email.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
+            return motDePasse.matches("^[A-Za-z]+$");
+        }
+
+        /**
+         * Verifie que le champs saisie dans l'input est bien de type numerique
+         * @param texteATester String du champs rempli par l'utilisateur
+         * @return booleen
+         */
+        private boolean isNumeric (String texteATester){
+            return texteATester.matches("[+-]?\\d*(\\.\\d+)?");
+        }
+        ;
+
+        /**
+         * Verifie que le champs saisie dans l'input email est bien de type Email
+         * @param email String
+         * @return booleen
+         */
+        private boolean validateEmail (String email){
+            return email.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
+        }
     }
 
 
-}
