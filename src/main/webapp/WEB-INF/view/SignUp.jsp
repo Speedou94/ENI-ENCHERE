@@ -22,11 +22,13 @@
     <jsp:include page="${pageContext.request.contextPath}/navbar-public"/>
 </header>
 <div>
+    <div  class="account-create">
     <h1>
         <fmt:message key="sign-up-sign_up" bundle="${message}"/>
     </h1>
+    </div>
 
-<jsp:include page="${pageContext.request.contextPath}/sign-up-form"/>
+    <jsp:include page="${pageContext.request.contextPath}/sign-up-form"/>
 
 </div>
 <div>

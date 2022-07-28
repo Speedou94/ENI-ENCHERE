@@ -22,32 +22,37 @@
 <header>
     <jsp:include page="${pageContext.request.contextPath}/navbar-public"/>
 </header>
+<h1 class="login-message">
+    <fmt:message key="login_page_message" bundle="${message}"/>
+</h1>
 <div class="box form-login mx-auto">
-    <form action="${pageContext.request.contextPath}/login" method="post">
-       <label for="pseudo">
-           <fmt:message key="login_page_pseudo" bundle="${message}"/>
-       </label>
-        <input class="input" type="text" placeholder="Text input" id="pseudo" name="pseudo">
+    <form action="${pageContext.request.contextPath}/login" method="post" class="login-card">
+        <label for="pseudo">
+            <fmt:message key="login_page_pseudo" bundle="${message}"/>
+        </label>
+        <input class="input" type="text" placeholder="<fmt:message key="login_page_pseudo" bundle="${message}"/>"
+               id="pseudo" name="pseudo">
         <label for="password">
             <fmt:message key="login_page_password" bundle="${message}"/>
         </label>
-        <input class="input" type="password" placeholder="Text input" id="password" name="password">
-<div class="btn-form-login">
-       <div>
-           <button class="button is-info " type="submit">
-               <fmt:message key="login_page_btn_connect" bundle="${message}"/>
-           </button>
-       </div>
-        <div class="options-form">
-            <label class="checkbox">
-                <input type="checkbox">
-                <fmt:message key="login_page_check_remember" bundle="${message}"/>
-            </label>
-            <a class="mt-1">
-                <fmt:message key="login_page_forgot_password" bundle="${message}"/>
-            </a>
+        <input class="input" type="password" placeholder="<fmt:message key="login_page_password" bundle="${message}"/>"
+               id="password" name="password">
+        <div class="btn-form-login">
+            <div>
+                <button class="button is-info " type="submit">
+                    <fmt:message key="login_page_btn_connect" bundle="${message}"/>
+                </button>
+            </div>
+            <div class="options-form">
+                <label class="checkbox">
+                    <input type="checkbox">
+                    <fmt:message key="login_page_check_remember" bundle="${message}"/>
+                </label>
+                <a class="mt-1">
+                    <fmt:message key="login_page_forgot_password" bundle="${message}"/>
+                </a>
+            </div>
         </div>
-</div>
 
     </form>
     <div>
@@ -60,10 +65,12 @@
             <jsp:include page="${pageContext.request.contextPath}/succes-toast"/>
         </c:if>
     </div>
-    <footer>
-        <jsp:include page="${pageContext.request.contextPath}/footer"/>
-    </footer>
+
+
 </div>
+<footer>
+    <jsp:include page="${pageContext.request.contextPath}/footer"/>
+</footer>
 </body>
 <script src="../../script/nav-bar-public.js"></script>
 </html>

@@ -15,9 +15,9 @@
     <title>Title</title>
 </head>
 <body>
-<nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a class="navbar-item" href="${pageContext.request.contextPath}/encheres/">
+<nav class="navbar is-info" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand is-info">
+        <a class="navbar-item is-info" href="${pageContext.request.contextPath}/encheres/">
             <img src="../../img/logo.png" alt="LogoEniEncheres" id="toto" width="128" height="28">
         </a>
 
@@ -28,22 +28,22 @@
         </a>
     </div>
 
-    <div id="navbar-public" class="navbar-menu">
+    <div id="navbar-public" class="navbar-menu is-info">
         <div class="navbar-start">
 
 
 
-            <div class="navbar-item has-dropdown is-hoverable">
+            <div class="navbar-item has-dropdown is-hoverable is-info">
                 <p class="navbar-link">
                     <fmt:message key="navbar_public_choix_langue" bundle="${message}"/>
                 </p>
 
-                <div class="navbar-dropdown">
+                <div class="navbar-dropdown is-info">
                     <a href="/encheres?lang=fr" class="navbar-item">
                         <span> <img class="image is-24x24 mr-4" src="../../img/drapeau_fr.png" alt="drapeau francais"> </span>    <fmt:message key="navbar_public_francais" bundle="${message}"/>
                     </a>
 
-                    <a href="/encheres?lang=en" class="navbar-item">
+                    <a href="/encheres?lang=en" class="navbar-item is-info">
                         <span> <img class="image is-24x24 mr-4" src="../../img/drapeau-en.png" alt="drapeau anglais"> </span>  <fmt:message key="navbar_public_anglais" bundle="${message}"/>
                     </a>
 

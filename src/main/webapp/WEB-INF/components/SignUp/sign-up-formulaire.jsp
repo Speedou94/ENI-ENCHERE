@@ -100,12 +100,11 @@
     </a>
 </c:if>
     <c:if test="${!empty login}">
-    <button class="button" type="submit" name="editUtilisateur" value="${login.noUtilisateur}">
-        <fmt:message key="sign_up_modif" bundle="${message}"/>
-    </button>
-      <button type="submit" value="delete" name="delete" class="button">Delete</button>
-
-    <a href="${pageContext.request.contextPath}/encheres/" class="button">
+        <button class="button is-primary" type="submit" name="editUtilisateur" value="${login.noUtilisateur}">
+            <fmt:message key="sign_up_modif" bundle="${message}"/>
+        </button>
+        <button type="submit" value="delete" name="delete" class="button is-danger">Delete</button>
+        <a href="${pageContext.request.contextPath}/encheres/" class="button is-danger">
             <fmt:message key="sign-up-cancel" bundle="${message}"/></a>
     </c:if>
 

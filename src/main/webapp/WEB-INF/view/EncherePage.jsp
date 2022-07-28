@@ -21,7 +21,7 @@
 <body>
 <header>
     <c:if test="${empty login}">
-       <jsp:include page="${pageContext.request.contextPath}/navbar-public"/>
+        <jsp:include page="${pageContext.request.contextPath}/navbar-public"/>
     </c:if>
     <c:if test="${!empty login}">
         <jsp:include page="${pageContext.request.contextPath}/navbar-private"/>
@@ -31,6 +31,16 @@
     <h1 class="has-text-centered title is-1">
         <fmt:message key="enchere_page_liste_enchere" bundle="${message}"/>
     </h1>
+    <article class="message is-info">
+        <div class="message-header">
+            <p><fmt:message key="enchere_page_message_header" bundle="${message}"/></p>
+        </div>
+        <div class="message-body">
+            <p><fmt:message key="enchere_page_who_whe_are" bundle="${message}"/></p>
+            <p><fmt:message key="enchere_page_who_whe_are2" bundle="${message}"/></p>
+            <p><fmt:message key="enchere_page_who_whe_are3" bundle="${message}"/></p>
+        </div>
+    </article>
     <c:if test="${empty login}">
         <jsp:include page="${pageContext.request.contextPath}/search-article"/>
     </c:if>
@@ -41,11 +51,11 @@
 </div>
 <div>
     <c:if test="${!empty error}">
-       <jsp:include page="${pageContext.request.contextPath}/error-toast"/>
+        <jsp:include page="${pageContext.request.contextPath}/error-toast"/>
     </c:if>
 </div>
 <footer>
-   <jsp:include page="${pageContext.request.contextPath}/footer"/>
+    <jsp:include page="${pageContext.request.contextPath}/footer"/>
 </footer>
 </body>
 <script src="../../script/nav-bar-public.js"></script>
