@@ -27,10 +27,12 @@ Edit by Niko 18/07/2022
 .navbar {
     background-color: #f5f5f5;
 }
-.navbar-dropdown{
+
+.navbar-dropdown {
     background-color: #f5f5f5;
 }
-.navbar-item.has-dropdown.is-hoverable{
+
+.navbar-item.has-dropdown.is-hoverable {
     background-color: #f5f5f5;
 }
 
@@ -42,10 +44,13 @@ Edit by Niko 18/07/2022
     margin-top: 5rem;
 }
 
-.message {
+.message.is-info {
     margin-left: 2rem;
     margin-right: 2rem;
+    margin-bottom: 10rem;
+    text-align: center;
 }
+
 
 /* Edit by Speedou 25/07 */
 /* Couleur footer */
@@ -57,6 +62,7 @@ Edit by Niko 18/07/2022
 /* Edit by Speedou 25/07 */
 /* Mise en place des card d'enchère */
 .card {
+    text-align: center;
     display: inline-grid;
     align-items: center;
     margin-inline-end: 5rem;
@@ -66,6 +72,20 @@ Edit by Niko 18/07/2022
     margin-left: 3rem;
 }
 
+.card-image {
+    height: 5rem;
+    text-align: -webkit-center;
+    margin-top: 2rem;
+}
+
+.card-content {
+    text-align: -webkit-center;
+}
+
+.media {
+    text-decoration: underline;
+}
+
 .is-flex {
     padding-top: 1rem;
     padding-left: 1rem;
@@ -73,13 +93,13 @@ Edit by Niko 18/07/2022
 }
 
 .filtres {
-    margin-left: 2rem;
+    margin-left: 1rem;
     margin-right: 2rem;
     margin-top: 0.5rem;
 }
 
 .categories {
-    padding-left: 2rem;
+    padding-left: 1rem;
     margin-top: 1rem;
     display: inline-block;
 }
@@ -89,25 +109,39 @@ Edit by Niko 18/07/2022
     display: inline-block;
 }
 
+.cat {
+
+}
+
+.openlist {
+
+}
+
+.currentlist {
+
+}
+
 .flex-btn-search {
     margin-left: 1.75rem;
     margin-top: 1rem;
-}
-
-.input {
-    margin-left: 1rem;
+    display: inline-grid;
 }
 
 .account-create {
+    text-decoration: underline;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
     margin-top: 3rem;
-    margin-bottom: 3rem;
+    margin-bottom: 5rem;
 }
 
 .form-login {
     max-width: 50%;
     margin-top: 15rem;
 }
-.login-message{
+
+.login-message {
     text-decoration: underline;
     font-size: 2rem;
     text-align: center;
@@ -115,16 +149,21 @@ Edit by Niko 18/07/2022
     margin-top: 3rem;
     margin-bottom: -9rem;
 }
-.login-card{
+
+/* Edit by Speedou 28/07/2022 */
+/* Carte Log In */
+.login-card {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-#pseudo{
+
+#pseudo {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
-#password{
+
+#password {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
@@ -142,7 +181,10 @@ Edit by Niko 18/07/2022
 
 .form-new-user {
     display: flex;
-    justify-content: space-around;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .form-new-user > .input-container > label {
@@ -155,30 +197,148 @@ Edit by Niko 18/07/2022
     min-width: 13rem;
 }
 
-.input-container {
+.input-container-left {
+    margin-right: 2rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: normal;
     align-content: space-around;
 }
 
-.input-container > label {
+.input-container-right {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    block-size: 5rem;
+    align-items: normal;
     align-content: space-around;
 }
 
-.button-create {
+/* Edit by Speedou 28/07/2022 */
+/* Bouton créer / Annuler Sign Up */
+.sign-up-create-button {
     flex-direction: column-reverse;
-    display: table-cell;
+    display: grid;
+    justify-items: stretch;
+    justify-content: space-evenly;
+    margin-top: 5rem;
+}
+
+.sign-up-cancel-button {
+    flex-direction: column-reverse;
+    display: grid;
+    justify-items: stretch;
+    justify-content: space-evenly;
+    margin-top: 5rem;
+}
+
+.create-button {
+    position: relative;
+    left: 94%;
+    top: inherit;
+    transform: translate(-50%, -50%);
+}
+
+/* Edit by Speedou 28/07/2022 */
+/* Mise en page du formulaire de mise en vente */
+.sell-form {
+    text-decoration: underline;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 3rem;
+    margin-bottom: 5rem;
+}
+
+.nameArticle {
+    display: list-item;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.description {
+    display: list-item;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.categoriesSell {
+    display: list-item;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.categoriesSell{
+    display: list-item;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-right: 63rem;
+}
+
+.file.has.name {
+    display: list-item;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.file-name {
+    display: list-item;
+    margin-bottom: 1rem;
+}
+
+.file-input {
+    display: flex;
+}
+
+.prix {
+    display: list-item;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.date-debut {
+    display: list-item;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.date-fin {
+    display: list-item;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.rue-enchere {
+    display: list-item;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.ZIP-enchere {
+    display: list-item;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.street-enchere {
+    display: list-item;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.enchere-buttons {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    display: inherit;
+}
+
+/* Edit by Speedou 28/07/2022 */
+/* Table d'affichage du profil utilisateur */
+.user-info{
+
 }
 
 .navbar-item > img {
     max-height: 4.75rem;
 }
-
 
 .max-width50 {
     max-width: 50%;

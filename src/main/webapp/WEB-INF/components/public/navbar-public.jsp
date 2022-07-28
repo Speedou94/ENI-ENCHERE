@@ -15,7 +15,7 @@
     <title>Title</title>
 </head>
 <body>
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<nav class="navbar is-info" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="${pageContext.request.contextPath}/encheres/">
             <img src="../../img/logo.png" alt="LogoEniEncheres" id="logo" width="128" height="28">
@@ -33,17 +33,17 @@
 
 
 
-            <div class="navbar-item has-dropdown is-hoverable">
-                <p class="navbar-link">
+            <div class="navbar-item has-dropdown is-hoverable is-info">
+                <p class="navbar-link is-info">
                     <fmt:message key="navbar_public_choix_langue" bundle="${message}"/>
                 </p>
 
-                <div class="navbar-dropdown">
-                    <a href="${pageContext.request.contextPath}?lang=fr" class="navbar-item">
+                <div class="navbar-dropdown is-info">
+                    <a href="${pageContext.request.contextPath}?lang=fr" class="navbar-item is-info">
                         <span> <img class="image is-24x24 mr-4" src="../../img/drapeau_fr.png" alt="drapeau francais"> </span>    <fmt:message key="navbar_public_francais" bundle="${message}"/>
                     </a>
 
-                    <a href="${pageContext.request.contextPath}?lang=en" class="navbar-item">
+                    <a href="${pageContext.request.contextPath}?lang=en" class="navbar-item is-info">
                         <span> <img class="image is-24x24 mr-4" src="../../img/drapeau-en.png" alt="drapeau anglais"> </span>  <fmt:message key="navbar_public_anglais" bundle="${message}"/>
                     </a>
                     <a></a>

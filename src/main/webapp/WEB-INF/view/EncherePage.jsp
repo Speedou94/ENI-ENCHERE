@@ -31,12 +31,14 @@
     <h1 class="has-text-centered title is-1">
         <fmt:message key="enchere_page_liste_enchere" bundle="${message}"/>
     </h1>
-    <article class="message">
+    <article class="message is-info">
         <div class="message-header">
             <p><fmt:message key="enchere_page_message_header" bundle="${message}"/></p>
         </div>
         <div class="message-body">
             <p><fmt:message key="enchere_page_who_whe_are" bundle="${message}"/></p>
+            <p><fmt:message key="enchere_page_who_whe_are2" bundle="${message}"/></p>
+            <p><fmt:message key="enchere_page_who_whe_are3" bundle="${message}"/></p>
         </div>
     </article>
     <c:if test="${empty login}">
